@@ -7,7 +7,7 @@ function Hero() {
     <div className="Hero jumbotron">
       <div className="Hero-content">
         <h2>Get to know trees around in Vancouver</h2>
-        <p>Get started now.</p>
+        <p>Get started now. This is a test to see if Master is protected.</p>
         <button class="btn btn-primary">EXPLORE TREES</button>
       </div>
 
