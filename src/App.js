@@ -1,22 +1,21 @@
 import React from "react";
-import logo from "./logo.svg";
+import Hero from "./Hero";
 import "./App.css";
+import WrappedMap from "./MapView";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>TreeSpree: Data Visualization for Vancouver's Street Trees</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Hero />
+      <div style={{ width: "100vw", height: "100vh" }}>
+        <WrappedMap
+          // Add &key=API_KEY when you get one to get out of DEV mode.
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
+          loadingElement={<div style={{ height: "100%" }} />}
+          containerElement={<div style={{ height: "100%" }} />}
+          mapElement={<div style={{ height: "100%" }} />}
+        />
+      </div>
     </div>
   );
 }
