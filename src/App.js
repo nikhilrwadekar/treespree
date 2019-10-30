@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import Header from "./Header";
 import Gridview from "./Gridview";
 import "./App.css";
+import Footer from "./Footer";
 // import WrappedMap from "./MapView";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           mapElement={<div style={{ height: "100%" }} />}
         /> */}
       </div>
+      <Footer />
     </div>
   );
 }
