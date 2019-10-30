@@ -4,7 +4,7 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <div className="Footer .container-fluid">
+    <div className="Footer container-fluid">
       <div>
         <nav>
           <ul>
