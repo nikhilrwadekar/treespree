@@ -22,7 +22,7 @@ exports.getTrees = (req, res) => {
 };
 
 // GET '/api/trees/treetypes'
-exports.getTrees = (req, res) => {
+exports.getTreeTypes = (req, res) => {
   // Send all Tree Types
   query(cp, `SELECT * from neighbourhoods`)
     .then(results => res.send(results))
