@@ -1,0 +1,26 @@
+.SingleImage{
+    width:50%;
+}
+fieldset{
+    padding:2em;
+}
+.others{
+    width:80%;
+    display: flex;
+    justify-content: space-around;
+    margin:auto;
+
+}
+.location{
+    width:40%;
+    border:1px solid black;
+}
+.location i{
+    width:40%;
+    border:1px solid black;
+}
+.shop{
+    width:40%;
+    border:1px solid black;
+
+}

@@ -1,0 +1,27 @@
+input, textarea {
+    width: 100%;
+    margin-bottom: .8em;
+    padding:.2em;
+  }
+  
+  p {
+    width: 100%;
+    text-align:left;
+    margin-bottom:.3em;
+  }
+  .ContactPage{
+      max-width:50%;
+      margin: auto;
+  }
+  
+input[type=submit] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: .6em;
+    text-decoration: none;
+    width:50%;
+    margin: auto;
+  }
+  
+    
