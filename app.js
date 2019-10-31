@@ -1,5 +1,12 @@
 const express = require("express");
+
+// CORS for local development and remote API requests
+var cors = require("cors");
+
 const app = express();
+
+// Use CORS
+app.use(cors());
 
 app.listen(8080, () => {
   console.log("Listening on port 8080!");
