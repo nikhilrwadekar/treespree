@@ -22,15 +22,14 @@ const {
 } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
 class MapView extends React.Component {
-  state;
+  state = {
+    trees: []
+  };
   constructor(props) {
     super(props);
-    this.state = {
-      trees: []
-    };
   }
   componentDidMount() {
-    axios.get(`http://localhost:3000/api/trees`).then(res => {
+    axios.get(`http://treespree.wmdd.ca/api/trees`).then(res => {
       const trees = res.data;
       this.setState({ trees: trees });
     });
