@@ -24,7 +24,7 @@ exports.getTrees = (req, res) => {
 // GET '/api/trees/treetypes'
 exports.getTreeTypes = (req, res) => {
   // Send all Tree Types
-  query(cp, `SELECT * from neighbourhoods`)
+  query(cp, `SELECT * from absolute_common_names`)
     .then(results => res.send(results))
     .catch(error => res.send(error));
 };
