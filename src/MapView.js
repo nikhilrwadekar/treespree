@@ -9,7 +9,7 @@ import {
 } from "react-google-maps";
 
 // Street Trees Open Data
-import * as treesData from "./data/StreetTrees_CityWide.json";
+// import * as treesData from "./data/StreetTrees_CityWide.json";
 
 import "./MapView.css";
 
@@ -64,7 +64,7 @@ class MapView extends React.Component {
           </SearchBox>
           <MarkerClusterer averageCenter gridSize={60}>
             {/* The Marker Loop for the Map */}
-            {treesData.features.map(tree => (
+            {/* {treesData.features.map(tree => (
               <Marker
                 key={tree.properties.TREE_ID}
                 position={{
@@ -72,7 +72,7 @@ class MapView extends React.Component {
                   lng: tree.geometry.coordinates[0]
                 }}
               />
-            ))}
+            ))} */}
           </MarkerClusterer>
         </GoogleMap>
       </div>
