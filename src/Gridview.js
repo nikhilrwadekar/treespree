@@ -3,49 +3,21 @@ import "./Gridview.css";
 import mapleleaf from "./mapleleaf.jpg";
 
 function Gridview() {
-    return (
-      <div className="Gridview">
-          <h2>Grid View</h2>
+  return (
+    <div className="Gridview">
+      <h2>Grid View</h2>
 
-          <div className="grid-images">
-          <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
+      <div className="grid-images">
+        <img src={mapleleaf} alt="" className="grid-view" />
 
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
+        <img src={mapleleaf} alt="" className="grid-view" />
 
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
+        <img src={mapleleaf} alt="" className="grid-view" />
 
-
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
-
-</div>
-        
-      
+        <img src={mapleleaf} alt="" className="grid-view" />
       </div>
-    );
-  }
-  
-  export default Gridview;
+    </div>
+  );
+}
+
+export default Gridview;

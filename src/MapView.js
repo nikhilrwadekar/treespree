@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 // Google Maps Import
 import {
@@ -7,9 +8,6 @@ import {
   withGoogleMap,
   Marker
 } from "react-google-maps";
-
-// Street Trees Open Data
-import * as treesData from "./data/StreetTrees_CityWide.json";
 
 import "./MapView.css";
 
@@ -24,10 +22,17 @@ const {
 } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
 class MapView extends React.Component {
+  state = {
+    trees: []
+  };
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
-    // Bounds for North America
-    let bounds = [(28.7, -127.5), (48.85, -55.9)];
-    this.map.fitBounds(bounds);
+    axios.get(`http://treespree.wmdd.ca/api/trees`).then(res => {
+      const trees = res.data;
+      this.setState({ trees: trees });
+    });
   }
 
   render() {
@@ -64,12 +69,12 @@ class MapView extends React.Component {
           </SearchBox>
           <MarkerClusterer averageCenter gridSize={60}>
             {/* The Marker Loop for the Map */}
-            {treesData.features.map(tree => (
+            {this.state.trees.map(tree => (
               <Marker
-                key={tree.properties.TREE_ID}
+                key={tree.tree_id}
                 position={{
-                  lat: tree.geometry.coordinates[1],
-                  lng: tree.geometry.coordinates[0]
+                  lat: tree.tree_latitude,
+                  lng: tree.tree_longitude
                 }}
               />
             ))}
