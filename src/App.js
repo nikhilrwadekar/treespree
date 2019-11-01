@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import Header from "./Header";
 import Gridview from "./Gridview";
 import "./App.css";
+import TeamPage from "./teamPage";
 import Footer from "./Footer";
 import WrappedMap from "./MapView";
 
@@ -13,6 +14,8 @@ function App() {
       <Hero />
       <Gridview />
       <div style={{ width: "100vw", height: "100vh" }}>
+
+      <TeamPage />
         <WrappedMap
           // Add &key=API_KEY when you get one to get out of DEV mode.
           isMarkerShown={false}
