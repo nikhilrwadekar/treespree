@@ -16,7 +16,7 @@ function Hero() {
           "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
         }
         alt=""
-        class="Hero-image"
+        className="Hero-image"
       />
     </div>
   );
