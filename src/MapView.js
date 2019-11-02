@@ -9,9 +9,10 @@ import {
   Marker
 } from "react-google-maps";
 
+import reactGoogleMaps from "react-google-maps";
 import "./MapView.css";
 
-// const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 
 const {
   SearchBox
@@ -29,7 +30,7 @@ class MapView extends React.Component {
     super(props);
   }
   componentDidMount() {
-    axios.get(`http://treespree.wmdd.ca/api/trees`).then(res => {
+    axios.get("http://treespree.wmdd.ca/api/trees").then(res => {
       const trees = res.data;
       this.setState({ trees: trees });
     });
@@ -39,7 +40,6 @@ class MapView extends React.Component {
     return (
       <div className="MapView">
         <h1>Map Here</h1>
-
         {/* Google Map Component */}
         <GoogleMap
           ref={ref => {
@@ -70,13 +70,36 @@ class MapView extends React.Component {
           <MarkerClusterer averageCenter gridSize={60}>
             {/* The Marker Loop for the Map */}
             {this.state.trees.map(tree => (
-              <Marker
-                key={tree.tree_id}
-                position={{
-                  lat: tree.tree_latitude,
-                  lng: tree.tree_longitude
-                }}
-              />
+              <div>
+                {/* <InfoBox
+                  defaultPosition={
+                    new reactGoogleMaps.maps(
+                      tree.tree_latitude,
+                      tree.tree_longitude
+                    )
+                  }
+                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: `yellow`,
+                      opacity: 0.75,
+                      padding: `12px`
+                    }}
+                  >
+                    <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+                      Hello, Taipei!
+                    </div>
+                  </div>
+                </InfoBox> */}
+                <Marker
+                  key={tree.tree_id}
+                  position={{
+                    lat: tree.tree_latitude,
+                    lng: tree.tree_longitude
+                  }}
+                />
+              </div>
             ))}
           </MarkerClusterer>
         </GoogleMap>
