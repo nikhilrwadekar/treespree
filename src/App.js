@@ -6,6 +6,8 @@ import Single from "./Single";
 import Contact from "./Contact";
 import Gridview from "./Gridview";
 import Terms from "./Terms";
+import Team from "./teamPage";
+import Footer from "./Footer";
 // import WrappedMap from "./MapView";
 
 
@@ -47,8 +49,11 @@ function App() {
       <Route exact path="/termsAndCondition">
              <Terms />
       </Route>
+      <Route exact path="/team">
+             <Team />
+      </Route>
 </Router>
-
+<Footer />
 
 
     

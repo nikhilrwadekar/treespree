@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 // Google Maps Import
 import {
@@ -8,12 +9,10 @@ import {
   Marker
 } from "react-google-maps";
 
-// Street Trees Open Data
-// import * as treesData from "./data/StreetTrees_CityWide.json";
-
+import reactGoogleMaps from "react-google-maps";
 import "./MapView.css";
 
-// const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 
 const {
   SearchBox
@@ -24,17 +23,23 @@ const {
 } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
 class MapView extends React.Component {
+  state = {
+    trees: []
+  };
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
-    // Bounds for North America
-    let bounds = [(28.7, -127.5), (48.85, -55.9)];
-    this.map.fitBounds(bounds);
+    axios.get("http://treespree.wmdd.ca/api/trees").then(res => {
+      const trees = res.data;
+      this.setState({ trees: trees });
+    });
   }
 
   render() {
     return (
       <div className="MapView">
         <h1>Map Here</h1>
-
         {/* Google Map Component */}
         <GoogleMap
           ref={ref => {
@@ -64,15 +69,38 @@ class MapView extends React.Component {
           </SearchBox>
           <MarkerClusterer averageCenter gridSize={60}>
             {/* The Marker Loop for the Map */}
-            {/* {treesData.features.map(tree => (
-              <Marker
-                key={tree.properties.TREE_ID}
-                position={{
-                  lat: tree.geometry.coordinates[1],
-                  lng: tree.geometry.coordinates[0]
-                }}
-              />
-            ))} */}
+            {this.state.trees.map(tree => (
+              <div>
+                {/* <InfoBox
+                  defaultPosition={
+                    new reactGoogleMaps.maps(
+                      tree.tree_latitude,
+                      tree.tree_longitude
+                    )
+                  }
+                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: `yellow`,
+                      opacity: 0.75,
+                      padding: `12px`
+                    }}
+                  >
+                    <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+                      Hello, Taipei!
+                    </div>
+                  </div>
+                </InfoBox> */}
+                <Marker
+                  key={tree.tree_id}
+                  position={{
+                    lat: tree.tree_latitude,
+                    lng: tree.tree_longitude
+                  }}
+                />
+              </div>
+            ))}
           </MarkerClusterer>
         </GoogleMap>
       </div>
