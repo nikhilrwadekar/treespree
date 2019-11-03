@@ -1,51 +1,34 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Gridview.css";
 import mapleleaf from "./mapleleaf.jpg";
-
-function Gridview() {
+import GridItem from "./GridItem";
+import GridSearch from "./GridSearch";
+class Gridview extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    // console.log(q)
     return (
-      <div className="Gridview">
-          <h2>Grid View</h2>
+      <>
+        <div>
+          <GridSearch />
+        </div>
 
-          <div className="grid-images">
-          <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
-
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
-
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
-
-
-        <img
-        src={
-            mapleleaf
-        }
-        alt=""
-        class="grid-view"
-      />
-
-</div>
-        
-      
-      </div>
+        <div className="grid-view">
+          <ul className="grid-images">
+            {this.props.gridview.map(grid => (
+              <GridItem
+                imageSrc={grid.url}
+                name={grid.name}
+                count={grid.count}
+              />
+            ))}
+          </ul>
+        </div>
+      </>
     );
   }
-  
-  export default Gridview;
+}
+
+export default Gridview;

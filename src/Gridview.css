@@ -1,14 +1,19 @@
 .grid-view {
-    max-width: 100%;
+  /* max-width: 100%;
     width: 250px;
-    height: 200px;
-    margin-right: 2%;
+    height: 200px; */
+  width: 100%;
+  margin-right: 2%;
+  text-decoration: none;
+  list-style-type: none;
+  display: flex;
 }
 
 h2 {
-    margin-top: 5rem;
+  margin-top: 5rem;
 }
 
 .grid-images {
-    margin-top: 2rem;
+  margin-top: 2rem;
+  list-style-type: none;
 }
