@@ -20,6 +20,11 @@ How to get data from the TreeSpree API
 
 Lists all trees with relative information.
 
+
+#### http://treespree.wmdd.ca/api/trees/types
+
+Lists all tree types with a total count of each in Vancouver.
+
 ##### /api/trees/type/TREE_TYPE
 
 Get a particular tree type with advanced filters, if needed.
@@ -35,7 +40,7 @@ Lists all trees with relative information.
 
 #### http://treespree.wmdd.ca/api/neighbourhoods
 
-Lists all neighbourhoods.
+Lists all neighbourhoods with its total tree count.
 
 ## Technologies Used
 
