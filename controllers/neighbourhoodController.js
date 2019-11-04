@@ -12,7 +12,8 @@ exports.getNeighbourhoods = (req, res) => {
     left join trees
     on (neighbourhoods.neighbourhood_id = trees.neighbourhood_id)
     group by
-        neighbourhoods.neighbourhood_id`
+        neighbourhoods.neighbourhood_id
+    order by neighbourhood_tree_count DESC`
   )
     .then(results => res.send(results))
     .catch(error => res.send(error));
