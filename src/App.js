@@ -3,65 +3,105 @@ import Hero from "./Hero";
 import Header from "./Header";
 import Gridview from "./Gridview";
 import "./App.css";
-import mapleleaf from "./mapleleaf.jpg";
+import TeamPage from "./teamPage";
+import Footer from "./Footer";
+import WrappedMap from "./MapView";
+import Axios from "axios";
+import Gridviewlocation from "./GridViewLocation";
 
-// import WrappedMap from "./MapView";
+class App extends React.Component {
+  // If componentDidMount - Do this.. (Lifecycle Hook)
+  componentDidMount() {
+    // When the App component is mounted, call the TreeSpree API, get the data and store it in the state
+    // Storing it in the state as 'dataFromTreespreeAPI'
 
-// const treeArray = [
-//   {name: 'Maple', count: 34},
-//   {name: 'Ash', count: 46},
-//   {name: 'Cherry', count: 84},
-//   {name: 'Plum', count: 54}
-// ];
+    Axios.get("http://treespree.wmdd.ca/api/trees/types")
+      .then(response => {
+        // Store the API data in a local variable absoluteCommonNames
+        let absoluteCommonNames = response.data;
 
-class App extends Component {
-  state = {
-    searchQuery: null,
-    gridview: [
-      { name: "Maple", count: 34, url: mapleleaf },
-      { name: "Ash", count: 46, url: mapleleaf },
-      { name: "Cherry", count: 84, url: mapleleaf },
-      { name: "Plum", count: 54, url: mapleleaf }
-    ]
-  };
+        // Assign it to the state variable - 'dataFromTreespreeAPI'
+        this.setState({
+          // Retain the original state with a spread operator.. otherwise the other state variables will be lost.
+          ...this.state,
+          dataFromTreespreeAPI: absoluteCommonNames
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods")
+      .then(response => {
+        // Store the API data in a local variable absoluteCommonNames
+        let neighbourhoodNames = response.data;
+
+        // Assign it to the state variable - 'dataFromTreespreeAPI'
+        this.setState({
+          // Retain the original state with a spread operator.. otherwise the other state variables will be lost.
+          ...this.state,
+          neighbourhoodsFromTreespreeAPI: neighbourhoodNames
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  renderGridView() {
+    return <Gridview gridItemArray={this.state.dataFromTreespreeAPI} />;
+  }
+
+  renderGridViewLocation() {
+    return (
+      <Gridviewlocation
+        gridItemLocationArray={this.state.neighbourhoodsFromTreespreeAPI}
+      />
+    );
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataFromTreespreeAPI: [],
+      neighbourhoodsFromTreespreeAPI: []
+    };
+  }
   render() {
     return (
       <div className="App">
         <Header />
         <Hero />
-        <Gridview
-          gridview={this.state.gridview}
-          // // gridview={this.state.gridview.filter(gridItem => {
-          // //   return gridItem.name.includes(this.state.searchQuery);
-          // // })
-          // }
-        />
+
+        {/* Showing all the trees based on absolutely common names */}
+        {this.state.dataFromTreespreeAPI.length ? (
+          this.renderGridView()
+        ) : (
+          <span>Loading Grid View...</span>
+        )}
+
+        {/* Showing all the neighbourhoods */}
+        {this.state.neighbourhoodsFromTreespreeAPI.length ? (
+          this.renderGridViewLocation()
+        ) : (
+          <span>Loading Locations...</span>
+        )}
+        <div style={{ width: "100vw", height: "100vh" }}>
+          <TeamPage />
+          <WrappedMap
+            // Add &key=API_KEY when you get one to get out of DEV mode.
+            isMarkerShown={false}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+          />
+        </div>
+
+        <Footer />
       </div>
     );
   }
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <Header />
-//       <Hero />
-//       <Gridview />
-//       <div style={{ width: "100vw", height: "100vh" }}>
-{
-  /* <WrappedMap
-          // Add &key=API_KEY when you get one to get out of DEV mode.
-          isMarkerShown={false}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
-          loadingElement={<div style={{ height: "100%" }} />}
-          containerElement={<div style={{ height: "100%" }} />}
-          mapElement={<div style={{ height: "100%" }} />}
-        /> */
-}
-
-//       </div>
-//     </div>
-//   );
-// }
 
 export default App;

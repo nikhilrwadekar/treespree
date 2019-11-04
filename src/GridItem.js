@@ -10,8 +10,9 @@ class GridItem extends React.Component {
       <li className="GridItem">
         <a href="#">
           <img src={this.props.imageSrc} className="GridItem-leaf-image" />
+
+          <p className="GridItem-name">{this.props.name}</p>
         </a>
-        <p className="GridItem-name">{this.props.name}</p>
         <p className="GridItem-count">{this.props.count}</p>
       </li>
     );

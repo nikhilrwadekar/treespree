@@ -1,5 +1,15 @@
 .GridItem-leaf-image {
-  max-width: 100%;
+  /* max-width: 100%; */
+  /* width: 100%; */
+  /* object-fit: cover; */
+}
+
+.GridItem {
   width: 100%;
-  object-fit: cover;
+}
+
+.GridItem-name {
+  text-transform: capitalize !important;
+  text-decoration: none;
+  color: black;
 }
