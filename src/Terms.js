@@ -9,7 +9,26 @@ class Terms extends React.Component{
             <div className="Terms">
                     <h1>Terms And Conditions</h1>
         
-
+                    <p> loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem 
+                        loremn lorem loremn lorem loremn lorem loremn lorem </p>
 
             </div>
 

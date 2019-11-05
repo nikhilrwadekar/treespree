@@ -1,14 +1,19 @@
 .SingleImage{
-    width:50%;
+    width:100%;
+}
+.singlePage{
+    width:70%;
+    margin:auto;
 }
 fieldset{
-    padding:2em;
+    /* padding:2em; */
 }
 .others{
     width:80%;
     display: flex;
     justify-content: space-around;
     margin:auto;
+    margin-top:1.5em;
 
 }
 .location{
@@ -26,4 +31,13 @@ fieldset{
 }
 p{
     text-align: center;
+}
+.moreInfo{
+    margin-bottom:2em;
+}
+.moreInfo h2{
+    margin-top:1.2em;
+}
+.ContactPage span{
+text-align: left;
 }
