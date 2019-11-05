@@ -3,6 +3,7 @@ import "./Gridview.css";
 import mapleleaf from "./mapleleaf.jpg";
 
 function Gridview() {
+
   return (
     <div className="Gridview">
       <h2>Grid View</h2>
