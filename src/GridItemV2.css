@@ -1,0 +1,24 @@
+.GridItemV2 {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  background: #eee;
+  height: 250px;
+  width: 250px;
+}
+
+.GridItemV2-image {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  align-self: center;
+}
+
+.GridItemV2 h5 {
+  justify-self: flex-end;
+}
+
+.GridItemV2-title {
+  text-transform: capitalize !important;
+}
