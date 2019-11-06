@@ -2,3 +2,6 @@
     background-color: #aa0;
     color: hotpink;
 }
+nav ul{
+    list-style-type: none;
+}

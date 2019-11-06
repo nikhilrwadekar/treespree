@@ -16,6 +16,7 @@ import Team from "./teamPage";
 import Footer from "./Footer";
 import WrappedMap from "./MapView";
 import GridViewV2 from "./GridViewV2";
+import Graphview from "./Graphview";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -36,6 +37,7 @@ class App extends React.Component {
         <Router>
           <Route exact path="/">
             <Hero />
+            <Graphview />
             <GridViewV2 />
             {/* Pagination Goes Here */}
             <div style={{ width: "100vw", height: "100vh" }}>
@@ -58,10 +60,6 @@ class App extends React.Component {
           <Route exact path="/termsAndCondition">
             <Terms />
           </Route>
-          <Route exact path="/team">
-            <Team />
-          </Route>
-
           <Route exact path="/team">
             <Team />
           </Route>
