@@ -9,16 +9,16 @@ function Footer() {
         <nav>
           <ul>
             <li>
-              <a href="#">Terms&Conditions</a>
+              <a href="/termsAndCondition">Terms&Conditions</a>
             </li>
             <li>
               <a href="#">Shop</a>
             </li>
             <li>
-              <a href="#">Team</a>
+              <a href="/team">Team</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a href="/contact">Contact</a>
             </li>
           </ul>
         </nav>

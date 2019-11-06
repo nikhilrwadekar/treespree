@@ -7,9 +7,23 @@ import "./App.css";
 // Import all Components
 import Hero from "./Hero";
 import Header from "./Header";
+import "./App.css";
+import Single from "./Single";
+import Contact from "./Contact";
+import Gridview from "./Gridview";
+import Terms from "./Terms";
+import Team from "./teamPage";
 import Footer from "./Footer";
 import WrappedMap from "./MapView";
 import GridViewV2 from "./GridViewV2";
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 
 // App Component
 class App extends React.Component {
@@ -23,7 +37,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
+      <Header />
+ 
+<Router>
+      <Route exact path="/">
         <Hero />
         <GridViewV2 />
         {/* Pagination Goes Here */}
@@ -37,10 +54,28 @@ class App extends React.Component {
             mapElement={<div style={{ height: "100%" }} />}
           />
         </div>
-        <Footer />
+
+
+      </Route>
+      <Route exact path="/single">
+            <Single />
+      </Route>
+      <Route exact path="/contact">
+             <Contact />
+      </Route>
+      <Route exact path="/termsAndCondition">
+             <Terms />
+      </Route>
+      <Route exact path="/team">
+             <Team />
+      </Route>
+</Router>
+<Footer />
       </div>
     );
   }
 }
 
 export default App;
+
+
