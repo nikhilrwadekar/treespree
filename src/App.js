@@ -1,103 +1,71 @@
-import React, { Component } from "react";
+import React from "react";
+import "./App.css";
+
+// import Gridview from "./Gridview";
+// import TeamPage from "./teamPage";
+
+// Import all Components
 import Hero from "./Hero";
 import Header from "./Header";
-import Gridview from "./Gridview";
 import "./App.css";
-import TeamPage from "./teamPage";
+import Single from "./Single";
+import Contact from "./Contact";
+import Gridview from "./Gridview";
+import Terms from "./Terms";
+import Team from "./teamPage";
 import Footer from "./Footer";
 import WrappedMap from "./MapView";
-import Axios from "axios";
-import Gridviewlocation from "./GridViewLocation";
+import GridViewV2 from "./GridViewV2";
 
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+// App Component
 class App extends React.Component {
-  // If componentDidMount - Do this.. (Lifecycle Hook)
-  componentDidMount() {
-    // When the App component is mounted, call the TreeSpree API, get the data and store it in the state
-    // Storing it in the state as 'dataFromTreespreeAPI'
+  state = {};
 
-    Axios.get("http://treespree.wmdd.ca/api/trees/types")
-      .then(response => {
-        // Store the API data in a local variable absoluteCommonNames
-        let absoluteCommonNames = response.data;
+  // This 'lifecycle hook' or function will run BEFORE the component is rendered. Pretty useful to set data from external API into the state.
+  componentWillMount() {}
 
-        // Assign it to the state variable - 'dataFromTreespreeAPI'
-        this.setState({
-          // Retain the original state with a spread operator.. otherwise the other state variables will be lost.
-          ...this.state,
-          dataFromTreespreeAPI: absoluteCommonNames
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods")
-      .then(response => {
-        // Store the API data in a local variable absoluteCommonNames
-        let neighbourhoodNames = response.data;
-
-        // Assign it to the state variable - 'dataFromTreespreeAPI'
-        this.setState({
-          // Retain the original state with a spread operator.. otherwise the other state variables will be lost.
-          ...this.state,
-          neighbourhoodsFromTreespreeAPI: neighbourhoodNames
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  renderGridView() {
-    return <Gridview gridItemArray={this.state.dataFromTreespreeAPI} />;
-  }
-
-  renderGridViewLocation() {
-    return (
-      <Gridviewlocation
-        gridItemLocationArray={this.state.neighbourhoodsFromTreespreeAPI}
-      />
-    );
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataFromTreespreeAPI: [],
-      neighbourhoodsFromTreespreeAPI: []
-    };
-  }
+  // If the component renders..
+  componentDidMount() {}
   render() {
     return (
       <div className="App">
         <Header />
-        <Hero />
 
-        {/* Showing all the trees based on absolutely common names */}
-        {this.state.dataFromTreespreeAPI.length ? (
-          this.renderGridView()
-        ) : (
-          <span>Loading Grid View...</span>
-        )}
+        <Router>
+          <Route exact path="/">
+            <Hero />
+            <GridViewV2 />
+            {/* Pagination Goes Here */}
+            <div style={{ width: "100vw", height: "100vh" }}>
+              <WrappedMap
+                // Add &key=API_KEY when you get one to get out of DEV mode.
+                isMarkerShown={false}
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
+                loadingElement={<div style={{ height: "100%" }} />}
+                containerElement={<div style={{ height: "100%" }} />}
+                mapElement={<div style={{ height: "100%" }} />}
+              />
+            </div>
+          </Route>
+          <Route exact path="/single">
+            <Single />
+          </Route>
+          <Route exact path="/contact">
+            <Contact />
+          </Route>
+          <Route exact path="/termsAndCondition">
+            <Terms />
+          </Route>
+          <Route exact path="/team">
+            <Team />
+          </Route>
 
-        {/* Showing all the neighbourhoods */}
-        {this.state.neighbourhoodsFromTreespreeAPI.length ? (
-          this.renderGridViewLocation()
-        ) : (
-          <span>Loading Locations...</span>
-        )}
-        <div style={{ width: "100vw", height: "100vh" }}>
-          <TeamPage />
-          <WrappedMap
-            // Add &key=API_KEY when you get one to get out of DEV mode.
-            isMarkerShown={false}
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: "100%" }} />}
-            containerElement={<div style={{ height: "100%" }} />}
-            mapElement={<div style={{ height: "100%" }} />}
-          />
-        </div>
-
+          <Route exact path="/team">
+            <Team />
+          </Route>
+        </Router>
         <Footer />
       </div>
     );
