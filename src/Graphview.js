@@ -1,6 +1,8 @@
 import React,{Component} from "react";
 import NeighbourhoodGraph from "./NeighbourhoodGraph";
 import "./Graphview.css"
+import TreeGraph from "./TreeGraph";
+
 class Graphview extends Component{
 
     render(){
@@ -19,6 +21,9 @@ class Graphview extends Component{
                </button>
                <div className="graphviewContainer">
                    <NeighbourhoodGraph />
+               </div>
+               <div className="graphviewContainer">
+                   <TreeGraph />
                </div>
            </div>
            </>

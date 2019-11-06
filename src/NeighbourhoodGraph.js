@@ -93,19 +93,7 @@ class NeighbourhoodGraph extends Component {
         labelSkipHeight={12}
         labelTextColor="#80ff80"
         legends={[
-          {
-            dataFrom: "keys",
-            anchor: "bottom-right",
-            direction: "column",
-            justify: false,
-            translateX: 124,
-            translateY: -24,
-            itemWidth: 103,
-            itemHeight: 20,
-            itemsSpacing: 0,
-            symbolSize: 20,
-            itemDirection: "left-to-right"
-          }
+          
         ]}
         animate={true}
         motionStiffness={90}
