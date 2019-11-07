@@ -1,7 +1,12 @@
 .navigation {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .logo {
-    text-align: left!important; 
+  text-align: left !important;
+}
+
+.logo a {
+  font-family: Kalam !important;
+  color: #50642d !important;
 }

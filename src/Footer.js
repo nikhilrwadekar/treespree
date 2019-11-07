@@ -12,7 +12,7 @@ function Footer() {
               <a href="/termsAndCondition">Terms&Conditions</a>
             </li>
             <li>
-              <a href="#">Shop</a>
+              <a href="/">Shop</a>
             </li>
             <li>
               <a href="/team">Team</a>

@@ -1,14 +1,23 @@
-.grid-view {
-    max-width: 100%;
+.Gridview-items {
+  /* max-width: 100%;
     width: 250px;
-    height: 200px;
-    margin-right: 2%;
+    height: 200px; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 300px);
+  grid-gap: 1rem;
+  width: 100%;
+  /* margin-right: 2%; */
+  text-decoration: none;
+  list-style-type: none;
+  /* display: flex; */
 }
 
 h2 {
-    margin-top: 5rem;
+  margin-top: 5rem;
 }
 
-.grid-images {
-    margin-top: 2rem;
+.Gridview-images {
+  margin-top: 2rem;
+  list-style-type: none;
 }
