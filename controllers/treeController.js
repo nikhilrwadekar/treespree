@@ -43,6 +43,33 @@ exports.getTreeByID = (req, res) => {
     .catch(error => res.send(error));
 };
 
+// GET '/api/trees/id/:tree_name'
+exports.getTreeByName = (req, res) => {
+  // Send all Tree Types
+  query(
+    cp,
+    `SELECT
+    genus.genus_name,
+    species.species_name,
+    common_names.common_name_tree,
+    (SELECT COUNT(*)
+    FROM trees
+    INNER JOIN common_names ON common_names.common_name_id = trees.common_name_id
+    WHERE common_names.common_name_tree = '${req.params.tree_name}') AS common_name_tree_count,
+    absolute_common_names.absolute_common_name_tree
+    FROM trees 
+    INNER JOIN neighbourhoods ON trees.neighbourhood_id = neighbourhoods.neighbourhood_id
+    INNER JOIN genus ON trees.genus_id = genus.genus_id
+    INNER JOIN species ON trees.species_id = species.species_id
+    INNER JOIN common_names ON trees.common_name_id = common_names.common_name_id
+    INNER JOIN absolute_common_names ON absolute_common_names.absolute_common_name_id = common_names.absolute_common_name_id
+    WHERE common_names.common_name_tree = '${req.params.tree_name}'
+    LIMIT 1`
+  )
+    .then(results => res.send(results))
+    .catch(error => res.send(error));
+};
+
 // GET '/api/trees/types'
 exports.getTreeTypes = (req, res) => {
   // Send all Tree Types
