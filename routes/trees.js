@@ -8,6 +8,7 @@ const {
   getTreeTypes,
   getTreeType,
   getTreeByID,
+  getTreeByName,
   getTreeNames
 } = require("../controllers/treeController");
 
@@ -22,6 +23,9 @@ router.get("/type/:tree_type", getTreeType);
 
 // GET '/api/trees/tree_id
 router.get("/id/:tree_id", getTreeByID);
+
+// GET '/api/trees/name/tree_id
+router.get("/name/:tree_name", getTreeByName);
 
 // GET '/api/trees/tree_id
 router.get("/names", getTreeNames);
