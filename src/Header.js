@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import treespreelogo from "../public/images/TreespreeLogo";
+import treespreelogo from "./images/TreespreeLogo.png";
 
 class Header extends React.Component {
   constructor(props) {

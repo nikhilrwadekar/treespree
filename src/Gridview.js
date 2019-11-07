@@ -12,7 +12,7 @@ class Gridview extends Component {
       <div className="Gridview">
         <h2>Grid View</h2>
 
-        <div className="grid-images">
+        {/* <div className="grid-images">
           <img src={mapleleaf} alt="" className="grid-view" />
 
           <img src={mapleleaf} alt="" className="grid-view" />
@@ -20,7 +20,7 @@ class Gridview extends Component {
           <img src={mapleleaf} alt="" className="grid-view" />
 
           <img src={mapleleaf} alt="" className="grid-view" />
-        </div>
+        </div> */}
       </div>
     );
   }
