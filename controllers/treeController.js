@@ -30,7 +30,9 @@ exports.getTreeByID = (req, res) => {
   // Send all Tree Types
   query(
     cp,
-    `SELECT trees.tree_id, trees.tree_planted, trees.tree_diameter, trees.tree_latitude, trees.tree_longitude, neighbourhoods.neighbourhood_name, genus.genus_name, species.species_name, common_names.common_name_tree, absolute_common_names.absolute_common_name_tree
+    `SELECT trees.tree_id, trees.tree_planted, trees.tree_diameter, trees.tree_latitude, trees.tree_longitude, neighbourhoods.neighbourhood_name, genus.genus_name, species.species_name, common_names.common_name_tree,
+    (SELECT COUNT(*) FROM trees WHERE trees.common_name_id = common_names.common_name_id) as common_name_tree_count,
+    absolute_common_names.absolute_common_name_tree
   FROM trees
   INNER JOIN neighbourhoods ON trees.neighbourhood_id = neighbourhoods.neighbourhood_id
   INNER JOIN genus ON trees.genus_id = genus.genus_id
