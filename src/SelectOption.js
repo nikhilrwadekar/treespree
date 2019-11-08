@@ -1,39 +1,56 @@
-import Select from 'react-select';
+import Select from "react-select";
 import React, { Component } from "react";
+import Axios from "axios";
 
-const options = [
-    { value: 'DOWNTOWN', label: 'DOWNTOWN' },
-    { value: 'SHAUGHNESSY', label: 'SHAUGHNESSY' },
-    { value: 'KITSILANO', label: 'KITSILANO' },
-    { value: 'RILEY PARK', label: 'RILEY PARK' },
-    { value: 'SUNSET', label: 'SUNSET' },
-  ];
+class SelectOption extends Component {
+  state = {
+    // Selected Options Array
+    selectedOption: [],
 
-  class SelectOption extends Component{
-    state = {
-        selectedOption: null,
-      }
-   
-      handleChange = (selectedOption) => {
-        this.setState({ selectedOption
-         });
-        console.log(`Option selected:`, selectedOption)
+    // Dropdown List - Neighbourhoods
+    options: []
+  };
 
-        }
-      render(){
-        const { selectedOption } = this.state;
-          return(
-              <>
-              <Select
-                    isMulti
-                    onChange={this.handleChange}
-                    options={options}
-                />
-              </>
-          );
-          }
+  componentWillMount() {
+    // API Call
+    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods").then(Response => {
+      // Get neighbourhoods and map them
+      let optionsMapped = Response.data.map(neighbourhood => {
+        return {
+          label: neighbourhood.neighbourhood_name,
+          value: neighbourhood.neighbourhood_name
+        };
+      });
 
+      // Map Them
+      this.setState({
+        ...this.state,
+        options: optionsMapped
+      });
+    });
   }
 
-  export default SelectOption;
-  
+  // Handle change for 'Select'
+  handleChange = selectedOption => {
+    // Update the state with SelectedOption(s)
+    this.setState({ ...this.state, selectedOption: selectedOption });
+
+    // CallBack Function
+    this.props.callbackFunction(selectedOption);
+
+    console.log(`Option selected:`, selectedOption);
+  };
+  render() {
+    return (
+      <>
+        <Select
+          isMulti
+          onChange={this.handleChange.bind(this)}
+          options={this.state.options}
+        />
+      </>
+    );
+  }
+}
+
+export default SelectOption;
