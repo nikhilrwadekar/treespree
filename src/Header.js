@@ -20,7 +20,11 @@ class Header extends React.Component {
     return (
       <div className="header">
         <a href="/">
-          <img src={treespreelogo} alt="Logo" className="header-treespree-logo" />
+          <img
+            src={treespreelogo}
+            alt="Logo"
+            className="header-treespree-logo"
+          />
         </a>
         <h2 className="logo">
           <a href="/">TreeSpree</a>
@@ -37,7 +41,9 @@ class Header extends React.Component {
           </li>
         </ul>
 
-        <button className="button-explore">Explore</button>
+        <a href="/explore">
+          <button className="button-explore">Explore</button>
+        </a>
       </div>
     );
   }

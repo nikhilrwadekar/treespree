@@ -7,10 +7,6 @@ class Terms extends React.Component {
       <div className="Terms">
         <h1>Terms And Conditions</h1>
 
-        <h2>
-          <strong>Terms and Conditions</strong>
-        </h2>
-
         <p>Welcome to Treespree!</p>
 
         <p>
