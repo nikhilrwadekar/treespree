@@ -52,7 +52,7 @@ class App extends React.Component {
             <Contact />
           </Route>
 
-          <Route exact path="/terms">
+          <Route exact path="/termsAndCondition">
             <Terms />
           </Route>
 
