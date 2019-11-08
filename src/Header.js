@@ -18,8 +18,10 @@ class Header extends React.Component {
   render() {
     console.log(this.state.headerLinks);
     return (
-      <div className="Header">
-        <img src={treespreelogo} alt="Logo" />
+      <div className="header">
+        <a href="/">
+          <img src={treespreelogo} alt="Logo" className="header-treespree-logo" />
+        </a>
         <h2 className="logo">
           <a href="/">TreeSpree</a>
         </h2>
@@ -31,11 +33,11 @@ class Header extends React.Component {
             <a href="/team">Team</a>
           </li>
           <li>
-            <a href="/contact">Contact Us</a>
+            <a href="/contact">Contact</a>
           </li>
         </ul>
 
-        <button>Explore</button>
+        <button className="button-explore">Explore</button>
       </div>
     );
   }

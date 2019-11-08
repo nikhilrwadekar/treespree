@@ -1,7 +1,62 @@
-.Footer{
-    background-color: #aa0;
-    color: hotpink;
+.footer {
+  background-color: #76533d;
 }
-nav ul{
-    list-style-type: none;
+
+.footer .logo {
+  margin-bottom: 0;
+}
+
+.footer .logo a {
+  font-family: Kalam !important;
+}
+
+.footer-treespree-logo {
+  width: 4rem;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 3fr;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.footer a {
+  grid-column: 1/2;
+}
+
+.footer .logo {
+  grid-column: 2/3;
+  margin-top: 0;
+  align-self: center;
+  text-align: left !important;
+}
+
+.footer .logo a {
+  color: #90c33e;
+}
+
+.footer .navigation {
+  grid-column: 3/4;
+  display: flex;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+
+.footer .navigation li {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.footer .navigation li a {
+  color: black;
+  color: #90c33e;
+  font-family: roboto;
+  font-weight: 300;
 }
