@@ -1,10 +1,5 @@
 import React from "react";
 import "./App.css";
-
-// import Gridview from "./Gridview";
-// import TeamPage from "./teamPage";
-
-// Import all Components
 import Hero from "./Hero";
 import Header from "./Header";
 import "./App.css";
@@ -15,6 +10,7 @@ import Team from "./teamPage";
 import Footer from "./Footer";
 import GridMapView from "./GridMapView";
 import Graphview from "./Graphview";
+
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
