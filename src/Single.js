@@ -71,25 +71,47 @@ class Single extends React.Component {
 
     console.log(this.state.tree_name);
 
-    let searchPic = this.state.tree_name ;
-    let b = searchPic.toLowerCase();
+    // let searchPic = this.state.tree_name ;
+    // let b = searchPic.toLowerCase();
+    // let imageUrl = wikiPictureUrl + b;
+   
+    let searchUrl1= wikiPictureUrl+this.state.genus_name.toLowerCase();
+    let searchUrl2= wikiPictureUrl+this.state.tree_name.toLowerCase();
 
 
 
-    
-    let imageUrl = wikiPictureUrl + b;
-    console.log("from get IMage()");
-    fetch(imageUrl)
+
+    fetch(searchUrl1)
       .then(res => {
         // Return data in form of JSON
         return res.json();
       })
       .then(foundData => {
-        let imageObj =
-          foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-        this.setState({
-          imageSrc: imageObj.thumbnail.source
-        });
+        let imageObj = foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+        
+        if(imageObj.thumbnail == undefined)
+        {
+            fetch(searchUrl2)
+            .then(res => {
+              // Return data in form of JSON
+              return res.json();
+            })
+            .then(foundData => {
+              let imageObj =foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+              this.setState({
+                imageSrc: imageObj.thumbnail.source
+              });
+            });
+
+        }
+
+        else
+        {
+            this.setState({
+                imageSrc: imageObj.thumbnail.source
+              });
+        }
+       
         console.log(this.state.imageSrc);
       });
     });
