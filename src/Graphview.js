@@ -1,7 +1,8 @@
 import React,{Component} from "react";
 import NeighbourhoodGraph from "./NeighbourhoodGraph";
 import "./Graphview.css"
-// import TreeGraph from "./TreeGraph";
+import SelectOption from "./SelectOption";
+
 
 class Graphview extends Component{
 
@@ -10,20 +11,12 @@ class Graphview extends Component{
             <>
            <h2>Did You Know?</h2> 
            <div className="factsDiv">
-
+                
            </div>
            <div>
-               <button className="neighbourhoodBtn">
-                   Neighbourhoods
-               </button>
-               <button className="treeBtn">
-                   Trees
-               </button>
                <div className="graphviewContainer">
-                   <NeighbourhoodGraph />
-               </div>
-               <div className="graphviewContainer">
-                   {/* <TreeGraph /> */}
+               <SelectOption />
+                <NeighbourhoodGraph />
                </div>
            </div>
            </>
