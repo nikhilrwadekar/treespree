@@ -38,9 +38,7 @@ class MapView extends React.Component {
   componentDidMount() {
     // Call the treeSpree API
     axios
-      .get(
-        "http://treespree.wmdd.ca/api/trees/type/maple?neighbourhood=OAKRIDGE&count=20"
-      )
+      .get("http://treespree.wmdd.ca/api/trees/type/maple?count=150")
       .then(res => {
         const trees = res.data;
         this.setState({ trees: trees });
@@ -83,6 +81,10 @@ class MapView extends React.Component {
               <div>
                 {/* Marker for the Marker Clusterer */}
                 <Marker
+                  icon={{
+                    url: `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    scale: 0.5
+                  }}
                   key={tree.tree_id}
                   position={{
                     lat: tree.tree_latitude,
@@ -114,7 +116,16 @@ class MapView extends React.Component {
                           fontFamily: "Karla"
                         }}
                       >
-                        {tree.common_name}
+                        <a
+                          style={{
+                            fontSize: `14px`,
+                            textTransform: "capitalize",
+                            fontStyle: "italic"
+                          }}
+                          href={`/tree/id/${tree.tree_id}`}
+                        >
+                          {tree.common_name.toLowerCase()}
+                        </a>
                       </div>
                     </div>
                   </InfoBox>

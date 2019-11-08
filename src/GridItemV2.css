@@ -3,15 +3,23 @@
   flex-direction: column;
   justify-self: center;
   align-self: center;
-  background: #eee;
+  /* background: #eee; */
   height: 250px;
   width: 250px;
+  border: 1px solid #90c33e;
+  border-radius: 20%;
 }
 
+.GridItemV2 a {
+  text-decoration: none;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #111;
+}
 .GridItemV2-image {
-  height: 100px;
-  width: 100px;
-  object-fit: cover;
+  height: 200px;
+  width: auto;
+  /* object-fit: cover; */
   align-self: center;
 }
 
@@ -21,4 +29,5 @@
 
 .GridItemV2-title {
   text-transform: capitalize !important;
+  text-align: center;
 }
