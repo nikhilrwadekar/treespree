@@ -1,10 +1,6 @@
 import React from "react";
 import "./App.css";
-
-// import Gridview from "./Gridview";
-// import TeamPage from "./teamPage";
-
-// Import all Components
+import Popup from "reactjs-popup";
 import Hero from "./Hero";
 import Header from "./Header";
 import "./App.css";
@@ -17,12 +13,11 @@ import Footer from "./Footer";
 import WrappedMap from "./MapView";
 import GridViewV2 from "./GridViewV2";
 import Graphview from "./Graphview";
+import PopUp from "./PopUp";
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 
@@ -38,11 +33,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-      <Header />
+   
  
 <Router>
       <Route exact path="/">
+      <Header />
         <Hero />
+
+        <Popup trigger={<button> Open POP Up</button>} position="right center">
+          <PopUp/>
+        </Popup>
+
         <Graphview/>
         <GridViewV2 />
         {/* Pagination Goes Here */}
@@ -59,20 +60,34 @@ class App extends React.Component {
 
 
       </Route>
+      
       <Route exact path="/single">
+            <Header />
             <Single />
+            <Footer />
       </Route>
       <Route exact path="/contact">
+             <Header />
              <Contact />
+             <Footer />
       </Route>
       <Route exact path="/termsAndCondition">
+            <Header />
              <Terms />
+             <Footer />
       </Route>
       <Route exact path="/team">
+              <Header />
              <Team />
+             <Footer />
+      </Route>
+      <Route exact path="/popUp">
+           
+             <PopUp />
+             
       </Route>
 </Router>
-<Footer />
+
       </div>
     );
   }

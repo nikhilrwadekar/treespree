@@ -1,13 +1,8 @@
 .SingleImage{
     width:100%;
 }
-.singlePage{
-    width:70%;
-    margin:auto;
-}
-fieldset{
-    /* padding:2em; */
-}
+
+
 .others{
     width:80%;
     display: flex;
@@ -16,28 +11,241 @@ fieldset{
     margin-top:1.5em;
 
 }
-.location{
-    width:40%;
-    border:1px solid black;
-}
-.location i{
-    width:40%;
-    border:1px solid black;
-}
-.shop{
-    width:40%;
-    border:1px solid black;
 
-}
-p{
+.singlePage p{
     text-align: center;
 }
 .moreInfo{
     margin-bottom:2em;
 }
-.moreInfo h2{
+.moreInfo h3{
     margin-top:1.2em;
+    text-align: left;
 }
-.ContactPage span{
-text-align: left;
+
+.others .location{
+    border-radius: .8em;
 }
+.others .shop{
+    border-radius: .8em;
+}
+
+
+      @media only screen and (max-width: 650px) 
+      {
+        .singlePage img{
+            width:100%;
+        }
+        .singlePage .info h1{
+            padding-top:.5em;
+            padding-bottom:.5em;
+
+        }
+        .singlePage .list ul{
+            list-style-type: none;
+            padding:0;
+            margin: 0;
+            
+            }
+            .singlePage .list li{
+                padding:0;
+            margin: 0;
+            
+            text-align: center;
+            
+            }
+            .singlePage .list{
+                width:100%;
+                display:grid;
+                grid-template-columns: auto auto auto;
+               
+            }
+            
+              .singlePage .list li:nth-child(2) {
+                font-weight: bold;
+                font-style: italic;
+              }
+              .location{
+                width:40%;
+                border:1px solid black;
+            }
+            .location a{
+                color:black;
+                text-decoration: none;
+            }
+            .shop{
+                width:40%;
+                border:1px solid black;
+            }
+            .moreInfo p{
+                font-size: .9em;
+              }
+
+            
+      }
+
+
+      @media only screen and (min-width: 650px) {
+     
+        /* .singlePage .image{
+            width:40%;
+            display:inline-block;
+        }
+     */
+     .singlePage img{
+        clip: rect(0px,60px,200px,0px);
+     }
+        .singlePage .info{
+           background-color: gray;
+           color:white;
+        } 
+        .singlePage .banner{
+            padding-top:1.2em;
+            display: grid;
+            grid-template-columns: 45% auto;
+        }
+        .singlePage .info h1{
+            padding-top:.5em;
+            padding-bottom:.5em;
+
+        }
+        .singlePage .list ul{
+            list-style-type: none;
+            padding:0;
+            margin: 0;
+            
+            }
+            .singlePage .list li{
+                padding:0;
+            margin: 0;
+            
+            text-align: center;
+            
+            }
+            .singlePage .list{
+                width:100%;
+                display:grid;
+                grid-template-columns: auto auto auto;
+               
+            }
+            
+              .singlePage .list li:nth-child(2) {
+                font-weight: bold;
+                font-style: italic;
+              }
+              /* .others{
+                margin-top:2em;  
+              } */
+              .location{
+              
+                width:40%;
+                border:1px solid white;
+                display:grid;
+                grid-template-columns:  40% auto;
+                text-align: left;
+
+
+            }
+            .location a{
+                color:white;
+                text-decoration: none;
+            }
+            .shop{
+                text-align: left;
+            
+                width:40%;
+                border:1px solid white;
+                display:grid;
+                grid-template-columns:  40% auto;
+            }
+            .moreInfo p{
+                font-size: 1em;
+              }
+              .singlePage{
+                  margin-bottom:1.5em;
+              }
+            
+
+      }
+
+      @media only screen and (min-width: 900px) {
+     
+        /* .singlePage .image{
+            width:40%;
+            display:inline-block;
+        }
+     */
+     
+        .singlePage .info{
+           background-color: gray;
+           color:white;
+        } 
+        .singlePage .banner{
+            padding-top:1.2em;
+            display: grid;
+            grid-template-columns: 45% auto;
+        }
+        .singlePage .info h1{
+            padding-top:.5em;
+            padding-bottom:.5em;
+
+        }
+        .singlePage .list ul{
+            list-style-type: none;
+            padding:0;
+            margin: 0;
+            
+            }
+            .singlePage .list li{
+                padding:0;
+            margin: 0;
+            
+            text-align: center;
+            
+            }
+            .singlePage .list{
+                width:100%;
+                display:grid;
+                grid-template-columns: auto auto auto;
+               
+            }
+            
+              .singlePage .list li:nth-child(2) {
+                font-weight: bold;
+                font-style: italic;
+              }
+              /* .others{
+                margin-top:2em;  
+              } */
+              .location{
+                padding:.5em;
+                width:40%;
+                border:1px solid white;
+                display:grid;
+                grid-template-columns:  40% auto;
+                text-align: left;
+
+
+            }
+            .location a{
+                color:white;
+                text-decoration: none;
+            }
+            .shop{
+                text-align: left;
+                padding:.5em;
+                width:40%;
+                border:1px solid white;
+                display:grid;
+                grid-template-columns:  40% auto;
+            }
+            .moreInfo p{
+                font-size: 1em;
+              }
+              .singlePage{
+                  margin-bottom:1.5em;
+              }
+
+      }
+
+    
