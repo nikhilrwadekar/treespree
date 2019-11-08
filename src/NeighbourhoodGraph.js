@@ -3,42 +3,45 @@ import { ResponsiveBar } from "@nivo/bar";
 import axios from "axios";
 import { throwStatement } from "@babel/types";
 
+
 class NeighbourhoodGraph extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       neighbourhoods: [],
+      cart:[],
       // Add all Absolutely Common Names FIRST
       absolutelyCommonNames: [
+        "DOVE",
         "PEACH",
         "LABURNUM",
-        "PLANE",
-        "DOVE",
         "SPINDLE",
-        "GOLDENRAIN",
-        "MONKEY PUZZLE",
         "PAGODA",
+        "PLANE",
         "STRAWBERRY",
+        "MONKEY PUZZLE",
+        "GOLDENRAIN",
         "RUBBER",
         "ANGELICA",
-        "EMPRESS",
-        "EPAULETTE",
         "SILK",
         "CHESTNUT",
-        "MAPLE",
-        "ASH",
         "CHERRY",
         "HORNBEAM",
         "LILAC",
+        "EMPRESS",
+        "EPAULETTE",
+        "MAPLE",
+        "ASH",
         "FIR",
         "DOGWOOD",
         "PLUM",
         "CEDAR",
         "LINDEN",
+        "BIRCH",
         "APPLE",
         "OAK",
         "HAWTHORN",
-        "BIRCH",
         "PEAR",
         "HEMLOCK",
         "LOCUST",
@@ -48,7 +51,6 @@ class NeighbourhoodGraph extends Component {
         "ELM",
         "FILBERT",
         "WALNUT",
-        "APPLE",
         "HOLLY",
         "SNOWBELL",
         "HONEYLOCUST",
@@ -57,61 +59,61 @@ class NeighbourhoodGraph extends Component {
         "WILLOW",
         "BEECH",
         "CYPRESS",
-        "TULIP",
         "IRONWOOD",
+        "TULIP",
+        "SEQUOIA",
+        "ACACIA",
         "PINE",
         "ARBORVITAE",
         "BUTTERNUT",
-        "SEQUOIA",
         "WHITEBEAM",
         "CATALPA",
-        "ACACIA",
         "ZELKOVA",
         "MAGNOLIA",
+        "COTTONWOOD",
+        "CHOKECHERRY",
         "FALSE CYPRESS",
         "SPRUCE",
-        "COTTONWOOD",
         "HACKBERRY",
-        "CHOKECHERRY",
         "GUM",
         "WINGNUT",
         "ALDER",
         "MANGLETIA",
         "REDBUD",
-        "SUMAC",
-        "BASSWOOD",
         "JUNIPER",
         "CRYPTOMERIA",
+        "SUMAC",
+        "BASSWOOD",
+        "SHARON",
         "HEAVEN",
         "CHITALPA",
-        "SHARON",
+        "AVONDALE",
         "BUCKEYE",
         "STEWARTIA",
-        "AVONDALE",
         "LAUREL",
         "YELLOWWOOD",
-        "POPLAR",
         "MADRONE",
         "ARBUTUS",
         "LARCH",
         "PALM",
-        "MULBERRY",
+        "POPLAR",
         "HAZELNUT",
         "NANNYBERRY",
+        "MULBERRY",
+        "FIG",
+        "COFFEETREE",
         "SOURWOOD",
         "YEW",
-        "FIG",
         "CORKTREE",
         "NUT",
-        "COFFEETREE",
         "GINKGO",
         "GOLDENCHAIN",
         "BUCKTHORN",
         "ELDER",
-        "CASCARA",
         "APRICOT",
-        "ASPEN",
+        "CASCARA",
         "GLORYBOWER",
+        "ASPEN",
         "BERRY",
         "ARALIA",
         "KATSURA"
@@ -120,6 +122,7 @@ class NeighbourhoodGraph extends Component {
   }
 
   componentWillMount() {
+    let cart=[];
     axios
       .get(
         "http://treespree.wmdd.ca/api/neighbourhoods/neighbourhood-treetype-count"
@@ -128,24 +131,68 @@ class NeighbourhoodGraph extends Component {
         let neighbourhoods = response.data;
         // let neighbourhood_tree_counts = neighbourhoods.map(neighbourhood => neighbourhood.neighbourhood_tree_count)
         // let neighbourhood_names = neighbourhoods.map(neighbourhood => neighbourhood.neighbourhood_name)
+        let element = {};
+        neighbourhoods.map(neighbourhood => {{
+          let sum=0;
+          Object.getOwnPropertyNames(neighbourhood).forEach(
+            function (val, idx, array) {
+
+              if(val=="neighbourhood"){
+                  element.neighbourhood=neighbourhood[val];
+                  // console.log(element.neighbourhood);
+                }else
+              if(val=="MAPLE"){
+                element.MAPLE=neighbourhood[val];
+                // console.log(element.MAPLE);
+              }else
+              if(val=="ASH"){
+                element.ASH=neighbourhood[val];
+                // console.log(element.ASH);
+              }else
+              if(val=="CHERRY"){
+                element.CHERRY=neighbourhood[val];
+                // console.log(element.CHERRY);
+              }else
+              if(val=="PLUM"){
+                element.PLUM=neighbourhood[val];
+                // console.log(element.PLUM);
+              }else
+              if(val=="HORNBEAM"){
+                element.HORNBEAM=neighbourhood[val];
+                // console.log(element.HORNBEAM);
+              }else{
+                sum=parseInt(neighbourhood[val])+sum;
+              }
+            
+            }
+          );
+          element.OTHERS=sum;
+        }
+          cart.push(element);
+          element={};
+        })
+        console.log(cart);
+
         this.setState({
           ...this.state,
-          neighbourhoods: neighbourhoods
+          neighbourhoods: neighbourhoods,
+          cart: cart
           // neighbourhood_tree_counts: neighbourhood_tree_counts,
           // neighbourhood_names: neighbourhood_names
         });
       });
   }
-
   render() {
+
     return (
       <ResponsiveBar
-        data={this.state.neighbourhoods.slice(0, 10)}
-        keys={this.state.absolutelyCommonNames.slice(0, 50)}
+        // data={this.state.neighbourhoods.slice(0, 5)}
+        // keys={this.state.absolutelyCommonNames.slice(0, 40)}
+        data={this.state.cart.slice(0,5)}
+        keys={['OTHERS','HORNBEAM','ASH','PLUM','CHERRY','MAPLE']}
         indexBy="neighbourhood"
         margin={{ top: 50, right: 100, bottom: 50, left: 100 }}
-        padding={0.25}
-        layout="horizontal"
+        padding={0.55}
         groupMode="stacked"
         colors={{ scheme: "nivo" }}
         defs={[
@@ -211,6 +258,7 @@ class NeighbourhoodGraph extends Component {
         motionStiffness={90}
         motionDamping={10}
       />
+
     );
   }
 }
