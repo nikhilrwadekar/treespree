@@ -23,7 +23,6 @@ class NeighbourhoodGraph extends Component {
         })
     })
   }
-  
   render() {
     return (
         <ResponsiveBar

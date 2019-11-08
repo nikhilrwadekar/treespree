@@ -1,7 +1,7 @@
 import React,{Component} from "react";
 import NeighbourhoodGraph from "./NeighbourhoodGraph";
 import "./Graphview.css"
-import TreeGraph from "./TreeGraph";
+// import TreeGraph from "./TreeGraph";
 
 class Graphview extends Component{
 
@@ -23,7 +23,7 @@ class Graphview extends Component{
                    <NeighbourhoodGraph />
                </div>
                <div className="graphviewContainer">
-                   <TreeGraph />
+                   {/* <TreeGraph /> */}
                </div>
            </div>
            </>
