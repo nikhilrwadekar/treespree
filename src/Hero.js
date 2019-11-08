@@ -8,7 +8,9 @@ function Hero() {
       <div className="Hero-content">
         <h2>Get to know trees around in Vancouver</h2>
         <p>Get started now.</p>
-        <button className="btn btn-primary">EXPLORE TREES</button>
+        <a className="btn btn-primary" href="/explore">
+          EXPLORE TREES
+        </a>
       </div>
 
       <img

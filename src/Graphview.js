@@ -1,34 +1,37 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import NeighbourhoodGraph from "./NeighbourhoodGraph";
-import "./Graphview.css"
-import TreeGraph from "./TreeGraph";
+import "./Graphview.css";
+import SelectOption from "./SelectOption";
 
-class Graphview extends Component{
+class Graphview extends Component {
+  state = {
+    selectedNeighbourhoods: []
+  };
 
-    render(){
-        return(
-            <>
-           <h2>Did You Know?</h2> 
-           <div className="factsDiv">
-
-           </div>
-           <div>
-               <button className="neighbourhoodBtn">
-                   Neighbourhoods
-               </button>
-               <button className="treeBtn">
-                   Trees
-               </button>
-               <div className="graphviewContainer">
-                   <NeighbourhoodGraph />
-               </div>
-               <div className="graphviewContainer">
-                   <TreeGraph />
-               </div>
-           </div>
-           </>
-        );
-    }
+  getSelectedNeighbourhoods(selectedOptions) {
+    this.setState({
+      ...this.state,
+      selectedNeighbourhoods: selectedOptions
+    });
+  }
+  render() {
+    return (
+      <>
+        <h2>Did You Know?</h2>
+        <div className="factsDiv"></div>
+        <div>
+          <div className="graphviewContainer">
+            <SelectOption
+              callbackFunction={this.getSelectedNeighbourhoods.bind(this)}
+            />
+            <NeighbourhoodGraph
+              selectedNeighbourhoods={this.state.selectedNeighbourhoods}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default Graphview;

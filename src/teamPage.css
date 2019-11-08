@@ -1,29 +1,49 @@
-
-.teamPage .h1 {
-    margin-top: 5rem;
+.tp-header h1 {
+  margin-top: 5rem;
 }
 
-.members{
-    margin-top: 2rem;
+.team-members {
+  margin-top: 2rem;
 }
 .img_teamPage{
-    max-width: 100%;
-    width: 250px;
-    height: 200px;
-    margin-right: 2%;
+  width: 100%;
+  height: auto;
+}
+.img-holder {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+  margin-bottom: 10%;
 }
 
-.teamPage p{
-    display: none;
+.tp-header p {
+  display: none;
 }
 
-@media only screen and (min-width: 800px) {
-    .img_teamPage{
-        width: 500px;
-        height: 400px;
-    }
-    .teamPage p{
-        display: block;
-        margin: 1rem;
-    }
+.img-holder p{
+  margin-top: 2%;
+}
+
+@media only screen and (min-width: 700px) {
+  .team-members  {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
   }
+  .tp-header p {
+    display: block;
+    margin: 1rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .team-members  {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .tp-header p  {
+    display: block;
+    font-size: 1.8rem;
+  }
+}

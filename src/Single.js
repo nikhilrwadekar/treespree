@@ -4,201 +4,151 @@ import "./Single.css";
 
 let wikiUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exchars=1000&explaintext&redirects=1&titles=";
-let wikiPictureUrl="https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
+let wikiPictureUrl =
+  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
-class Single extends React.Component{
-    state = {
-        trees: [],
-        common_name:'',
-        value: "maple",
-        data: "",
-        population:100,
-        paragraph: null,
-        genus_name:'',
-        tree_name:'',
-        imageSrc:''
-      }
+class Single extends React.Component {
+  state = {
+    trees: [],
+    common_name: "",
+    value: "maple",
+    data: "",
+    population: 100,
+    paragraph: null,
+    genus_name: "",
+    tree_name: "",
+    imageSrc: "",
+    tree_id: 602
+  };
+
+  constructor(props) {
+    super(props);
+    // this.getImage = this.getImage.bind(this);
+
+    // this.getTrees();
+    // this.getImage();
+  }
+
+  componentDidMount() {
+    let treespreeAPIQuery = "";
     
-    constructor(props) {
-              
-        super(props);
-        this.getImage= this.getImage.bind(this);
-  
-        console.log("treessssssssssssss")
-        this.getTrees();
-        this.getImage();
-     
+    if(this.props.match.params.tree_id) {
+        treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
+    } else if (this.props.match.params.tree_name) {
+        treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
     }
 
-    getTrees() {
-        axios.get("http://treespree.wmdd.ca/api/trees").then(response => {
-        let trees = response.data;
-        // this.setState({...this.state,trees: trees})
+    axios.get(treespreeAPIQuery).then(response => {
+      let tree = response.data;
+    console.log(response.data)
+      
+      
+      //Setting state.common_name to tree's common name
+      this.setState(prevstate => {
+        return {
+          genus_name: tree[0].genus_name,
+          species_name: tree[0].species_name,
+          common_name: tree[0].common_name_tree,
+          tree_name: tree[0].absolute_common_name_tree.toLowerCase(),
+          population: tree[0].common_name_tree_count
+        };
+      });
 
-        //giving a fixed id
-        let tree_id=125;
-        //filtering tree from api that match this id
-        let found = trees.find(function (element)
-         {
-            return element.tree_id == tree_id;
-                
+      let search = this.state.tree_name;
+      let searchUrl = wikiUrl + search
+      fetch(searchUrl)
+        .then(res => {
+          return res.json();
+        })
+        .then(foundData => {
+          this.setState({
+            paragraph:
+              foundData.query.pages[Object.keys(foundData.query.pages)[0]]
+                .extract
           });
-          
-          //Setting state.common_name to tree's common name
-         this.setState((prevstate)=>{
-            return{
-                genus_name:found.genus_name,
-                species_name:found.species_name,
-                common_name:found.common_name_tree,
-                tree_name:found.absolute_common_name,
-                population:found.common_name_tree_count
-            }
-            });   
-      
-           
-            let search = "Maple";
-            let searchUrl = wikiUrl + search;
-            fetch(searchUrl)
-           .then(res => {
-            return res.json();
-            })
-            .then(foundData => {
-            this.setState({
-              paragraph: foundData.query.pages[Object.keys(foundData.query.pages)[0]].extract
-                 });
-            });
-      
-        })
-
-
-
-
-
-    }
-
- getImage()
- {
+        });
    
-    let searchPic = "MAPLE";
-    let b=searchPic.toLowerCase();
+
+    console.log(this.state.tree_name);
+
+    let searchPic = this.state.tree_name ;
+    let b = searchPic.toLowerCase();
+
+
+
+    
     let imageUrl = wikiPictureUrl + b;
-    console.log("from get IMage()")
+    console.log("from get IMage()");
     fetch(imageUrl)
-    .then(res => {
-    // Return data in form of JSON
-    return res.json();
-    })
-    .then(foundData => {
-        
-    let imageObj=foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-    this.setState({
-        imageSrc:imageObj.thumbnail.source
-           });
-           console.log(this.state.imageSrc)
-        })
- }
+      .then(res => {
+        // Return data in form of JSON
+        return res.json();
+      })
+      .then(foundData => {
+        let imageObj =
+          foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+        this.setState({
+          imageSrc: imageObj.thumbnail.source
+        });
+        console.log(this.state.imageSrc);
+      });
+    });
+  }
 
 
+//   componentDidMount() {
+//     console.log(this.props.match.params.tree_id)
+//     console.log(this.props.match.params.tree_name)
+//   }
 
+  render() {
+    return (
+      <div className="singlePage">
+        <div className="banner">
+          <div className="image">
+            <img src={this.state.imageSrc} alt="" className="SingleImage" />
+          </div>
 
-
-
-    render()
-    {
-    return(
-        
-
-        <div className="singlePage">
-           
-           <div className="banner">
-           <div className="image">
-            <img src={this.state.imageSrc} alt="" className="SingleImage"/>
-            </div>
-
-
-            <div className="info">
+          <div className="info">
             <h1>{this.state.common_name}</h1>
-       
+
             <div className="list">
-            <ul>
-                <li>
-                        Species
-                    </li>
-                    <li>
-                    {this.state.species_name}
-                    </li>
-                </ul>
-                <ul>
-                <li>
-                        Genus
-                    </li>
-                    <li>
-                    {this.state.genus_name}
-                    </li>
-                </ul>
-                <ul>
-                <li>
-                        Population
-                    </li>
-                    <li>
-                    {this.state.population}
-                    </li>
-                </ul>
-
-
-
-                </div>
-            
-
-          
-
+              <ul>
+                <li>Species</li>
+                <li>{this.state.species_name}</li>
+              </ul>
+              <ul>
+                <li>Genus</li>
+                <li>{this.state.genus_name}</li>
+              </ul>
+              <ul>
+                <li>Population</li>
+                <li>{this.state.population}</li>
+              </ul>
+            </div>
 
             <div className="others">
-                <div className="location">
-              
-                    <div>
-                        
-                        </div>
-                        <div>
-                       <a href="/"> Find One Near Me</a>
-                        </div>
-               
-                     </div>
-                <div className="shop">
-                         <div>
-                        
-                        </div>
-                        <div>
-                        Shop Products
-
-                        </div>
-            </div>
-            </div>
-
-            </div>
-
-
+              <div className="location">
+                <div></div>
+                <div>
+                  <a href="/"> Find One Near Me</a>
+                </div>
               </div>
-            <div className="moreInfo">
-                <h3> ABOUT </h3>
-                 {/* If state's 'paragraph' is not null and has any value, render the component */}
-                 {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
+              <div className="shop">
+                <div></div>
+                <div>Shop Products</div>
+              </div>
             </div>
-
-
-
+          </div>
         </div>
-        )
-    }
+        <div className="moreInfo">
+          <h3> ABOUT </h3>
+          {/* If state's 'paragraph' is not null and has any value, render the component */}
+          {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
+        </div>
+      </div>
+    );
+  }
 }
-
-
-
-
-
-
-
-
-
 
 export default Single;
