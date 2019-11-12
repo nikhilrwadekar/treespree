@@ -2,6 +2,8 @@
   "name": "treespree",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
@@ -30,7 +32,6 @@
     "eject": "react-scripts eject",
     "dev": "nodemon app.js"
   },
-  "proxy": "http://localhost:8080/",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -60,6 +61,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/nikhilrwadekar/treespree/issues"
-  },
-  "homepage": "https://github.com/nikhilrwadekar/treespree#readme"
+  }
 }
