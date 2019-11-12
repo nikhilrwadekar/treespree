@@ -4,23 +4,20 @@ import "./Hero.css";
 
 function Hero() {
   return (
-    <div className="Hero jumbotron">
-      <div className="Hero-content">
+    <>
+      <div class="mainContent area1">
+        <div class="bgVid-container">
+          <video class="bgVid" autoPlay muted loop>
+            <source
+              src="https://storage.googleapis.com/coverr-main/mp4%2Fcoverr-a-beautiful-vermont-road-1572327401402.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
         <h2>Get to know trees around in Vancouver</h2>
         <p>Get started now.</p>
-        <a className="btn btn-primary" href="/explore">
-          EXPLORE TREES
-        </a>
       </div>
-
-      <img
-        src={
-          "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-        }
-        alt=""
-        className="Hero-image"
-      />
-    </div>
+    </>
   );
 }
 
