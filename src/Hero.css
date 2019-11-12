@@ -12,3 +12,36 @@
   height: 200px;
   object-fit: cover;
 }
+
+.bgVid-container {
+  height: 100%;
+  width: 100%;
+  clip-path: polygon(50% 0%, 100% 0, 100% 45%, 50% 71%, 0 100%, 0 0);
+}
+
+.bgVid {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mainContent {
+  position: relative;
+}
+
+.mainContent h2 {
+  position: absolute;
+  top: 80px;
+  color: white;
+  font-weight: 300;
+  left: 5%;
+}
+
+.mainContent p {
+  position: absolute;
+  top: 120px;
+  color: white;
+  font-weight: 300;
+  left: 5%;
+  font-size: 1.25rem;
+}
