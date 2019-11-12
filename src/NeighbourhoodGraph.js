@@ -7,7 +7,8 @@ class NeighbourhoodGraph extends Component {
     super(props);
     this.state = {
       neighbourhoods: [],
-      dataForGraph: []
+      dataForGraph: [],
+      filteredDataForGraph: []
     };
   }
 
@@ -48,30 +49,51 @@ class NeighbourhoodGraph extends Component {
     this.setState({
       ...this.state,
       neighbourhoods: passedNeighbourhoods,
-      dataForGraph: dataForGraph
+      dataForGraph: dataForGraph,
+      filteredDataForGraph: dataForGraph
     });
   }
 
-  componentWillUpdate() {
-    console.log("COMPONENT DID UPDATE");
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // Convert previous and current states into Strings for comparison
+    let prevNeighbourhoods = JSON.stringify(prevProps.selectedNeighbourhoods);
+    let currentNeighbourhoods = JSON.stringify(
+      this.props.selectedNeighbourhoods
+    );
 
-    let dataForGraph = this.state.dataForGraph;
-    let updatedDataForGraph = [];
-    // < 5 logic
-    if (this.props.selectedNeighbourhoods.length) {
-      updatedDataForGraph = dataForGraph.filter(
-        neighbourhoodItem =>
-          neighbourhoodItem.neighbourhood ==
-          this.props.selectedNeighbourhoods[0].value
+    // If selection of neighbourhoods changes
+    if (prevNeighbourhoods !== currentNeighbourhoods) {
+      // Filter Graph Data based on selection
+      let filteredDataForGraph = this.state.dataForGraph.filter(
+        neighbourhoodWithData => {
+          if (this.props.selectedNeighbourhoods)
+            for (let selectedNeighbourhood of this.props
+              .selectedNeighbourhoods) {
+              if (
+                neighbourhoodWithData.neighbourhood ===
+                selectedNeighbourhood.label
+              ) {
+                return true;
+              }
+            }
+        }
       );
-      console.log(updatedDataForGraph);
-    }
 
-    // BROKEN LOGIC
-    // this.setState({
-    //   ...this.state,
-    //   dataForGraph: updatedDataForGraph
-    // });
+      // If we have selections, render those
+      if (filteredDataForGraph.length)
+        this.setState({
+          ...this.state,
+          filteredDataForGraph
+        });
+      // Reset the filter with all Graphs
+      else
+        this.setState({
+          ...this.state,
+          filteredDataForGraph: this.state.dataForGraph
+        });
+
+      // IF CONDITION ENDS
+    }
   }
   componentDidMount() {
     console.log("COMPONENT DID MOUNT");
@@ -83,14 +105,13 @@ class NeighbourhoodGraph extends Component {
       .then(response => {
         let neighbourhoods = response.data;
         this.testFunction(neighbourhoods);
-        // console.log(dataForGraph);
       });
   }
 
   render() {
     return (
       <ResponsiveBar
-        data={this.state.dataForGraph.slice(0, 5)}
+        data={this.state.filteredDataForGraph.slice(0, 5)}
         keys={["OTHERS", "HORNBEAM", "ASH", "PLUM", "CHERRY", "MAPLE"]}
         indexBy="neighbourhood"
         margin={{ top: 50, right: 100, bottom: 50, left: 100 }}
