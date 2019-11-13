@@ -5,9 +5,9 @@ import "./Hero.css";
 function Hero() {
   return (
     <>
-      <div class="mainContent area1">
-        <div class="bgVid-container">
-          <video class="bgVid" autoPlay muted loop>
+      <div className="mainContent area1">
+        <div className="bgVid-container">
+          <video className="bgVid" autoPlay muted loop>
             <source
               src="https://storage.googleapis.com/coverr-main/mp4%2Fcoverr-a-beautiful-vermont-road-1572327401402.mp4"
               type="video/mp4"

@@ -10,7 +10,7 @@ import Team from "./teamPage";
 import Footer from "./Footer";
 import GridMapView from "./GridMapView";
 import Graphview from "./Graphview";
-
+import Newsletter from "./Newsletter";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -33,6 +33,7 @@ class App extends React.Component {
             <Hero />
             <Graphview />
             {/* Newsletter Component Here */}
+            <Newsletter />
           </Route>
 
           <Route exact path="/explore">
