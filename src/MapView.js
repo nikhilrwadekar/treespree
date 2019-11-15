@@ -133,10 +133,15 @@ class MapView extends React.Component {
             <div>
               {/* Marker for the Marker Clusterer */}
               <Marker
-                icon={{
-                  url: `/svg/leaves/${tree.absolute_common_name}.svg`,
-                  scale: 0.5
-                }}
+                icon={
+                  new google.maps.MarkerImage(
+                    `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(75, 75)
+                  )
+                }
                 key={tree.tree_id}
                 position={{
                   lat: tree.tree_latitude,
@@ -157,9 +162,10 @@ class MapView extends React.Component {
                 >
                   <div
                     style={{
-                      backgroundColor: `yellow`,
-                      opacity: 0.75,
-                      padding: `12px`
+                      backgroundColor: `green`,
+                      opacity: 0.5,
+                      padding: `12px`,
+                      borderRadius: "10px"
                     }}
                   >
                     <div
@@ -173,7 +179,8 @@ class MapView extends React.Component {
                         style={{
                           fontSize: `14px`,
                           textTransform: "capitalize",
-                          fontStyle: "italic"
+                          fontStyle: "italic",
+                          color: "#fff"
                         }}
                         href={`/tree/id/${tree.tree_id}`}
                       >
