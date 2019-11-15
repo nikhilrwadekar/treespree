@@ -5,20 +5,31 @@
 .team-members {
   margin-top: 2rem;
 }
+.team-holder{
+  margin-bottom: 3rem;
+}
 .img_teamPage{
   width: 100%;
   height: auto;
-  border-radius: 25px;
+  border-radius: 8%;
 }
 .img-holder {
-  border-radius: 25px;
+  border-radius: 10%;
   margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-  margin-bottom: 10%;
+  width: 80%;
+  border: 2px solid #90c33e;
+  padding: 1%;
+  margin-bottom: 5%;
 }
-
+.txt-holder{
+  margin: auto;
+  width: 80%;
+  text-align: left;
+}
+.txt-holder p{
+  display: inline;
+  margin-right: 2%;
+}
 .tp-header p {
   display: none;
 }
@@ -26,12 +37,20 @@
 .img-holder p{
   margin-top: 2%;
 }
-
+/* Icons */
+.img_git, .img_link{
+  width: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
 @media only screen and (min-width: 700px) {
   .team-members  {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
+  }
+  .img_git, .img_link{
+    width: 10%;
   }
   .tp-header p {
     display: block;
@@ -42,7 +61,7 @@
 
 @media only screen and (min-width: 900px) {
   .team-members  {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   .tp-header p  {
     display: block;
