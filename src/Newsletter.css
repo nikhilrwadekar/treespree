@@ -1,0 +1,52 @@
+.newsletter {
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.newsletter-graphic {
+  height: 150px;
+}
+
+.newsletter-text .subscribe {
+  background-color: #90c33e;
+  border-radius: 20px;
+  color: white;
+}
+
+.subscribe-form {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.subscribe-form .input-email {
+  border-radius: 20px;
+  margin-right: 2%;
+  width: 230px;
+  padding-left: 2%;
+  border: 1px solid grey;
+}
+
+.newsletter-text h2 {
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
+.newsletter-text {
+  align-self: center;
+}
+
+.newsletter-text h3 {
+  font-weight: 100;
+  text-align: left;
+}
+
+.newsletter .img {
+  grid-column: 1/2;
+  justify-self: end;
+}
+
+.newsletter .newsletter-text {
+  grid-column: 2/3;
+  justify-self: center;
+}
