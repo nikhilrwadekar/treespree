@@ -38,7 +38,7 @@ class MapView extends React.Component {
 
   // After the component is mounted..
   componentDidMount() {
-    // Call the treeSpree API
+    // Set Data Layer
   }
 
   getTreeDataAndStoreInState(boundingBox) {
@@ -53,17 +53,13 @@ class MapView extends React.Component {
   }
 
   // On Zoom Change function (Handler)
-  handleZoomChanged() {
-    // zoomChanged && zoomLevel && bounds!
-
+  handleMapUpdate() {
     // Current Zoom Level
     let currentZoomLevel = this.map.getZoom();
 
-    // If Current Zoom Level is >= 18 &
     // Get current trees bound by current view from API..
-
-    // Code Courtesy: Stackoverflow - User: Mario Rossi
     if (currentZoomLevel >= 20) {
+      console.log("You're zoomed in enough! Updating Trees on map..");
       // Derive NE and SW
       let NE = this.map.getBounds().getNorthEast();
       let SW = this.map.getBounds().getSouthWest();
@@ -80,12 +76,22 @@ class MapView extends React.Component {
       console.log(boundingBox);
 
       this.getTreeDataAndStoreInState(boundingBox);
-    } else {
+    } else if (currentZoomLevel < 20) {
       this.setState({
         trees: []
       });
     }
-    console.log("Zoom Changed!:" + currentZoomLevel);
+    console.log("Current Zoom:" + currentZoomLevel);
+  }
+
+  //
+  onBoundsChanged() {
+    console.log("Map Bounds Changed!");
+  }
+
+  onIdle() {
+    console.log("Now Idle..");
+    this.handleMapUpdate();
   }
 
   render() {
@@ -96,12 +102,13 @@ class MapView extends React.Component {
           ref={ref => {
             this.map = ref;
           }}
-          defaultZoom={10}
-          defaultCenter={{ lat: 49.28273, lng: -123.120735 }}
+          defaultZoom={20}
+          defaultCenter={{ lat: 49.2258331, lng: -123.1078227 }}
           // Pass this.map instead of this as you need to bind map's this
-          onZoomChanged={this.handleZoomChanged.bind(this)}
+          onZoomChanged={this.handleMapUpdate.bind(this)}
+          onIdle={this.onIdle.bind(this)}
         >
-          {/* <SearchBox>
+          <SearchBox>
             <input
               type="text"
               placeholder="Customized your placeholder"
@@ -119,23 +126,24 @@ class MapView extends React.Component {
                 textOverflow: `ellipses`
               }}
             />
-          </SearchBox> */}
+          </SearchBox>
           {/* <MarkerClusterer averageCenter gridSize={60}> */}
           {/* The Marker Loop for the Map */}
           {this.state.trees.map(tree => (
             <div>
               {/* Marker for the Marker Clusterer */}
               <Marker
-                // icon={{
-                //   url: `/svg/leaves/${tree.absolute_common_name}.svg`,
-                //   scale: 0.5
-                // }}
+                icon={{
+                  url: `/svg/leaves/${tree.absolute_common_name}.svg`,
+                  scale: 0.5
+                }}
                 key={tree.tree_id}
                 position={{
                   lat: tree.tree_latitude,
                   lng: tree.tree_longitude
                 }}
                 title={tree.common_name}
+                // onClick={console.log("Clicked")}
               >
                 {/* InfoBox for the Marker */}
                 <InfoBox
@@ -169,8 +177,7 @@ class MapView extends React.Component {
                         }}
                         href={`/tree/id/${tree.tree_id}`}
                       >
-                        {/* .toLowerCase() */}
-                        {tree.common_name}
+                        {tree.common_name_tree.toLowerCase()}
                       </a>
                     </div>
                   </div>
