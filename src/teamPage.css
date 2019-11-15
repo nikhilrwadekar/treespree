@@ -8,8 +8,10 @@
 .img_teamPage{
   width: 100%;
   height: auto;
+  border-radius: 25px;
 }
 .img-holder {
+  border-radius: 25px;
   margin: auto;
   width: 50%;
   border: 3px solid green;
