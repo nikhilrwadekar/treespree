@@ -35,7 +35,7 @@ class GridMapView extends React.Component {
             <WrappedMap
               // Add &key=API_KEY when you get one to get out of DEV mode.
               isMarkerShown={false}
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`}
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: "100%" }} />}
               mapElement={<div style={{ height: "100%" }} />}
