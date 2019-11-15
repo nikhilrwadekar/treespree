@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 import "./Single.css";
 
-let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exchars=1000&explaintext&redirects=1&titles=";
+let wikiUrl = "https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exlimit=10&exintro=0&exsectionformat=wiki&titles="
+//   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exchars=1000&explaintext&redirects=1&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -166,7 +166,10 @@ class Single extends React.Component {
         <div className="moreInfo">
           <h3> ABOUT </h3>
           {/* If state's 'paragraph' is not null and has any value, render the component */}
-          {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
+          {/* {this.state.paragraph ? <p>{this.state.paragraph.split("==").map(sentence => */}
+            {/* //  <p>{sentence}</p>)}</p> : ""} */}
+           <div dangerouslySetInnerHTML={{__html: this.state.paragraph }}></div> 
+           {/* {this.state.paragraph ? this.state.paragraph : ""} */}
         </div>
       </div>
     );
