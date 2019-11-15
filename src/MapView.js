@@ -1,3 +1,5 @@
+/* global google */
+
 import React from "react";
 import axios from "axios";
 
@@ -37,12 +39,53 @@ class MapView extends React.Component {
   // After the component is mounted..
   componentDidMount() {
     // Call the treeSpree API
+  }
+
+  getTreeDataAndStoreInState(boundingBox) {
     axios
-      .get("http://treespree.wmdd.ca/api/trees/type/maple?count=150")
+      .get(
+        `http://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
+      )
       .then(res => {
         const trees = res.data;
         this.setState({ trees: trees });
       });
+  }
+
+  // On Zoom Change function (Handler)
+  handleZoomChanged() {
+    // zoomChanged && zoomLevel && bounds!
+
+    // Current Zoom Level
+    let currentZoomLevel = this.map.getZoom();
+
+    // If Current Zoom Level is >= 18 &
+    // Get current trees bound by current view from API..
+
+    // Code Courtesy: Stackoverflow - User: Mario Rossi
+    if (currentZoomLevel >= 20) {
+      // Derive NE and SW
+      let NE = this.map.getBounds().getNorthEast();
+      let SW = this.map.getBounds().getSouthWest();
+
+      // Bounding Box
+      let boundingBox = {
+        NorthWestX: NE.lat(),
+        NorthWestY: SW.lng(),
+        SouthEastX: SW.lat(),
+        SouthEastY: NE.lng()
+      };
+      // Point is in bounding box
+      console.log("Ready to pull data!");
+      console.log(boundingBox);
+
+      this.getTreeDataAndStoreInState(boundingBox);
+    } else {
+      this.setState({
+        trees: []
+      });
+    }
+    console.log("Zoom Changed!:" + currentZoomLevel);
   }
 
   render() {
@@ -55,8 +98,10 @@ class MapView extends React.Component {
           }}
           defaultZoom={10}
           defaultCenter={{ lat: 49.28273, lng: -123.120735 }}
+          // Pass this.map instead of this as you need to bind map's this
+          onZoomChanged={this.handleZoomChanged.bind(this)}
         >
-          <SearchBox>
+          {/* <SearchBox>
             <input
               type="text"
               placeholder="Customized your placeholder"
@@ -74,65 +119,66 @@ class MapView extends React.Component {
                 textOverflow: `ellipses`
               }}
             />
-          </SearchBox>
-          <MarkerClusterer averageCenter gridSize={60}>
-            {/* The Marker Loop for the Map */}
-            {this.state.trees.map(tree => (
-              <div>
-                {/* Marker for the Marker Clusterer */}
-                <Marker
-                  icon={{
-                    url: `/svg/leaves/${tree.absolute_common_name}.svg`,
-                    scale: 0.5
-                  }}
-                  key={tree.tree_id}
-                  position={{
-                    lat: tree.tree_latitude,
-                    lng: tree.tree_longitude
-                  }}
-                  title={tree.common_name}
+          </SearchBox> */}
+          {/* <MarkerClusterer averageCenter gridSize={60}> */}
+          {/* The Marker Loop for the Map */}
+          {this.state.trees.map(tree => (
+            <div>
+              {/* Marker for the Marker Clusterer */}
+              <Marker
+                // icon={{
+                //   url: `/svg/leaves/${tree.absolute_common_name}.svg`,
+                //   scale: 0.5
+                // }}
+                key={tree.tree_id}
+                position={{
+                  lat: tree.tree_latitude,
+                  lng: tree.tree_longitude
+                }}
+                title={tree.common_name}
+              >
+                {/* InfoBox for the Marker */}
+                <InfoBox
+                  defaultPosition={
+                    new window.google.maps.LatLng(
+                      tree.tree_latitude,
+                      tree.tree_longitude
+                    )
+                  }
+                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
                 >
-                  {/* InfoBox for the Marker */}
-                  <InfoBox
-                    defaultPosition={
-                      new window.google.maps.LatLng(
-                        tree.tree_latitude,
-                        tree.tree_longitude
-                      )
-                    }
-                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                  <div
+                    style={{
+                      backgroundColor: `yellow`,
+                      opacity: 0.75,
+                      padding: `12px`
+                    }}
                   >
                     <div
                       style={{
-                        backgroundColor: `yellow`,
-                        opacity: 0.75,
-                        padding: `12px`
+                        fontSize: `16px`,
+                        fontColor: `#08233B`,
+                        fontFamily: "Karla"
                       }}
                     >
-                      <div
+                      <a
                         style={{
-                          fontSize: `16px`,
-                          fontColor: `#08233B`,
-                          fontFamily: "Karla"
+                          fontSize: `14px`,
+                          textTransform: "capitalize",
+                          fontStyle: "italic"
                         }}
+                        href={`/tree/id/${tree.tree_id}`}
                       >
-                        <a
-                          style={{
-                            fontSize: `14px`,
-                            textTransform: "capitalize",
-                            fontStyle: "italic"
-                          }}
-                          href={`/tree/id/${tree.tree_id}`}
-                        >
-                          {tree.common_name.toLowerCase()}
-                        </a>
-                      </div>
+                        {/* .toLowerCase() */}
+                        {tree.common_name}
+                      </a>
                     </div>
-                  </InfoBox>
-                </Marker>
-              </div>
-            ))}
-          </MarkerClusterer>
+                  </div>
+                </InfoBox>
+              </Marker>
+            </div>
+          ))}
+          {/* </MarkerClusterer> */}
         </GoogleMap>
       </div>
     );
