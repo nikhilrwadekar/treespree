@@ -36,7 +36,7 @@ router.get("/names", getTreeNames);
 router.get("/genus", getTreeGenus);
 
 // GET '/api/trees/species
-router.get("/genus", getTreeSpecies);
+router.get("/species", getTreeSpecies);
 
 // Export the Router
 module.exports = router;
