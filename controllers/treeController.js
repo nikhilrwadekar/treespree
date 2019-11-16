@@ -152,3 +152,17 @@ exports.getTreeType = (req, res) => {
     .then(results => res.send(results))
     .catch(error => res.send(error));
 };
+
+// Get /api/trees/species
+exports.getTreeSpecies = (req, res) => {
+  query(cp, `SELECT * from species`)
+    .then(results => res.send(results))
+    .catch(error => res.send(error));
+};
+
+// Get /api/trees/species
+exports.getTreeGenus = (req, res) => {
+  query(cp, `SELECT * from genus`)
+    .then(results => res.send(results))
+    .catch(error => res.send(error));
+};
