@@ -117,11 +117,38 @@ exports.getTreeNames = (req, res) => {
   // Send all Tree Types
   query(
     cp,
-    `SELECT common_names.common_name_id, common_names.common_name_tree common_name, absolute_common_names.absolute_common_name_tree absolute_common_name
-  FROM common_names
-  INNER JOIN absolute_common_names ON common_names.absolute_common_name_id = absolute_common_names.absolute_common_name_id`
+    `SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+    SELECT common_name_id, common_name, genus_name, species_name, GROUP_CONCAT(SG.neighbourhood_name ORDER BY SG.neighbourhood_name ASC SEPARATOR ', ') neighbourhood_names, absolute_common_name
+    
+    FROM
+    
+    (SELECT DISTINCT common_names.common_name_id, common_names.common_name_tree common_name, genus.genus_name, species.species_name, neighbourhoods.neighbourhood_name, absolute_common_names.absolute_common_name_tree absolute_common_name
+    FROM trees
+    INNER JOIN genus ON trees.genus_id = genus.genus_id
+    INNER JOIN neighbourhoods ON trees.neighbourhood_id = neighbourhoods.neighbourhood_id
+    INNER JOIN species ON trees.species_id = species.species_id
+    INNER JOIN common_names ON trees.common_name_id = common_names.common_name_id
+    INNER JOIN absolute_common_names ON common_names.absolute_common_name_id = absolute_common_names.absolute_common_name_id
+
+    ORDER BY common_name_tree) SG
+    
+    GROUP BY SG.common_name
+  `
   )
-    .then(results => res.send(results))
+    .then(results => {
+      res.send(
+        // Map, Split, Trim and Send!
+        results[1].map(result => {
+          result.neighbourhood_names = result.neighbourhood_names
+            .split(",")
+            .map(item => {
+              return item.trim();
+            });
+          return result;
+        })
+      );
+    })
     .catch(error => res.send(error));
 };
 
@@ -160,9 +187,22 @@ exports.getTreeSpecies = (req, res) => {
     .catch(error => res.send(error));
 };
 
-// Get /api/trees/species
+// Get /api/trees/genus
 exports.getTreeGenus = (req, res) => {
-  query(cp, `SELECT * from genus`)
+  query(
+    cp,
+    `SET SESSION group_concat_max_len = 2000;
+  SELECT genus_name, GROUP_CONCAT(SG.species_name ORDER BY SG.species_name ASC SEPARATOR ', ') species_names
+  
+  FROM
+  
+  (SELECT DISTINCT genus.genus_name, species.species_name
+  FROM trees
+  INNER JOIN genus ON trees.genus_id = genus.genus_id
+  INNER JOIN species ON trees.species_id = species.species_id) SG
+  
+  GROUP BY SG.genus_name;`
+  )
     .then(results => res.send(results))
     .catch(error => res.send(error));
 };
