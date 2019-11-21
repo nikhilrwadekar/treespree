@@ -1,8 +1,28 @@
 /* global google */
 
+/*
+ <div
+                        style={{
+                          fontSize: `16px`,
+                          fontColor: `#08233B`,
+                          fontFamily: "Karla"
+                        }}
+                      >
+                        <a
+                          style={{
+                            fontSize: `14px`,
+                            textTransform: "capitalize",
+                            fontStyle: "italic",
+                            color: "#fff"
+                          }}
+                          href={`/tree/id/${tree.tree_id}`}
+                        >
+                          tess {tree.common_name_tree.toLowerCase()}
+                        </a>
+                      </div> */
 import React from "react";
 import axios from "axios";
-
+import PopUp from "./PopUp";
 // Google Maps Import
 import {
   GoogleMap,
@@ -94,6 +114,10 @@ class MapView extends React.Component {
     this.handleMapUpdate();
   }
 
+  showInfo(a) {
+    this.setState({ showInfoIndex: a });
+  }
+
   render() {
     return (
       <div className="MapView">
@@ -148,47 +172,34 @@ class MapView extends React.Component {
                   lng: tree.tree_longitude
                 }}
                 title={tree.common_name}
-                // onClick={console.log("Clicked")}
+                onClick={() => {
+                  this.showInfo(tree.tree_id);
+                }}
               >
                 {/* InfoBox for the Marker */}
-                <InfoBox
-                  defaultPosition={
-                    new window.google.maps.LatLng(
-                      tree.tree_latitude,
-                      tree.tree_longitude
-                    )
-                  }
-                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: `green`,
-                      opacity: 0.5,
-                      padding: `12px`,
-                      borderRadius: "10px"
-                    }}
+                {this.state.showInfoIndex == tree.tree_id && (
+                  <InfoBox
+                    defaultPosition={
+                      new window.google.maps.LatLng(
+                        tree.tree_latitude,
+                        tree.tree_longitude
+                      )
+                    }
+                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
                   >
                     <div
                       style={{
-                        fontSize: `16px`,
-                        fontColor: `#08233B`,
-                        fontFamily: "Karla"
+                        backgroundColor: `white`,
+                        opacity: 1,
+                        padding: `12px`,
+                        borderRadius: "10px",
+                        width: "300px"
                       }}
                     >
-                      <a
-                        style={{
-                          fontSize: `14px`,
-                          textTransform: "capitalize",
-                          fontStyle: "italic",
-                          color: "#fff"
-                        }}
-                        href={`/tree/id/${tree.tree_id}`}
-                      >
-                        {tree.common_name_tree.toLowerCase()}
-                      </a>
+                      <PopUp />
                     </div>
-                  </div>
-                </InfoBox>
+                  </InfoBox>
+                )}
               </Marker>
             </div>
           ))}

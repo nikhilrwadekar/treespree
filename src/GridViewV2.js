@@ -1,10 +1,45 @@
 import React from "react";
 import "./GridViewV2.css";
 import GridItemV2 from "./GridItemV2";
+import Axios from "axios";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+
+/*
+COMMENT BOX:
+Neighbourhoods, Genus and Species should be filtered based on whatever is selected in any of the three fields.
+
+Lets say if neighbourhood(s) is/are selected, filter the existing genus and species based on the neighbourhood(s) selected.
+
+If on top of that other fields are selected, filter further, but keep the previous filtered state.
+[filtered1 (was a result of n2,s3,g2g3 for example),filtered2,filtered3,]
+
+{
+  // The condition will probably be g1 || g2 || g3 & s2 || s3 & n1 || n2 
+
+  if(genusOptions.includes(tree.genus_name)
+  && speciesOptions.includes(tree.species_name)
+  && (treeCommonNames.map(treeCommonName => treeCommonName.neighbourhood_names).filter(
+        treeFilteredCommonName =>
+          selectedOptions
+            .map(selectedCommonName => selectedCommonName.value)
+            .includes(treeFilteredCommonName.common_name)
+      )) )
+  genusOptions: [],
+  speciesOptions: [],
+  neighbourhoodOptions: [],
+
+  treeFilteredCommonNames: []
+}
+*/
 
 class GridViewV2 extends React.Component {
   state = {
     treeCommonNames: [],
+    selectedCommonNames: [],
+    selectedGenus: [],
+    selectedSpecies: [],
+    selectedNeighbourhoods: [],
     limitPerPage: 12,
     searchGridQuery: "",
     gridStarterIndex: 0,
@@ -16,50 +51,236 @@ class GridViewV2 extends React.Component {
 
   componentWillMount() {
     this.getDatafromTreeSpreeAPI();
+
+    // API Calls
+
+    // Neighbourhoods
+    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods").then(Response => {
+      // Get neighbourhoods and map them
+      let optionsMapped = Response.data.map(neighbourhood => {
+        return {
+          label: neighbourhood.neighbourhood_name,
+          value: neighbourhood.neighbourhood_name
+        };
+      });
+
+      // Map Neighbourhoods to State
+      this.setState({
+        ...this.state,
+        neighbourhoods: optionsMapped
+      });
+
+      // Species
+      Axios.get("http://treespree.wmdd.ca/api/trees/species").then(Response => {
+        // Get species and map them
+        let optionsMapped = Response.data.map(species => {
+          return {
+            label: species.species_name,
+            value: species.species_name
+          };
+        });
+
+        // Map species to State
+        this.setState({
+          ...this.state,
+          species: optionsMapped
+        });
+      });
+
+      // Genus
+      Axios.get("http://treespree.wmdd.ca/api/trees/genus").then(Response => {
+        // Get genus and map them
+        let optionsMapped = Response.data[1].map(genus => {
+          return {
+            label: genus.genus_name,
+            value: genus.genus_name
+          };
+        });
+
+        // Map genus to State
+        this.setState({
+          ...this.state,
+          genus: optionsMapped
+        });
+      });
+    });
   }
 
+  // Code Courtesy - Stackoverflow user: envo
+  arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+
+    for (var i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Component Did Update");
+
+    // If Common Names were Filtered
+    if (
+      !this.arraysEqual(
+        prevState.selectedNeighbourhoods,
+        this.state.selectedNeighbourhoods
+      ) ||
+      !this.arraysEqual(
+        prevState.selectedSpecies,
+        this.state.selectedSpecies
+      ) ||
+      !this.arraysEqual(prevState.selectedGenus, this.state.selectedGenus)
+    ) {
+      // If Advanced Options Change, Filter Tree Common Names!
+
+      let treeFilteredCommonNames = this.state.treeCommonNames.filter(
+        treeCommonName => {
+          let genusSelected = this.state.selectedGenus.includes(
+            treeCommonName.genus_name
+          );
+          let speciesSelected = this.state.selectedSpecies.includes(
+            treeCommonName.species_name
+          );
+          let neighbourhoodsSelected = this.state.selectedNeighbourhoods.filter(
+            selectedNeighbourhood =>
+              treeCommonName.neighbourhood_names.includes(selectedNeighbourhood)
+          );
+
+          let shouldTreeBeRendered =
+            // genusSelected ||
+            // speciesSelected ||
+            // neighbourhoodsSelected ||
+            (genusSelected && speciesSelected) ||
+            (genusSelected && neighbourhoodsSelected) ||
+            (speciesSelected && neighbourhoodsSelected);
+
+          return shouldTreeBeRendered;
+        }
+      );
+
+      console.log(treeFilteredCommonNames);
+
+      if (treeFilteredCommonNames.length)
+        this.setState({
+          ...this.state,
+          treeFilteredCommonNames: treeFilteredCommonNames
+        });
+      else
+        this.setState({
+          ...this.state,
+          treeFilteredCommonNames: this.state.treeCommonNames
+        });
+    }
+  }
+
+  // Handle Change for ADVANCED VIEW
+  // 1 - NEIGHBOURHOOD Selection
+  handleNeighbourhoodChange = selectedOptions => {
+    // Update the state with SelectedOptions(s)
+
+    if (selectedOptions)
+      this.setState({
+        ...this.state,
+        selectedNeighbourhoods: selectedOptions.map(
+          selectedOption => selectedOption.value
+        )
+      });
+    else
+      this.setState({
+        ...this.state,
+        selectedNeighbourhoods: []
+      });
+  };
+
+  // 2 - SPECIES Selection
+  handleSpeciesChange = selectedOptions => {
+    // Update the state with SelectedOptions(s)
+    if (selectedOptions)
+      this.setState({
+        ...this.state,
+        selectedSpecies: selectedOptions.map(
+          selectedOption => selectedOption.value
+        )
+      });
+    else
+      this.setState({
+        ...this.state,
+        selectedSpecies: []
+      });
+  };
+
+  // 2 - GENUS Selection
+  handleGenusChange = selectedOptions => {
+    // Update the state with SelectedOptions(s)
+    if (selectedOptions)
+      this.setState({
+        ...this.state,
+        selectedGenus: selectedOptions.map(
+          selectedOption => selectedOption.value
+        )
+      });
+    else
+      this.setState({
+        ...this.state,
+        selectedGenus: []
+      });
+  };
+
   // Handle Change for Grid View Search
-  handleChange(event) {
-    // Update Grid Query in Component State
+  handleCommonNameChange = selectedOptions => {
     this.setState({
       ...this.state,
-      gridStarterIndex: 0,
-      searchGridQuery: event.target.value
+      selectedCommonNames: selectedOptions
     });
 
-    let treeFilteredCommonNames;
+    let treeFilteredCommonNames = this.state.treeCommonNames;
 
-    // If search Query exists
-    if (this.state.searchGridQuery) {
-      // Filter Array!
-      treeFilteredCommonNames = this.state.treeCommonNames.filter(
-        treeCommonName =>
-          treeCommonName.common_name
-            .toUpperCase()
-            .includes(this.state.searchGridQuery.toUpperCase())
+    // Mutually matching Options and Trees
+    if (selectedOptions) {
+      treeFilteredCommonNames = treeFilteredCommonNames.filter(
+        treeFilteredCommonName =>
+          selectedOptions
+            .map(selectedCommonName => selectedCommonName.value)
+            .includes(treeFilteredCommonName.common_name)
       );
 
       // Set the Filtered Array in State to the one we just filtered..
       this.setState({
         ...this.state,
-        searchGridQuery: event.target.value,
         treeFilteredCommonNames: treeFilteredCommonNames
       });
-    } //Set filtered array back as same as Common Names Array
-    else
+    }
+
+    // Else set it back to the common names Array
+    else if (selectedOptions == null)
       this.setState({
         ...this.state,
-        searchGridQuery: event.target.value,
         treeFilteredCommonNames: this.state.treeCommonNames
       });
-  }
+  };
 
+  // Get Data from API
   getDatafromTreeSpreeAPI() {
     fetch("http://treespree.wmdd.ca/api/trees/names")
       .then(response => response.json())
       .then(responseJson => {
+        let commonNameOptions = responseJson.map(treeCommonName => {
+          return {
+            label: treeCommonName.common_name,
+            value: treeCommonName.common_name
+          };
+        });
+
         this.setState({
           ...this.state,
+          commonNameOptions: commonNameOptions,
           treeCommonNames: responseJson,
           treeFilteredCommonNames: responseJson
         });
@@ -69,16 +290,17 @@ class GridViewV2 extends React.Component {
       });
   }
 
+  // Update Grid View on page change
   updateGridView(event) {
     // Page Number: 4; Items: 60; 4*12
     let newGridStarterIndex = (event.target.id - 1) * this.state.limitPerPage;
-    console.log(`New Starter Index: ${newGridStarterIndex}`);
     this.setState({
       ...this.state,
       gridStarterIndex: newGridStarterIndex
     });
   }
 
+  // Pagination
   paginateGridView = () => {
     let pagination = [];
     let numberOfPages = Math.ceil(
@@ -89,6 +311,7 @@ class GridViewV2 extends React.Component {
     for (let i = 1; i <= numberOfPages; i++) {
       children.push(
         <button
+          className="paginationButton"
           key={i}
           id={i}
           onClick={this.updateGridView.bind(this)}
@@ -104,12 +327,41 @@ class GridViewV2 extends React.Component {
     return (
       <>
         {/* Search Box for Grid View */}
-        <input
+
+        <Select
+          isMulti
+          onChange={this.handleCommonNameChange.bind(this)}
+          options={this.state.commonNameOptions}
+          components={makeAnimated()}
+          autoFocus
           placeholder="Search and explore trees"
-          value={this.state.searchGridQuery}
-          onChange={this.handleChange.bind(this)}
         />
 
+        {/* Advanced Filters */}
+        <h5>Advanced Filters</h5>
+        <div className="GridViewV2-advancedFilters">
+          <Select
+            isMulti
+            onChange={this.handleNeighbourhoodChange.bind(this)}
+            options={this.state.neighbourhoods}
+            components={makeAnimated()}
+            placeholder="Select Neighbourhood(s).."
+          />
+          <Select
+            isMulti
+            onChange={this.handleSpeciesChange.bind(this)}
+            options={this.state.species}
+            components={makeAnimated()}
+            placeholder="Select Species.."
+          />
+          <Select
+            isMulti
+            onChange={this.handleGenusChange.bind(this)}
+            options={this.state.genus}
+            components={makeAnimated()}
+            placeholder="Select Genus.."
+          />
+        </div>
         {/* The Grid View itself */}
         <div className="GridViewV2">
           {this.state.treeFilteredCommonNames
