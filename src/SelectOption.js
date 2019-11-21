@@ -1,4 +1,5 @@
 import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import React, { Component } from "react";
 import Axios from "axios";
 
@@ -47,6 +48,7 @@ class SelectOption extends Component {
           isMulti
           onChange={this.handleChange.bind(this)}
           options={this.state.options}
+          components={makeAnimated()}
         />
       </>
     );
