@@ -2,52 +2,46 @@ import React from "react";
 import axios from "axios";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./PopUp.css";
-
+import Spinner from "react-bootstrap/Spinner";
+// https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
 let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
+  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro&summary=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
 class PopUp extends React.Component {
-  state = {
-    trees: [],
-    common_name: "",
-    value: "maple",
-    data: "",
-    population: 100,
-    paragraph: null,
-    genus_name: "",
-    tree_name: "",
-    imageSrc: "",
-    tree_id: 602,
-    linkToPopUp:""
-  };
+  state = {};
 
   constructor(props) {
     super(props);
-    // this.getImage = this.getImage.bind(this);
-
-    // this.getTrees();
-    // this.getImage();
   }
 
   componentDidMount() {
-    let treespreeAPIQuery = "";
+    let treespreeAPIQuery, linkToSingleView;
 
-    if (this.props.match.params.tree_id) {
-      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
-      this.state.linkToPopUp=`popUp/tree/id/${this.props.match.params.tree_id}`;
-    } else if (this.props.match.params.tree_name) {
-      this.state.linkToPopUp=`popUp/tree/id/{this.props.match.params.tree_name}`;
-      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
+    // If ID is passed in props
+    if (this.props.tree_id) {
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.tree_id}`;
+      linkToSingleView = `/tree/id/${this.props.tree_id}`;
+    } else if (this.props.tree_name) {
+      //Else if the NAME is passed in props
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.tree_name}`;
+      linkToSingleView = `/tree/name/${this.props.tree_name}`;
     }
 
+    if (linkToSingleView) {
+      this.setState({
+        ...this.state,
+        linkToSingleView
+      });
+    }
 
+    // Get Data from API
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
       console.log(response.data);
 
-      //Setting state.common_name to tree's common name
+      //Storing tree data in state
       this.setState(prevstate => {
         return {
           genus_name: tree[0].genus_name,
@@ -74,10 +68,6 @@ class PopUp extends React.Component {
         });
 
       console.log(this.state.tree_name);
-
-      // let searchPic = this.state.tree_name ;
-      // let b = searchPic.toLowerCase();
-      // let imageUrl = wikiPictureUrl + b;
 
       let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
       let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
@@ -115,13 +105,18 @@ class PopUp extends React.Component {
     });
   }
 
-
   render() {
     return (
       <div className="popUp">
         <h1>{this.state.common_name}</h1>
 
-        <img src={this.state.imageSrc} alt="" className="SingleImage" />
+        {this.state.imageSrc ? (
+          <img src={this.state.imageSrc} alt="" className="SingleImage" />
+        ) : (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        )}
 
         <div className="list">
           <ul>
@@ -140,23 +135,21 @@ class PopUp extends React.Component {
 
         <div className="moreInfo">
           <h2> About </h2>
-        
+
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
             <div
-              dangerouslySetInnerHTML={{ __html: this.state.paragraph }}
+              dangerouslySetInnerHTML={{
+                __html: this.state.paragraph.substring(0, 299) + "..."
+              }}
             ></div>
           ) : (
             ""
           )}
 
-
-        
-
-
-
-<a href={this.state.linkToPopUp}><input type="submit" value="Know More" /></a>
-          
+          <a className="PopUp-know-more" href={this.state.linkToSingleView}>
+            KNOW MORE
+          </a>
         </div>
       </div>
     );
