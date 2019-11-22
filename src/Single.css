@@ -29,6 +29,10 @@
 .others .shop{
     border-radius: .8em;
 }
+.moreInfo p{
+    font-size: .9em;
+    text-align: left;
+  }
 
 
       @media only screen and (max-width: 650px) 
@@ -77,26 +81,29 @@
                 width:40%;
                 border:1px solid black;
             }
-            .moreInfo p{
-                font-size: .9em;
-              }
-
+          
+            .moreInfo{
+                padding: 1px 5%;
+            }
             
       }
 
 
       @media only screen and (min-width: 650px) {
+
+       
      
-        /* .singlePage .image{
-            width:40%;
-            display:inline-block;
-        }
-     */
-     .singlePage img{
-        clip: rect(0px,60px,200px,0px);
-     }
+        .SingleImage{
+            object-fit: cover;
+    
+         }
+         .singlePage img{
+           height:20em;
+           width:100%;
+    
+         }
         .singlePage .info{
-           background-color: gray;
+           background-color: #50642d;
            color:white;
         } 
         .singlePage .banner{
@@ -107,6 +114,9 @@
         .singlePage .info h1{
             padding-top:.5em;
             padding-bottom:.5em;
+          
+                font-size:2em;
+            
 
         }
         .singlePage .list ul{
@@ -158,32 +168,46 @@
                 display:grid;
                 grid-template-columns:  40% auto;
             }
-            .moreInfo p{
-                font-size: 1em;
-              }
+            .moreInfo{
+                padding: 1px 5%;
+            }
+            
               .singlePage{
                   margin-bottom:1.5em;
               }
+
+              .moreInfo p{
+                font-size: 1em;
+              }
+              .moreInfo{
+                  max-width:550px;
+                  margin:auto;
+              }
+              
             
 
       }
 
-      @media only screen and (min-width: 900px) {
+      /* @media only screen and (min-width: 900px) {
      
-        /* .singlePage .image{
-            width:40%;
-            display:inline-block;
-        }
-     */
-     
+    
+     .SingleImage{
+        object-fit: cover;
+
+     }
+     .singlePage img{
+       height:20em;
+       width:100%;
+
+     }
         .singlePage .info{
-           background-color: gray;
-           color:white;
+            background-color: #50642d;
+            color:white;
         } 
         .singlePage .banner{
             padding-top:1.2em;
             display: grid;
-            grid-template-columns: 45% auto;
+            grid-template-columns: 50% auto;
         }
         .singlePage .info h1{
             padding-top:.5em;
@@ -214,9 +238,7 @@
                 font-weight: bold;
                 font-style: italic;
               }
-              /* .others{
-                margin-top:2em;  
-              } */
+            
               .location{
                 padding:.5em;
                 width:40%;
@@ -242,10 +264,27 @@
             .moreInfo p{
                 font-size: 1em;
               }
+              .moreInfo{
+                  max-width:550px;
+                  margin:auto;
+              }
               .singlePage{
                   margin-bottom:1.5em;
               }
 
       }
 
-    
+     */
+
+
+
+
+     .popup-content {
+         width:70%  !important;
+         margin:auto !important;
+         /* position:static !important; */
+
+         top:5em  !important;
+         left:15%  !important;
+     }
+ 

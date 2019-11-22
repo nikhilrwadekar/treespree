@@ -3,9 +3,8 @@ import axios from "axios";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./PopUp.css";
 
-// URL Default for getting a summary paragraph from Wiki's API
 let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=";
+  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -13,87 +12,109 @@ class PopUp extends React.Component {
   state = {
     trees: [],
     common_name: "",
-    age: 12,
     value: "maple",
     data: "",
     population: 100,
     paragraph: null,
     genus_name: "",
+    tree_name: "",
     imageSrc: "",
-    species_name: ""
+    tree_id: 602,
+    parameterId:""
   };
 
   constructor(props) {
     super(props);
-    console.log("treessssssssssssss");
-    this.getTrees();
-    this.getImage();
+    // this.getImage = this.getImage.bind(this);
+
+    // this.getTrees();
+    // this.getImage();
   }
 
-  getTrees() {
-    axios.get("http://treespree.wmdd.ca/api/trees").then(response => {
-      let trees = response.data;
-      // this.setState({...this.state,trees: trees})
+  componentDidMount() {
+    let treespreeAPIQuery = "";
 
-      //giving a fixed id
-      let tree_id = 969;
-      //filtering tree from api that match this id
-      let found = trees.find(function(element) {
-        return (element.tree_id = tree_id);
-      });
-      this.state.genus_name = found.genus_name;
-      this.state.common_name = found.common_name_tree;
-      this.state.species_name = found.species_name;
+    if (this.props.match.params.tree_id) {
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
+      this.state.parameterId=this.props.match.params.tree_id;
+    } else if (this.props.match.params.tree_name) {
+      this.state.parameterId=this.props.match.params.tree_name;
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
+    }
+
+
+    axios.get(treespreeAPIQuery).then(response => {
+      let tree = response.data;
+      console.log(response.data);
+
       //Setting state.common_name to tree's common name
-      //  this.setState((prevstate)=>{
-      //     return{
-      //         common_name: found.common_name_tree
-      //            }
+      this.setState(prevstate => {
+        return {
+          genus_name: tree[0].genus_name,
+          species_name: tree[0].species_name,
+          common_name: tree[0].common_name_tree,
+          tree_name: tree[0].absolute_common_name_tree.toLowerCase(),
+          population: tree[0].common_name_tree_count
+        };
+      });
 
-      // });
-
-      //using fetched common name in wikipedia URL
-      //let search = found.genus_name;
-      //temperary search keyword untill API is not getting fixed
-      let search = "maple";
-      // Append the search query to the link
+      let search = this.state.tree_name;
       let searchUrl = wikiUrl + search;
-      // Fetch data from constructed search URL
       fetch(searchUrl)
+        .then(res => {
+          return res.json();
+        })
+        .then(foundData => {
+          console.log(foundData);
+          this.setState({
+            paragraph:
+              foundData.query.pages[Object.keys(foundData.query.pages)[0]]
+                .extract
+          });
+        });
+
+      console.log(this.state.tree_name);
+
+      // let searchPic = this.state.tree_name ;
+      // let b = searchPic.toLowerCase();
+      // let imageUrl = wikiPictureUrl + b;
+
+      let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
+      let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
+
+      fetch(searchUrl1)
         .then(res => {
           // Return data in form of JSON
           return res.json();
         })
         .then(foundData => {
-          this.setState({
-            paragraph:
-              // Take the returned JSON data, access the first property (regardless of the name), get that property's 'extract'
-              // Store the extract in the current 'State'
-              foundData.query.pages[Object.keys(foundData.query.pages)[0]]
-                .extract
-          });
+          let imageObj =
+            foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+
+          if (imageObj.thumbnail == undefined) {
+            fetch(searchUrl2)
+              .then(res => {
+                // Return data in form of JSON
+                return res.json();
+              })
+              .then(foundData => {
+                let imageObj =
+                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+                this.setState({
+                  imageSrc: imageObj.thumbnail.source
+                });
+              });
+          } else {
+            this.setState({
+              imageSrc: imageObj.thumbnail.source
+            });
+          }
+
+          console.log(this.state.imageSrc);
         });
     });
   }
 
-  getImage() {
-    let searchPic = this.state.value;
-    let imageUrl = wikiPictureUrl + searchPic;
-    console.log("from get IMage()");
-    fetch(imageUrl)
-      .then(res => {
-        // Return data in form of JSON
-        return res.json();
-      })
-      .then(foundData => {
-        let imageObj =
-          foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-        this.setState({
-          imageSrc: imageObj.thumbnail.source
-        });
-        console.log(this.state.imageSrc);
-      });
-  }
 
   render() {
     return (
@@ -119,10 +140,21 @@ class PopUp extends React.Component {
 
         <div className="moreInfo">
           <h2> About </h2>
+        
           {/* If state's 'paragraph' is not null and has any value, render the component */}
-          {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
+          {this.state.paragraph ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: this.state.paragraph }}
+            ></div>
+          ) : (
+            ""
+          )}
 
-          <input type="submit" value="Know More" />
+
+            
+
+
+          <a href="/single/"><input type="submit" value="Know More" /></a>
         </div>
       </div>
     );
