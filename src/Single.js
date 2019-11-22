@@ -125,6 +125,7 @@ class Single extends React.Component {
           <div className="image">
             <img src={this.state.imageSrc} alt="" className="SingleImage" />
           </div>
+          
 
           <div className="info">
             <h1>{this.state.common_name}</h1>

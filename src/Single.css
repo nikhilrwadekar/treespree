@@ -188,9 +188,19 @@
 
       }
 
-      /* @media only screen and (min-width: 900px) {
-     
-    
+      @media only screen and (min-width: 900px) {
+     .others{
+        margin-top:2em;
+     }
+     .list{
+        margin-top:2em;
+     }
+     .shop div{
+         padding:.3em;
+     }
+
+      }
+    /*
      .SingleImage{
         object-fit: cover;
 
