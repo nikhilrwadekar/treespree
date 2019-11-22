@@ -1,3 +1,13 @@
+.singlePage .others a{
+color:white;
+text-decoration: none;
+padding:.3em;
+}
+.singlePage .others{
+  
+    text-align: center;
+}
+
 .SingleImage{
     width:100%;
 }
@@ -195,9 +205,7 @@
      .list{
         margin-top:2em;
      }
-     .shop div{
-         padding:.3em;
-     }
+    
 
       }
     /*

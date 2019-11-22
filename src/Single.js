@@ -149,12 +149,14 @@ class Single extends React.Component {
               <div className="location">
                 <div></div>
                 <div>
-                  <a href="/"> Find One Near Me</a>
+                  <a href="/explore"> Find One Near Me</a>
                 </div>
               </div>
               <div className="shop">
                 <div></div>
-                <div>Shop Products</div>
+                <div>
+                <a href="/explore">Shop Products</a>
+                </div>
               </div>
             </div>
           </div>
