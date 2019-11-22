@@ -1,3 +1,5 @@
+/* global google */
+
 import React from "react";
 import axios from "axios";
 
@@ -36,13 +38,60 @@ class MapView extends React.Component {
 
   // After the component is mounted..
   componentDidMount() {
-    // Call the treeSpree API
+    // Set Data Layer
+  }
+
+  getTreeDataAndStoreInState(boundingBox) {
     axios
-      .get("http://treespree.wmdd.ca/api/trees/type/maple?count=150")
+      .get(
+        `http://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
+      )
       .then(res => {
         const trees = res.data;
         this.setState({ trees: trees });
       });
+  }
+
+  // On Zoom Change function (Handler)
+  handleMapUpdate() {
+    // Current Zoom Level
+    let currentZoomLevel = this.map.getZoom();
+
+    // Get current trees bound by current view from API..
+    if (currentZoomLevel >= 20) {
+      console.log("You're zoomed in enough! Updating Trees on map..");
+      // Derive NE and SW
+      let NE = this.map.getBounds().getNorthEast();
+      let SW = this.map.getBounds().getSouthWest();
+
+      // Bounding Box
+      let boundingBox = {
+        NorthWestX: NE.lat(),
+        NorthWestY: SW.lng(),
+        SouthEastX: SW.lat(),
+        SouthEastY: NE.lng()
+      };
+      // Point is in bounding box
+      console.log("Ready to pull data!");
+      console.log(boundingBox);
+
+      this.getTreeDataAndStoreInState(boundingBox);
+    } else if (currentZoomLevel < 20) {
+      this.setState({
+        trees: []
+      });
+    }
+    console.log("Current Zoom:" + currentZoomLevel);
+  }
+
+  //
+  onBoundsChanged() {
+    console.log("Map Bounds Changed!");
+  }
+
+  onIdle() {
+    console.log("Now Idle..");
+    this.handleMapUpdate();
   }
 
   render() {
@@ -53,8 +102,11 @@ class MapView extends React.Component {
           ref={ref => {
             this.map = ref;
           }}
-          defaultZoom={10}
-          defaultCenter={{ lat: 49.28273, lng: -123.120735 }}
+          defaultZoom={20}
+          defaultCenter={{ lat: 49.2258331, lng: -123.1078227 }}
+          // Pass this.map instead of this as you need to bind map's this
+          onZoomChanged={this.handleMapUpdate.bind(this)}
+          onIdle={this.onIdle.bind(this)}
         >
           <SearchBox>
             <input
@@ -75,64 +127,72 @@ class MapView extends React.Component {
               }}
             />
           </SearchBox>
-          <MarkerClusterer averageCenter gridSize={60}>
-            {/* The Marker Loop for the Map */}
-            {this.state.trees.map(tree => (
-              <div>
-                {/* Marker for the Marker Clusterer */}
-                <Marker
-                  icon={{
-                    url: `/svg/leaves/${tree.absolute_common_name}.svg`,
-                    scale: 0.5
-                  }}
-                  key={tree.tree_id}
-                  position={{
-                    lat: tree.tree_latitude,
-                    lng: tree.tree_longitude
-                  }}
-                  title={tree.common_name}
+          {/* <MarkerClusterer averageCenter gridSize={60}> */}
+          {/* The Marker Loop for the Map */}
+          {this.state.trees.map(tree => (
+            <div>
+              {/* Marker for the Marker Clusterer */}
+              <Marker
+                icon={
+                  new google.maps.MarkerImage(
+                    `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(75, 75)
+                  )
+                }
+                key={tree.tree_id}
+                position={{
+                  lat: tree.tree_latitude,
+                  lng: tree.tree_longitude
+                }}
+                title={tree.common_name}
+                // onClick={console.log("Clicked")}
+              >
+                {/* InfoBox for the Marker */}
+                <InfoBox
+                  defaultPosition={
+                    new window.google.maps.LatLng(
+                      tree.tree_latitude,
+                      tree.tree_longitude
+                    )
+                  }
+                  options={{ closeBoxURL: ``, enableEventPropagation: true }}
                 >
-                  {/* InfoBox for the Marker */}
-                  <InfoBox
-                    defaultPosition={
-                      new window.google.maps.LatLng(
-                        tree.tree_latitude,
-                        tree.tree_longitude
-                      )
-                    }
-                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                  <div
+                    style={{
+                      backgroundColor: `green`,
+                      opacity: 0.5,
+                      padding: `12px`,
+                      borderRadius: "10px"
+                    }}
                   >
                     <div
                       style={{
-                        backgroundColor: `yellow`,
-                        opacity: 0.75,
-                        padding: `12px`
+                        fontSize: `16px`,
+                        fontColor: `#08233B`,
+                        fontFamily: "Karla"
                       }}
                     >
-                      <div
+                      <a
                         style={{
-                          fontSize: `16px`,
-                          fontColor: `#08233B`,
-                          fontFamily: "Karla"
+                          fontSize: `14px`,
+                          textTransform: "capitalize",
+                          fontStyle: "italic",
+                          color: "#fff"
                         }}
+                        href={`/tree/id/${tree.tree_id}`}
                       >
-                        <a
-                          style={{
-                            fontSize: `14px`,
-                            textTransform: "capitalize",
-                            fontStyle: "italic"
-                          }}
-                          href={`/tree/id/${tree.tree_id}`}
-                        >
-                          {tree.common_name.toLowerCase()}
-                        </a>
-                      </div>
+                        {tree.common_name_tree.toLowerCase()}
+                      </a>
                     </div>
-                  </InfoBox>
-                </Marker>
-              </div>
-            ))}
-          </MarkerClusterer>
+                  </div>
+                </InfoBox>
+              </Marker>
+            </div>
+          ))}
+          {/* </MarkerClusterer> */}
         </GoogleMap>
       </div>
     );
