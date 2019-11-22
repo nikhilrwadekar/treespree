@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
+import Popup from "reactjs-popup";
+import Pops from "./PopUp.js";
+ 
 
 let wikiUrl =
   "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
@@ -157,6 +160,9 @@ class Single extends React.Component {
         </div>
         <div className="moreInfo">
           <h3> ABOUT </h3>
+        
+
+          
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
             <div
