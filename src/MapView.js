@@ -114,6 +114,7 @@ class MapView extends React.Component {
     this.handleMapUpdate();
   }
 
+  // CITE THIS!!!!!
   showInfo(a) {
     this.setState({ showInfoIndex: a });
   }
@@ -196,7 +197,7 @@ class MapView extends React.Component {
                         width: "300px"
                       }}
                     >
-                      <PopUp />
+                      <PopUp tree_id={tree.tree_id} />
                     </div>
                   </InfoBox>
                 )}
