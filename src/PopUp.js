@@ -20,7 +20,7 @@ class PopUp extends React.Component {
     tree_name: "",
     imageSrc: "",
     tree_id: 602,
-    parameterId:""
+    linkToPopUp:""
   };
 
   constructor(props) {
@@ -36,9 +36,9 @@ class PopUp extends React.Component {
 
     if (this.props.match.params.tree_id) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
-      this.state.parameterId=this.props.match.params.tree_id;
+      this.state.linkToPopUp=`popUp/tree/id/${this.props.match.params.tree_id}`;
     } else if (this.props.match.params.tree_name) {
-      this.state.parameterId=this.props.match.params.tree_name;
+      this.state.linkToPopUp=`popUp/tree/id/{this.props.match.params.tree_name}`;
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
     }
 
@@ -151,10 +151,12 @@ class PopUp extends React.Component {
           )}
 
 
-            
+        
 
 
-          <a href="/single/"><input type="submit" value="Know More" /></a>
+
+<a href={this.state.linkToPopUp}><input type="submit" value="Know More" /></a>
+          
         </div>
       </div>
     );
