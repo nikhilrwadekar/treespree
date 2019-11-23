@@ -1,6 +1,28 @@
+/* global google */
+
+/*
+ <div
+                        style={{
+                          fontSize: `16px`,
+                          fontColor: `#08233B`,
+                          fontFamily: "Karla"
+                        }}
+                      >
+                        <a
+                          style={{
+                            fontSize: `14px`,
+                            textTransform: "capitalize",
+                            fontStyle: "italic",
+                            color: "#fff"
+                          }}
+                          href={`/tree/id/${tree.tree_id}`}
+                        >
+                          tess {tree.common_name_tree.toLowerCase()}
+                        </a>
+                      </div> */
 import React from "react";
 import axios from "axios";
-
+import PopUp from "./PopUp";
 // Google Maps Import
 import {
   GoogleMap,
@@ -36,13 +58,65 @@ class MapView extends React.Component {
 
   // After the component is mounted..
   componentDidMount() {
-    // Call the treeSpree API
+    // Set Data Layer
+  }
+
+  getTreeDataAndStoreInState(boundingBox) {
     axios
-      .get("http://treespree.wmdd.ca/api/trees/type/maple?count=150")
+      .get(
+        `http://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
+      )
       .then(res => {
         const trees = res.data;
         this.setState({ trees: trees });
       });
+  }
+
+  // On Zoom Change function (Handler)
+  handleMapUpdate() {
+    // Current Zoom Level
+    let currentZoomLevel = this.map.getZoom();
+
+    // Get current trees bound by current view from API..
+    if (currentZoomLevel >= 20) {
+      console.log("You're zoomed in enough! Updating Trees on map..");
+      // Derive NE and SW
+      let NE = this.map.getBounds().getNorthEast();
+      let SW = this.map.getBounds().getSouthWest();
+
+      // Bounding Box
+      let boundingBox = {
+        NorthWestX: NE.lat(),
+        NorthWestY: SW.lng(),
+        SouthEastX: SW.lat(),
+        SouthEastY: NE.lng()
+      };
+      // Point is in bounding box
+      console.log("Ready to pull data!");
+      console.log(boundingBox);
+
+      this.getTreeDataAndStoreInState(boundingBox);
+    } else if (currentZoomLevel < 20) {
+      this.setState({
+        trees: []
+      });
+    }
+    console.log("Current Zoom:" + currentZoomLevel);
+  }
+
+  //
+  onBoundsChanged() {
+    console.log("Map Bounds Changed!");
+  }
+
+  onIdle() {
+    console.log("Now Idle..");
+    this.handleMapUpdate();
+  }
+
+  // CITE THIS!!!!!
+  showInfo(a) {
+    this.setState({ showInfoIndex: a });
   }
 
   render() {
@@ -53,8 +127,11 @@ class MapView extends React.Component {
           ref={ref => {
             this.map = ref;
           }}
-          defaultZoom={10}
-          defaultCenter={{ lat: 49.28273, lng: -123.120735 }}
+          defaultZoom={20}
+          defaultCenter={{ lat: 49.2258331, lng: -123.1078227 }}
+          // Pass this.map instead of this as you need to bind map's this
+          onZoomChanged={this.handleMapUpdate.bind(this)}
+          onIdle={this.onIdle.bind(this)}
         >
           <SearchBox>
             <input
@@ -75,24 +152,33 @@ class MapView extends React.Component {
               }}
             />
           </SearchBox>
-          <MarkerClusterer averageCenter gridSize={60}>
-            {/* The Marker Loop for the Map */}
-            {this.state.trees.map(tree => (
-              <div>
-                {/* Marker for the Marker Clusterer */}
-                <Marker
-                  icon={{
-                    url: `/svg/leaves/${tree.absolute_common_name}.svg`,
-                    scale: 0.5
-                  }}
-                  key={tree.tree_id}
-                  position={{
-                    lat: tree.tree_latitude,
-                    lng: tree.tree_longitude
-                  }}
-                  title={tree.common_name}
-                >
-                  {/* InfoBox for the Marker */}
+          {/* <MarkerClusterer averageCenter gridSize={60}> */}
+          {/* The Marker Loop for the Map */}
+          {this.state.trees.map(tree => (
+            <div>
+              {/* Marker for the Marker Clusterer */}
+              <Marker
+                icon={
+                  new google.maps.MarkerImage(
+                    `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    null,
+                    null,
+                    null,
+                    new google.maps.Size(75, 75)
+                  )
+                }
+                key={tree.tree_id}
+                position={{
+                  lat: tree.tree_latitude,
+                  lng: tree.tree_longitude
+                }}
+                title={tree.common_name}
+                onClick={() => {
+                  this.showInfo(tree.tree_id);
+                }}
+              >
+                {/* InfoBox for the Marker */}
+                {this.state.showInfoIndex == tree.tree_id && (
                   <InfoBox
                     defaultPosition={
                       new window.google.maps.LatLng(
@@ -104,35 +190,21 @@ class MapView extends React.Component {
                   >
                     <div
                       style={{
-                        backgroundColor: `yellow`,
-                        opacity: 0.75,
-                        padding: `12px`
+                        backgroundColor: `white`,
+                        opacity: 1,
+                        padding: `12px`,
+                        borderRadius: "10px",
+                        width: "300px"
                       }}
                     >
-                      <div
-                        style={{
-                          fontSize: `16px`,
-                          fontColor: `#08233B`,
-                          fontFamily: "Karla"
-                        }}
-                      >
-                        <a
-                          style={{
-                            fontSize: `14px`,
-                            textTransform: "capitalize",
-                            fontStyle: "italic"
-                          }}
-                          href={`/tree/id/${tree.tree_id}`}
-                        >
-                          {tree.common_name.toLowerCase()}
-                        </a>
-                      </div>
+                      <PopUp tree_id={tree.tree_id} />
                     </div>
                   </InfoBox>
-                </Marker>
-              </div>
-            ))}
-          </MarkerClusterer>
+                )}
+              </Marker>
+            </div>
+          ))}
+          {/* </MarkerClusterer> */}
         </GoogleMap>
       </div>
     );

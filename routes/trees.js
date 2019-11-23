@@ -9,7 +9,9 @@ const {
   getTreeType,
   getTreeByID,
   getTreeByName,
-  getTreeNames
+  getTreeNames,
+  getTreeGenus,
+  getTreeSpecies
 } = require("../controllers/treeController");
 
 // GET '/api/albums' sends an array of albums - using albumController;
@@ -29,6 +31,12 @@ router.get("/name/:tree_name", getTreeByName);
 
 // GET '/api/trees/tree_id
 router.get("/names", getTreeNames);
+
+// GET '/api/trees/genus
+router.get("/genus", getTreeGenus);
+
+// GET '/api/trees/species
+router.get("/species", getTreeSpecies);
 
 // Export the Router
 module.exports = router;

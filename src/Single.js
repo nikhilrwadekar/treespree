@@ -1,9 +1,14 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faShoppingBag,
+  faMapMarkerAlt
+} from "@fortawesome/free-solid-svg-icons";
 
 let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exchars=1000&explaintext&redirects=1&titles=";
+  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&summary=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -31,18 +36,17 @@ class Single extends React.Component {
 
   componentDidMount() {
     let treespreeAPIQuery = "";
-    
-    if(this.props.match.params.tree_id) {
-        treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
+
+    if (this.props.match.params.tree_id) {
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
     } else if (this.props.match.params.tree_name) {
-        treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
     }
 
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
-    console.log(response.data)
-      
-      
+      console.log(response.data);
+
       //Setting state.common_name to tree's common name
       this.setState(prevstate => {
         return {
@@ -55,73 +59,66 @@ class Single extends React.Component {
       });
 
       let search = this.state.tree_name;
-      let searchUrl = wikiUrl + search
+      let searchUrl = wikiUrl + search;
       fetch(searchUrl)
         .then(res => {
           return res.json();
         })
         .then(foundData => {
+          console.log(foundData);
           this.setState({
             paragraph:
               foundData.query.pages[Object.keys(foundData.query.pages)[0]]
                 .extract
           });
         });
-   
 
-    console.log(this.state.tree_name);
+      console.log(this.state.tree_name);
 
-    // let searchPic = this.state.tree_name ;
-    // let b = searchPic.toLowerCase();
-    // let imageUrl = wikiPictureUrl + b;
-   
-    let searchUrl1= wikiPictureUrl+this.state.genus_name.toLowerCase();
-    let searchUrl2= wikiPictureUrl+this.state.tree_name.toLowerCase();
+      // let searchPic = this.state.tree_name ;
+      // let b = searchPic.toLowerCase();
+      // let imageUrl = wikiPictureUrl + b;
 
+      let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
+      let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
 
+      fetch(searchUrl1)
+        .then(res => {
+          // Return data in form of JSON
+          return res.json();
+        })
+        .then(foundData => {
+          let imageObj =
+            foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-
-    fetch(searchUrl1)
-      .then(res => {
-        // Return data in form of JSON
-        return res.json();
-      })
-      .then(foundData => {
-        let imageObj = foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-        
-        if(imageObj.thumbnail == undefined)
-        {
+          if (imageObj.thumbnail == undefined) {
             fetch(searchUrl2)
-            .then(res => {
-              // Return data in form of JSON
-              return res.json();
-            })
-            .then(foundData => {
-              let imageObj =foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-              this.setState({
-                imageSrc: imageObj.thumbnail.source
+              .then(res => {
+                // Return data in form of JSON
+                return res.json();
+              })
+              .then(foundData => {
+                let imageObj =
+                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+                this.setState({
+                  imageSrc: imageObj.thumbnail.source
+                });
               });
-            });
-
-        }
-
-        else
-        {
+          } else {
             this.setState({
-                imageSrc: imageObj.thumbnail.source
-              });
-        }
-       
-        console.log(this.state.imageSrc);
-      });
+              imageSrc: imageObj.thumbnail.source
+            });
+          }
+
+          console.log(this.state.imageSrc);
+        });
     });
   }
 
-
-//   componentDidMount() {
-//     console.log(this.props.match.params.tree_id)
-//     console.log(this.props.match.params.tree_name)
-//   }
+  //   componentDidMount() {
+  //     console.log(this.props.match.params.tree_id)
+  //     console.log(this.props.match.params.tree_name)
+  //   }
 
   render() {
     return (
@@ -151,22 +148,36 @@ class Single extends React.Component {
 
             <div className="others">
               <div className="location">
-                <div></div>
                 <div>
-                  <a href="/"> Find One Near Me</a>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </div>
+                <div>
+                  <a href="/explore">Find One Near Me</a>
                 </div>
               </div>
               <div className="shop">
-                <div></div>
-                <div>Shop Products</div>
+                <div>
+                  {" "}
+                  <FontAwesomeIcon icon={faShoppingBag} />
+                </div>
+                <div>
+                  <a href="/explore">Shop Products</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="moreInfo">
           <h3> ABOUT </h3>
+
           {/* If state's 'paragraph' is not null and has any value, render the component */}
-          {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
+          {this.state.paragraph ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: this.state.paragraph }}
+            ></div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

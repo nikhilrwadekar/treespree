@@ -2,184 +2,158 @@ import React from "react";
 import axios from "axios";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./PopUp.css";
-
-
-// URL Default for getting a summary paragraph from Wiki's API
+import Spinner from "react-bootstrap/Spinner";
+// https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
 let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=";
-let wikiPictureUrl="https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
+  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro&summary=&origin=*&titles=";
+let wikiPictureUrl =
+  "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
-class PopUp extends React.Component{
-    state = {
-        trees: [],
-        common_name:'',
-        age:12,
-        value: "maple",
-        data: "",
-        population:100,
-        paragraph: null,
-        genus_name:'',
-        imageSrc:'',
-        species_name:''
-      }
-    
-    constructor(props) {
-        super(props);
-        console.log("treessssssssssssss")
-        this.getTrees();
-        this.getImage();
-     
+class PopUp extends React.Component {
+  state = {};
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    let treespreeAPIQuery, linkToSingleView;
+
+    // If ID is passed in props
+    if (this.props.tree_id) {
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.tree_id}`;
+      linkToSingleView = `/tree/id/${this.props.tree_id}`;
+    } else if (this.props.tree_name) {
+      //Else if the NAME is passed in props
+      treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.tree_name}`;
+      linkToSingleView = `/tree/name/${this.props.tree_name}`;
     }
 
-    getTrees() {
-        axios.get("http://treespree.wmdd.ca/api/trees").then(response => {
-        let trees = response.data;
-        // this.setState({...this.state,trees: trees})
+    if (linkToSingleView) {
+      this.setState({
+        ...this.state,
+        linkToSingleView
+      });
+    }
 
-        //giving a fixed id
-        let tree_id=969;
-        //filtering tree from api that match this id
-        let found = trees.find(function (element)
-         {
-            return element.tree_id = tree_id;
-                
+    // Get Data from API
+    axios.get(treespreeAPIQuery).then(response => {
+      let tree = response.data;
+      console.log(response.data);
+
+      //Storing tree data in state
+      this.setState(prevstate => {
+        return {
+          genus_name: tree[0].genus_name,
+          species_name: tree[0].species_name,
+          common_name: tree[0].common_name_tree,
+          tree_name: tree[0].absolute_common_name_tree.toLowerCase(),
+          population: tree[0].common_name_tree_count
+        };
+      });
+
+      let search = this.state.tree_name;
+      let searchUrl = wikiUrl + search;
+      fetch(searchUrl)
+        .then(res => {
+          return res.json();
+        })
+        .then(foundData => {
+          console.log(foundData);
+          this.setState({
+            paragraph:
+              foundData.query.pages[Object.keys(foundData.query.pages)[0]]
+                .extract
           });
-          this.state.genus_name=found.genus_name;
-          this.state.common_name=found.common_name_tree;
-          this.state.species_name=found.species_name;
-          //Setting state.common_name to tree's common name
-        //  this.setState((prevstate)=>{
-        //     return{
-        //         common_name: found.common_name_tree
-        //            }
-                 
-        // });   
-      
-            //using fetched common name in wikipedia URL
-            //let search = found.genus_name;
-            //temperary search keyword untill API is not getting fixed
-            let search = "maple";
-            // Append the search query to the link
-            let searchUrl = wikiUrl + search;
-            // Fetch data from constructed search URL
-            fetch(searchUrl)
-           .then(res => {
-            // Return data in form of JSON
-            return res.json();
-            })
-            .then(foundData => {
+        });
+
+      console.log(this.state.tree_name);
+
+      let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
+      let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
+
+      fetch(searchUrl1)
+        .then(res => {
+          // Return data in form of JSON
+          return res.json();
+        })
+        .then(foundData => {
+          let imageObj =
+            foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+
+          if (imageObj.thumbnail == undefined) {
+            fetch(searchUrl2)
+              .then(res => {
+                // Return data in form of JSON
+                return res.json();
+              })
+              .then(foundData => {
+                let imageObj =
+                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+                this.setState({
+                  imageSrc: imageObj.thumbnail.source
+                });
+              });
+          } else {
             this.setState({
-              paragraph:
-                // Take the returned JSON data, access the first property (regardless of the name), get that property's 'extract'
-                // Store the extract in the current 'State'
-                foundData.query.pages[Object.keys(foundData.query.pages)[0]].extract
-                 });
+              imageSrc: imageObj.thumbnail.source
             });
-      
-        })
+          }
 
+          console.log(this.state.imageSrc);
+        });
+    });
+  }
 
+  render() {
+    return (
+      <div className="popUp">
+        <h1>{this.state.common_name}</h1>
 
+        {this.state.imageSrc ? (
+          <img src={this.state.imageSrc} alt="" className="SingleImage" />
+        ) : (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        )}
 
+        <div className="list">
+          <ul>
+            <li>Species</li>
+            <li>{this.state.species_name}</li>
+          </ul>
+          <ul>
+            <li>Genus</li>
+            <li>{this.state.genus_name}</li>
+          </ul>
+          <ul>
+            <li>Population</li>
+            <li>{this.state.population}</li>
+          </ul>
+        </div>
 
-    }
+        <div className="moreInfo">
+          <h2> About </h2>
 
- getImage()
- {
-    let searchPic = this.state.value;
-    let imageUrl = wikiPictureUrl + searchPic;
-    console.log("from get IMage()")
-    fetch(imageUrl)
-    .then(res => {
-    // Return data in form of JSON
-    return res.json();
-    })
-    .then(foundData => {
-        
-    let imageObj=foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-    this.setState({
-        imageSrc:imageObj.thumbnail.source
-           });
-           console.log(this.state.imageSrc)
-        })
- }
+          {/* If state's 'paragraph' is not null and has any value, render the component */}
+          {this.state.paragraph ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: this.state.paragraph.substring(0, 299) + "..."
+              }}
+            ></div>
+          ) : (
+            ""
+          )}
 
-
-
-
-
-
-    render()
-    {
-    return(
-        
-
-        <div className="popUp">
-            <h1>{this.state.common_name}</h1>
-           
-           
-            <img src={this.state.imageSrc} alt="" className="SingleImage"/>
-      
-            <div className="list">
-            <ul>
-                <li>
-                        Species
-                    </li>
-                    <li>
-                    {this.state.species_name}
-                    </li>
-                </ul>
-                <ul>
-                <li>
-                        Genus
-                    </li>
-                    <li>
-                    {this.state.genus_name}
-                    </li>
-                </ul>
-                <ul>
-                <li>
-                        Population
-                    </li>
-                    <li>
-                    {this.state.population}
-                    </li>
-                </ul>
-
-
-
-            </div>
-
-
-           
-
-
-          
-
-
-            
-            <div className="moreInfo">
-                <h2> About  </h2>
-                    {/* If state's 'paragraph' is not null and has any value, render the component */}
-                    {this.state.paragraph ? <p>{this.state.paragraph}</p> : ""}
-
-                <input type="submit" value="Know More"/>
-            </div>
-
-
-
- </div>
-        )
-    }
+          <a className="PopUp-know-more" href={this.state.linkToSingleView}>
+            KNOW MORE
+          </a>
+        </div>
+      </div>
+    );
+  }
 }
-
-
-
-
-
-
-
-
-
 
 export default PopUp;
