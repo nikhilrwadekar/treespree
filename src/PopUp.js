@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
 import "./PopUp.css";
 import Spinner from "react-bootstrap/Spinner";
 // https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
@@ -143,9 +143,13 @@ class PopUp extends React.Component {
             ""
           )}
 
-          <a className="PopUp-know-more" href={this.state.linkToSingleView}>
+          <Button
+            // className="PopUp-know-more"
+            href={this.state.linkToSingleView}
+            variant="success"
+          >
             KNOW MORE
-          </a>
+          </Button>
         </div>
       </div>
     );
