@@ -5,7 +5,6 @@ import treespreelogo from "./images/TreespreeLogo.png";
 
 class Header extends React.Component {
   render() {
-    console.log(this.state.headerLinks);
     return (
       // Boilerplate from React Bootstrap Nav: https://react-bootstrap.github.io/components/navbar/
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
