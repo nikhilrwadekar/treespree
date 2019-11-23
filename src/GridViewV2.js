@@ -127,7 +127,7 @@ class GridViewV2 extends React.Component {
     return true;
   }
 
-  // Window Handling Code from https://www.hawatel.com/blog/handle-window-resize-in-react/
+  // Window Resize Handling Code from https://www.hawatel.com/blog/handle-window-resize-in-react/
 
   componentDidMount() {
     console.log("component Did Mount" + this.state.limitPerPage);
