@@ -12,10 +12,6 @@ let wikiPictureUrl =
 class PopUp extends React.Component {
   state = {};
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     let treespreeAPIQuery, linkToSingleView;
 
@@ -81,7 +77,7 @@ class PopUp extends React.Component {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-          if (imageObj.thumbnail == undefined) {
+          if (imageObj.thumbnail === undefined) {
             fetch(searchUrl2)
               .then(res => {
                 // Return data in form of JSON

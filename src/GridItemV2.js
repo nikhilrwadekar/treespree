@@ -6,10 +6,6 @@ import PopUpComponent from "./PopUp";
 class GridItemV2 extends React.Component {
   state = {};
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.getDatafromTreeSpreeAPI();
   }
