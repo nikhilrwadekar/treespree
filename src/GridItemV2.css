@@ -5,7 +5,7 @@
   align-self: center;
   /* background: #eee; */
   height: auto;
-  width: 200px;
+  width: 150px;
   border: 1px solid #90c33e;
   border-radius: 20%;
 }
@@ -17,7 +17,7 @@
   color: #111;
 }
 .GridItemV2-image {
-  height: 100px;
+  height: 75px;
   width: auto;
   /* object-fit: cover; */
   align-self: center;

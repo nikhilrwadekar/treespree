@@ -1,38 +1,72 @@
+/* Grid View Column Responsiveness */
 .GridViewV2 {
   display: grid;
   margin: 1rem;
   padding: 1rem;
   grid-gap: 10px;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
-@media screen and (min-width: 450px) {
-  .GridViewV2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 500px) {
   .GridViewV2 {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 750px) {
   .GridViewV2 {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.paginationButton {
-  display: inline-block;
+@media screen and (min-width: 1000px) {
+  .GridViewV2 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Grid View Column Responsiveness Ends */
+
+/* Pagination CSS */
+
+/* Code Courtesy: W3Schools - https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_pagination */
+
+.pagination {
+  justify-content: center;
+}
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  width: 50px;
+  height: 50px;
+}
+
+.pagination .active {
   background-color: #90c33e;
-  border: none;
-  height: 30px;
-  width: 30px;
-  /* font-size: 0.5rem; */
+  color: white !important;
   border-radius: 50%;
-  color: #fff;
-  /* padding: 1rem; */
-  margin: 1rem;
+}
+
+/* Pagination CSS ENDS */
+
+/* All Dropdowns - React Select CSS */
+.selectorCommonName {
+  margin: 0 auto;
+}
+
+.selector {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+@media screen and (min-width: 900px) {
+  .GridViewV2-advancedFilters {
+    /* display: flex;
+    justify-content: space-around;
+    flex: 1 1 300px; */
+  }
 }
