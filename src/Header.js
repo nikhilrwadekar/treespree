@@ -24,9 +24,9 @@ class Header extends React.Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="/shop">Shop</Nav.Link>
-            <Nav.Link href="/team">Team</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
+            <Nav.Link href="/shop">SHOP</Nav.Link>
+            <Nav.Link href="/team">TEAM</Nav.Link>
+            <Nav.Link href="/contact">CONTACT</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link eventKey={2} href="/explore">

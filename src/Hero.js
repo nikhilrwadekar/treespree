@@ -1,6 +1,6 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./Hero.css";
+import { Button } from "react-bootstrap";
 
 function Hero() {
   return (
@@ -31,9 +31,17 @@ function Hero() {
             </div>
           </foreignObject>
         </svg>
-
-        <h2>Get to know trees around in Vancouver</h2>
-        <p>Get started now.</p>
+        <div className="contentOverlay">
+          <h2>Get to know trees around in Vancouver</h2>
+          <p>Get started now.</p>
+          <Button
+            size="lg"
+            style={{ backgroundColor: "#90c33e", color: "#fff" }}
+            variant=""
+          >
+            EXPLORE
+          </Button>
+        </div>
       </div>
     </>
   );
