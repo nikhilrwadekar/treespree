@@ -420,7 +420,6 @@ class GridViewV2 extends React.Component {
           onChange={this.handleCommonNameChange.bind(this)}
           options={this.state.commonNameOptions}
           components={makeAnimated()}
-          autoFocus
           placeholder="Search and explore trees"
         />
 

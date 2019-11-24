@@ -38,6 +38,7 @@ function Hero() {
             size="lg"
             style={{ backgroundColor: "#90c33e", color: "#fff" }}
             variant=""
+            href="/explore"
           >
             EXPLORE
           </Button>
