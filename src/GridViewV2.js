@@ -169,26 +169,78 @@ class GridViewV2 extends React.Component {
 
       let treeFilteredCommonNames = this.state.treeCommonNames.filter(
         treeCommonName => {
-          let genusSelected = this.state.selectedGenus.includes(
-            treeCommonName.genus_name
-          );
-          let speciesSelected = this.state.selectedSpecies.includes(
-            treeCommonName.species_name
-          );
-          let neighbourhoodsSelected = this.state.selectedNeighbourhoods.filter(
-            selectedNeighbourhood =>
-              treeCommonName.neighbourhood_names.includes(selectedNeighbourhood)
-          );
+          // If ALL THREE Options are used
+          if (
+            this.state.selectedNeighbourhoods.length &&
+            this.state.selectedGenus.length &&
+            this.state.selectedSpecies.length
+          ) {
+            return (
+              this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) &&
+              this.state.selectedGenus.includes(treeCommonName.genus_name) &&
+              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length
+            );
+          }
 
-          let shouldTreeBeRendered =
-            // genusSelected ||
-            // speciesSelected ||
-            // neighbourhoodsSelected ||
-            (genusSelected && speciesSelected) ||
-            (genusSelected && neighbourhoodsSelected) ||
-            (speciesSelected && neighbourhoodsSelected);
+          // If ANY TWO of the Options are used
+          else if (
+            (this.state.selectedNeighbourhoods.length &&
+              this.state.selectedGenus.length) ||
+            (this.state.selectedNeighbourhoods.length &&
+              this.state.selectedSpecies.length) ||
+            (this.state.selectedGenus.length &&
+              this.state.selectedSpecies.length)
+          ) {
+            // console.log("ANY TWO!");
 
-          return shouldTreeBeRendered;
+            return (
+              (this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) &&
+                this.state.selectedGenus.includes(treeCommonName.genus_name)) ||
+              (this.state.selectedGenus.includes(treeCommonName.genus_name) &&
+                this.state.selectedNeighbourhoods.filter(
+                  selectedNeighbourhood =>
+                    treeCommonName.neighbourhood_names.includes(
+                      selectedNeighbourhood
+                    )
+                ).length) ||
+              (this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length &&
+                this.state.selectedSpecies.includes(
+                  treeCommonName.species_name
+                ))
+            );
+          }
+          // If ANY ONE of the options is selected
+          else if (
+            this.state.selectedNeighbourhoods.length ||
+            this.state.selectedGenus.length ||
+            this.state.selectedSpecies.length
+          ) {
+            // console.log("ANY ONE!");
+
+            return (
+              this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) ||
+              this.state.selectedGenus.includes(treeCommonName.genus_name) ||
+              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length
+            );
+          }
         }
       );
 

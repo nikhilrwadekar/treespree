@@ -53,7 +53,9 @@ class GridMapView extends React.Component {
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}&v=3.exp&libraries=geometry,places`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: "100%" }} />}
-              mapElement={<div style={{ height: "500px" }} />}
+              mapElement={
+                <div style={{ height: "80vh", minHeight: "600px" }} />
+              }
             />
           </div>
         )}

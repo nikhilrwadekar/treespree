@@ -104,10 +104,19 @@ class PopUp extends React.Component {
   render() {
     return (
       <div className="popUp">
-        <h1>{this.state.common_name}</h1>
+        <h3>{this.state.common_name}</h3>
 
         {this.state.imageSrc ? (
-          <img src={this.state.imageSrc} alt="" className="SingleImage" />
+          <img
+            src={this.state.imageSrc}
+            style={{
+              width: this.props.tree_id ? "200px" : "400px",
+              height: this.props.tree_id ? "200px" : "300px",
+              objectFit: "cover"
+            }}
+            alt=""
+            className="SingleImage"
+          />
         ) : (
           <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
@@ -130,7 +139,7 @@ class PopUp extends React.Component {
         </div>
 
         <div className="moreInfo">
-          <h2> About </h2>
+          <h5>ABOUT</h5>
 
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
