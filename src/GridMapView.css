@@ -1,0 +1,7 @@
+.abg-switch__container .abg-switch__overlay {
+  background-color: #90c33e !important;
+}
+
+.abg-switch__item.abg-switch__item--on {
+  color: white;
+}

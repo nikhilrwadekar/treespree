@@ -186,7 +186,11 @@ class MapView extends React.Component {
                         tree.tree_longitude
                       )
                     }
-                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                    options={{
+                      closeBoxURL: ``,
+                      enableEventPropagation: true,
+                      pixelOffset: new google.maps.Size(10, -250)
+                    }}
                   >
                     <div
                       style={{
@@ -194,7 +198,7 @@ class MapView extends React.Component {
                         opacity: 1,
                         padding: `12px`,
                         borderRadius: "10px",
-                        width: "300px"
+                        width: "500px"
                       }}
                     >
                       <PopUp tree_id={tree.tree_id} />

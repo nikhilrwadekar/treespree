@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
 import "./PopUp.css";
 import Spinner from "react-bootstrap/Spinner";
 // https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
@@ -11,10 +11,6 @@ let wikiPictureUrl =
 
 class PopUp extends React.Component {
   state = {};
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     let treespreeAPIQuery, linkToSingleView;
@@ -81,7 +77,7 @@ class PopUp extends React.Component {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-          if (imageObj.thumbnail == undefined) {
+          if (imageObj.thumbnail === undefined) {
             fetch(searchUrl2)
               .then(res => {
                 // Return data in form of JSON
@@ -108,10 +104,19 @@ class PopUp extends React.Component {
   render() {
     return (
       <div className="popUp">
-        <h1>{this.state.common_name}</h1>
+        <h3>{this.state.common_name}</h3>
 
         {this.state.imageSrc ? (
-          <img src={this.state.imageSrc} alt="" className="SingleImage" />
+          <img
+            src={this.state.imageSrc}
+            style={{
+              width: this.props.tree_id ? "200px" : "400px",
+              height: this.props.tree_id ? "200px" : "300px",
+              objectFit: "cover"
+            }}
+            alt=""
+            className="SingleImage"
+          />
         ) : (
           <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
@@ -134,7 +139,7 @@ class PopUp extends React.Component {
         </div>
 
         <div className="moreInfo">
-          <h2> About </h2>
+          <h5>ABOUT</h5>
 
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
@@ -147,9 +152,13 @@ class PopUp extends React.Component {
             ""
           )}
 
-          <a className="PopUp-know-more" href={this.state.linkToSingleView}>
+          <Button
+            // className="PopUp-know-more"
+            href={this.state.linkToSingleView}
+            variant="success"
+          >
             KNOW MORE
-          </a>
+          </Button>
         </div>
       </div>
     );

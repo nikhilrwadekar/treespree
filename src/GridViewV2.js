@@ -4,6 +4,8 @@ import GridItemV2 from "./GridItemV2";
 import Axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import ReactPaginate from "react-paginate";
+import Popup from "reactjs-popup";
 
 /*
 COMMENT BOX:
@@ -40,13 +42,15 @@ class GridViewV2 extends React.Component {
     selectedGenus: [],
     selectedSpecies: [],
     selectedNeighbourhoods: [],
-    limitPerPage: 12,
+    limitPerPage: 6,
     searchGridQuery: "",
     gridStarterIndex: 0,
     treeFilteredCommonNames: []
   };
   constructor(props) {
     super(props);
+
+    this.updateGridPerPageLimit = this.updateGridPerPageLimit.bind(this);
   }
 
   componentWillMount() {
@@ -123,8 +127,31 @@ class GridViewV2 extends React.Component {
     return true;
   }
 
+  // Window Resize Handling Code from https://www.hawatel.com/blog/handle-window-resize-in-react/
+
+  componentDidMount() {
+    console.log("component Did Mount" + this.state.limitPerPage);
+    this.updateGridPerPageLimit();
+    window.addEventListener("resize", this.updateGridPerPageLimit);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateGridPerPageLimit);
+  }
+
+  updateGridPerPageLimit() {
+    let limitPerPage,
+      windowWidth = window.innerWidth;
+    if (windowWidth < 500) limitPerPage = 6;
+    else if (windowWidth >= 500 && windowWidth < 750) limitPerPage = 9;
+    else if (windowWidth >= 750 && windowWidth < 1000) limitPerPage = 12;
+    else if (windowWidth >= 1000) limitPerPage = 15;
+
+    this.setState({ ...this.state, limitPerPage });
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log("Component Did Update");
+    console.log("Component Did Update: " + this.state.limitPerPage);
 
     // If Common Names were Filtered
     if (
@@ -142,37 +169,94 @@ class GridViewV2 extends React.Component {
 
       let treeFilteredCommonNames = this.state.treeCommonNames.filter(
         treeCommonName => {
-          let genusSelected = this.state.selectedGenus.includes(
-            treeCommonName.genus_name
-          );
-          let speciesSelected = this.state.selectedSpecies.includes(
-            treeCommonName.species_name
-          );
-          let neighbourhoodsSelected = this.state.selectedNeighbourhoods.filter(
-            selectedNeighbourhood =>
-              treeCommonName.neighbourhood_names.includes(selectedNeighbourhood)
-          );
+          // If ALL THREE Options are used
+          if (
+            this.state.selectedNeighbourhoods.length &&
+            this.state.selectedGenus.length &&
+            this.state.selectedSpecies.length
+          ) {
+            return (
+              this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) &&
+              this.state.selectedGenus.includes(treeCommonName.genus_name) &&
+              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length
+            );
+          }
 
-          let shouldTreeBeRendered =
-            // genusSelected ||
-            // speciesSelected ||
-            // neighbourhoodsSelected ||
-            (genusSelected && speciesSelected) ||
-            (genusSelected && neighbourhoodsSelected) ||
-            (speciesSelected && neighbourhoodsSelected);
+          // If ANY TWO of the Options are used
+          else if (
+            (this.state.selectedNeighbourhoods.length &&
+              this.state.selectedGenus.length) ||
+            (this.state.selectedNeighbourhoods.length &&
+              this.state.selectedSpecies.length) ||
+            (this.state.selectedGenus.length &&
+              this.state.selectedSpecies.length)
+          ) {
+            // console.log("ANY TWO!");
 
-          return shouldTreeBeRendered;
+            return (
+              (this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) &&
+                this.state.selectedGenus.includes(treeCommonName.genus_name)) ||
+              (this.state.selectedGenus.includes(treeCommonName.genus_name) &&
+                this.state.selectedNeighbourhoods.filter(
+                  selectedNeighbourhood =>
+                    treeCommonName.neighbourhood_names.includes(
+                      selectedNeighbourhood
+                    )
+                ).length) ||
+              (this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length &&
+                this.state.selectedSpecies.includes(
+                  treeCommonName.species_name
+                ))
+            );
+          }
+          // If ANY ONE of the options is selected
+          else if (
+            this.state.selectedNeighbourhoods.length ||
+            this.state.selectedGenus.length ||
+            this.state.selectedSpecies.length
+          ) {
+            // console.log("ANY ONE!");
+
+            return (
+              this.state.selectedSpecies.includes(
+                treeCommonName.species_name
+              ) ||
+              this.state.selectedGenus.includes(treeCommonName.genus_name) ||
+              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
+                treeCommonName.neighbourhood_names.includes(
+                  selectedNeighbourhood
+                )
+              ).length
+            );
+          }
         }
       );
 
       console.log(treeFilteredCommonNames);
 
-      if (treeFilteredCommonNames.length)
+      if (treeFilteredCommonNames.length) {
+        let numberOfPages = Math.ceil(
+          this.state.treeFilteredCommonNames.length / this.state.limitPerPage
+        );
+
         this.setState({
           ...this.state,
-          treeFilteredCommonNames: treeFilteredCommonNames
+          treeFilteredCommonNames: treeFilteredCommonNames,
+          numberOfPages
         });
-      else
+      } else
         this.setState({
           ...this.state,
           treeFilteredCommonNames: this.state.treeCommonNames
@@ -293,7 +377,8 @@ class GridViewV2 extends React.Component {
   // Update Grid View on page change
   updateGridView(event) {
     // Page Number: 4; Items: 60; 4*12
-    let newGridStarterIndex = (event.target.id - 1) * this.state.limitPerPage;
+    // console.log(event.selected);
+    let newGridStarterIndex = event.selected * this.state.limitPerPage;
     this.setState({
       ...this.state,
       gridStarterIndex: newGridStarterIndex
@@ -302,24 +387,25 @@ class GridViewV2 extends React.Component {
 
   // Pagination
   paginateGridView = () => {
-    let pagination = [];
     let numberOfPages = Math.ceil(
       this.state.treeFilteredCommonNames.length / this.state.limitPerPage
     );
 
-    let children = [];
-    for (let i = 1; i <= numberOfPages; i++) {
-      children.push(
-        <button
-          className="paginationButton"
-          key={i}
-          id={i}
-          onClick={this.updateGridView.bind(this)}
-        >{`${i}`}</button>
-      );
-    }
-
-    pagination.push(<div>{children}</div>);
+    let pagination = (
+      <ReactPaginate
+        previousLabel={"<<"}
+        nextLabel={">>"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={numberOfPages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={this.updateGridView.bind(this)}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
+    );
     return pagination;
   };
 
@@ -329,39 +415,63 @@ class GridViewV2 extends React.Component {
         {/* Search Box for Grid View */}
 
         <Select
+          className="selector selectorCommonName"
           isMulti
           onChange={this.handleCommonNameChange.bind(this)}
           options={this.state.commonNameOptions}
           components={makeAnimated()}
-          autoFocus
           placeholder="Search and explore trees"
         />
 
         {/* Advanced Filters */}
-        <h5>Advanced Filters</h5>
-        <div className="GridViewV2-advancedFilters">
-          <Select
-            isMulti
-            onChange={this.handleNeighbourhoodChange.bind(this)}
-            options={this.state.neighbourhoods}
-            components={makeAnimated()}
-            placeholder="Select Neighbourhood(s).."
-          />
-          <Select
-            isMulti
-            onChange={this.handleSpeciesChange.bind(this)}
-            options={this.state.species}
-            components={makeAnimated()}
-            placeholder="Select Species.."
-          />
-          <Select
-            isMulti
-            onChange={this.handleGenusChange.bind(this)}
-            options={this.state.genus}
-            components={makeAnimated()}
-            placeholder="Select Genus.."
-          />
-        </div>
+        <Popup
+          width={300}
+          trigger={<h5>Advanced Filters</h5>}
+          position="bottom center"
+          // modal
+          closeOnDocumentClick
+          repositionOnResize
+        >
+          <div className="GridViewV2-advancedFilters">
+            <Select
+              value={this.state.selectedNeighbourhoods.map(neighbourhood => ({
+                value: neighbourhood,
+                label: neighbourhood
+              }))}
+              className="selector"
+              isMulti
+              onChange={this.handleNeighbourhoodChange.bind(this)}
+              options={this.state.neighbourhoods}
+              components={makeAnimated()}
+              placeholder="Select Neighbourhood(s).."
+            />
+            <Select
+              value={this.state.selectedSpecies.map(species => ({
+                value: species,
+                label: species
+              }))}
+              className="selector"
+              isMulti
+              onChange={this.handleSpeciesChange.bind(this)}
+              options={this.state.species}
+              components={makeAnimated()}
+              placeholder="Select Species.."
+            />
+            <Select
+              value={this.state.selectedGenus.map(genus => ({
+                value: genus,
+                label: genus
+              }))}
+              className="selector"
+              isMulti
+              onChange={this.handleGenusChange.bind(this)}
+              options={this.state.genus}
+              components={makeAnimated()}
+              placeholder="Select Genus.."
+            />
+          </div>
+        </Popup>
+
         {/* The Grid View itself */}
         <div className="GridViewV2">
           {this.state.treeFilteredCommonNames
@@ -386,7 +496,6 @@ class GridViewV2 extends React.Component {
         {/* Pagination for the Grid View */}
         <div>
           <div>{this.paginateGridView()}</div>
-          {/* {} */}
         </div>
       </>
     );
