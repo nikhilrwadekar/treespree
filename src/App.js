@@ -4,6 +4,8 @@ import Hero from "./Hero";
 import Header from "./Header";
 import "./App.css";
 import Single from "./Single";
+import Shop from "./Shop";
+
 import Contact from "./Contact";
 import Terms from "./Terms";
 import Team from "./teamPage";
@@ -51,6 +53,10 @@ class App extends React.Component {
 
           <Route exact path="/termsAndCondition">
             <Terms />
+          </Route>
+
+          <Route exact path="/shop">
+            <Shop />
           </Route>
 
           <Route exact path="/team">

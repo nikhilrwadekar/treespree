@@ -31,7 +31,7 @@ class Header extends React.Component {
         </h2>
         <ul className="navigation">
           <li>
-            <a href="/">Shop</a>
+            <a href="/shop">Shop</a>
           </li>
           <li>
             <a href="/team">Team</a>

@@ -48,7 +48,7 @@ state={
     },
     {
       name: "Nikhil Wadekar",
-      Description: "Full-stock Developer",
+      Description: "Full-stack Developer",
       img: "/images/team-photos/Nikhil.jpg",
       github:"/images/team-photos/github-logo.png",
       linkdin:"/images/team-photos/linkdin-logo.png",
