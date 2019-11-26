@@ -14,6 +14,7 @@ class Header extends React.Component {
             alt="Logo"
             className="header-treespree-logo"
           />
+
           <span
             className="logoText"
             style={{ fontFamily: "Kalam", fontSize: "2rem", color: "#50642d" }}
@@ -41,6 +42,7 @@ class Header extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
     );
   }
 }
