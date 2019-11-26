@@ -114,6 +114,7 @@ class MapView extends React.Component {
     this.handleMapUpdate();
   }
 
+  // CITE THIS!!!!!
   showInfo(a) {
     this.setState({ showInfoIndex: a });
   }
@@ -185,7 +186,11 @@ class MapView extends React.Component {
                         tree.tree_longitude
                       )
                     }
-                    options={{ closeBoxURL: ``, enableEventPropagation: true }}
+                    options={{
+                      closeBoxURL: ``,
+                      enableEventPropagation: true,
+                      pixelOffset: new google.maps.Size(10, -250)
+                    }}
                   >
                     <div
                       style={{
@@ -193,10 +198,10 @@ class MapView extends React.Component {
                         opacity: 1,
                         padding: `12px`,
                         borderRadius: "10px",
-                        width: "300px"
+                        width: "500px"
                       }}
                     >
-                      <PopUp />
+                      <PopUp tree_id={tree.tree_id} />
                     </div>
                   </InfoBox>
                 )}

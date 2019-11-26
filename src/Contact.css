@@ -12,6 +12,7 @@
   .ContactPage{
       max-width:50%;
       margin: auto;
+      margin-bottom:2em;
   }
   
   .ContactPage input[type=submit] {
@@ -25,5 +26,17 @@
   }
   .ContactPage span{
     text-align: left;
+
     }
     
+
+    @media only screen and (max-width: 650px) {
+
+
+      .ContactPage{
+        max-width:70%;
+        margin: auto;
+        margin-bottom: 2em;
+    }
+    
+    }

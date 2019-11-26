@@ -1,9 +1,14 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faShoppingBag,
+  faMapMarkerAlt
+} from "@fortawesome/free-solid-svg-icons";
 
 let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
+  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&summary=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -143,20 +148,28 @@ class Single extends React.Component {
 
             <div className="others">
               <div className="location">
-                <div></div>
                 <div>
-                  <a href="/"> Find One Near Me</a>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </div>
+                <div>
+                  <a href="/explore">Find One Near Me</a>
                 </div>
               </div>
               <div className="shop">
-                <div></div>
-                <div>Shop Products</div>
+                <div>
+                  {" "}
+                  <FontAwesomeIcon icon={faShoppingBag} />
+                </div>
+                <div>
+                  <a href="/explore">Shop Products</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="moreInfo">
           <h3> ABOUT </h3>
+
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
             <div

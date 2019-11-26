@@ -16,7 +16,6 @@
 .bgVid-container {
   height: 100%;
   width: 100%;
-  clip-path: polygon(50% 0%, 100% 0, 100% 45%, 50% 71%, 0 100%, 0 0);
 }
 
 .bgVid {
@@ -29,19 +28,21 @@
   position: relative;
 }
 
-.mainContent h2 {
+.mainContent .contentOverlay {
   position: absolute;
-  top: 80px;
+  top: 5%;
+  left: 5%;
+  text-align: left;
+  padding: 2rem;
+}
+
+.mainContent h2 {
   color: white;
   font-weight: 300;
-  left: 5%;
 }
 
 .mainContent p {
-  position: absolute;
-  top: 120px;
   color: white;
   font-weight: 300;
-  left: 5%;
   font-size: 1.25rem;
 }
