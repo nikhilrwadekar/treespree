@@ -110,6 +110,8 @@ class NeighbourhoodGraph extends Component {
 
   render() {
     return (
+      // Graph component developed with nivo library. https://nivo.rocks/bar
+      // Nivo, an alternative to react d3, which provides server side rendering ability and fully declarative charts.
       <ResponsiveBar
         data={this.state.filteredDataForGraph.slice(0, 5)}
         keys={["OTHERS", "HORNBEAM", "ASH", "PLUM", "CHERRY", "MAPLE"]}
@@ -176,7 +178,21 @@ class NeighbourhoodGraph extends Component {
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="#80ff80"
-        legends={[]}
+        legends={[
+          {
+            dataFrom: 'keys',
+            anchor: 'right',
+            direction: 'column',
+            justify: false,
+            translateX: 106,
+            translateY: 0,
+            itemWidth: 100,
+            itemHeight: 28,
+            itemsSpacing: 0,
+            symbolSize: 20,
+            itemDirection: 'left-to-right'
+        }
+        ]}
         animate={true}
         motionStiffness={90}
         motionDamping={10}
