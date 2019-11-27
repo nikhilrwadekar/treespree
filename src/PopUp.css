@@ -22,6 +22,12 @@
   font-weight: bold;
 }
 
+.popUp .moreInfo{
+  margin-top:1.2em;
+}
+.moreInfo .btn{
+  margin-top:.5em;
+}
 .popUp img {
   padding: 2em;
   width: 400px;
@@ -32,6 +38,9 @@
 }
 .moreInfo h2 {
   text-align: left;
+}
+.popUp h3 {
+margin-top:.9em;
 }
 .moreInfo p {
   text-align: left;

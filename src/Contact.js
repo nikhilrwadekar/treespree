@@ -39,7 +39,7 @@ class Contact extends React.Component{
             <h1> CONTACT</h1>
              
             <form>
-      <h1>Hello {this.state.name}{this.state.email}{this.state.message}</h1>
+    
     
       <p>Name:</p>
       <input

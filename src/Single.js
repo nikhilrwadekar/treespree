@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
+import noImage from './no.jpg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBag,
@@ -22,7 +23,7 @@ class Single extends React.Component {
     paragraph: null,
     genus_name: "",
     tree_name: "",
-    imageSrc: "",
+    imageSrc: "noImage",
     tree_id: 602
   };
 
@@ -86,7 +87,10 @@ class Single extends React.Component {
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
             //checking if results for picture from wikipedia, using genus name is undefined
-          if (imageObj.thumbnail == undefined) {
+          
+          try{
+          
+            if (imageObj.thumbnail == undefined) {
             fetch(searchUrl2)
               .then(res => {
                 return res.json();
@@ -97,7 +101,8 @@ class Single extends React.Component {
                 this.setState({
                   imageSrc: imageObj.thumbnail.source
                 });
-              });
+
+                    });
           } 
           //Use tree absolute name for searching picture on wikipedia if searching with genus anme returns undefined
           else 
@@ -106,6 +111,12 @@ class Single extends React.Component {
               imageSrc: imageObj.thumbnail.source
             });
           }
+        }
+        catch(error){
+          this.setState({
+            imageSrc: noImage
+          });
+        }
 
           console.log(this.state.imageSrc);
         });
