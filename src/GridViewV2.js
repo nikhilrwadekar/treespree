@@ -483,7 +483,7 @@ class GridViewV2 extends React.Component {
               return (
                 <GridItemV2
                   key={index}
-                  imageLink={`/svg/leaves/${treeCommonName.absolute_common_name.toLowerCase()}.svg`}
+                  imageLink={`/png/leaves/${treeCommonName.absolute_common_name.toLowerCase()}.png`}
                   title={treeCommonName.common_name}
                   linkToPopUp={
                     "/tree/name/" + treeCommonName.common_name.toLowerCase()

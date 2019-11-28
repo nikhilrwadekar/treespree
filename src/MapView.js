@@ -160,11 +160,11 @@ class MapView extends React.Component {
               <Marker
                 icon={
                   new google.maps.MarkerImage(
-                    `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    `/png/leaves/${tree.absolute_common_name}.png`,
                     null,
                     null,
                     null,
-                    new google.maps.Size(75, 75)
+                    new google.maps.Size(50, 50)
                   )
                 }
                 key={tree.tree_id}
