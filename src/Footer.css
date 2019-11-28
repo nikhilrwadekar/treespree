@@ -11,7 +11,7 @@
 }
 
 .footer-treespree-logo {
-  width: 4rem;
+  width: 3rem;
 }
 
 .footer {
@@ -23,6 +23,7 @@
 
 .footer a {
   grid-column: 1/2;
+  display: block;
 }
 
 .footer .logo {
@@ -34,6 +35,7 @@
 
 .footer .logo a {
   color: #90c33e;
+  font-size: 1.35rem;
 }
 
 .footer .navigation {
@@ -59,4 +61,5 @@
   color: #90c33e;
   font-family: roboto;
   font-weight: 300;
+  font-size: 13px;
 }

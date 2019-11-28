@@ -14,7 +14,7 @@ function Newsletter() {
 
       <div className="newsletter-text">
         <h2>Sign up for our newsletter</h2>
-        <h3>Get updates from Treespree.</h3>
+        <h3>Get green events notifications and news updates from Treespree.</h3>
         <div className="subscribe-form">
           <form>
             <input
