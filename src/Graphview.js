@@ -18,7 +18,14 @@ class Graphview extends Component {
     return (
       <>
         <h2>Did You Know?</h2>
-        <div className="factsDiv"></div>
+        <div className="factsDiv">
+          <p className="factParagraph">
+            In 2011, Vancouver adopted the goal of becoming the greenest city by 2020. As a result Vancouver's city tree population has been increased drastically.
+          </p>
+          <p className="factParahraph">
+            Get to know the city tree population by neighbouhoods.
+          </p>
+          </div>
         <div>
           <div className="graphviewContainer">
             <SelectOption
