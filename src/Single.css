@@ -1,12 +1,17 @@
 .singlePage .others a {
-  color: white;
+  color: black;
   text-decoration: none;
   padding: 0.3em;
 }
 .singlePage .others {
   text-align: center;
 }
-
+.singlePage .location{
+  padding:.3em;
+}
+.singlePage .shop{
+  padding:.3em;
+}
 .SingleImage {
   width: 100%;
 }
@@ -22,10 +27,10 @@
 .singlePage p {
   text-align: center;
 }
-.moreInfo {
+.singlePage .moreInfo {
   margin-bottom: 2em;
 }
-.moreInfo h3 {
+.singlePage .moreInfo h3 {
   margin-top: 1.2em;
   text-align: left;
 }
@@ -36,12 +41,13 @@
 .others .shop {
   border-radius: 0.8em;
 }
-.moreInfo p {
+.singlePage .moreInfo p {
   font-size: 0.9em;
   text-align: left;
 }
 
 @media only screen and (max-width: 650px) {
+
   .singlePage img {
     width: 100%;
   }
@@ -83,12 +89,17 @@
     border: 1px solid black;
   }
 
-  .moreInfo {
+  .singlePage .moreInfo {
     padding: 1px 5%;
   }
 }
 
 @media only screen and (min-width: 650px) {
+  .singlePage .others a {
+    color: white;
+    text-decoration: none;
+    padding: 0.3em;
+  }
   .SingleImage {
     object-fit: cover;
   }
@@ -101,7 +112,7 @@
     color: white;
   }
   .singlePage .banner {
-    padding-top: 1.2em;
+    
     display: grid;
     grid-template-columns: 45% auto;
   }
@@ -154,7 +165,7 @@
     display: grid;
     grid-template-columns: 40% auto;
   }
-  .moreInfo {
+  .singlePage .moreInfo {
     padding: 1px 5%;
   }
 
@@ -162,114 +173,53 @@
     margin-bottom: 1.5em;
   }
 
-  .moreInfo p {
+  .singlePage .moreInfo p {
     font-size: 1em;
   }
-  .moreInfo {
-    max-width: 550px;
+  .singlePage  .moreInfo {
+    max-width: 650px;
     margin: auto;
   }
-}
-
-@media only screen and (min-width: 900px) {
   .others {
     margin-top: 2em;
   }
   .list {
     margin-top: 2em;
   }
+  .others .svg-inline--fa{
+
+    font-size:2em;
+    padding:4px;
+    text-align: center;
+  }
+  .others .location :nth-child(1){
+    text-align: center;
+  }
+  .others .shop :nth-child(1){
+    text-align: center;
+  }
 }
-/*
-     .SingleImage{
-        object-fit: cover;
 
-     }
-     .singlePage img{
-       height:20em;
-       width:100%;
+@media only screen and (min-width: 900px) {
+  .singlePage .moreInfo h2{
+    padding-top:.7em;
+  }
+  .others {
+    margin-top: 2em;
+  }
+  .list {
+    margin-top: 2em;
+  }
+  .others .svg-inline--fa{
 
-     }
-        .singlePage .info{
-            background-color: #50642d;
-            color:white;
-        } 
-        .singlePage .banner{
-            padding-top:1.2em;
-            display: grid;
-            grid-template-columns: 50% auto;
-        }
-        .singlePage .info h1{
-            padding-top:.5em;
-            padding-bottom:.5em;
-
-        }
-        .singlePage .list ul{
-            list-style-type: none;
-            padding:0;
-            margin: 0;
-            
-            }
-            .singlePage .list li{
-                padding:0;
-            margin: 0;
-            
-            text-align: center;
-            
-            }
-            .singlePage .list{
-                width:100%;
-                display:grid;
-                grid-template-columns: auto auto auto;
-               
-            }
-            
-              .singlePage .list li:nth-child(2) {
-                font-weight: bold;
-                font-style: italic;
-              }
-            
-              .location{
-                padding:.5em;
-                width:40%;
-                border:1px solid white;
-                display:grid;
-                grid-template-columns:  40% auto;
-                text-align: left;
-
-
-            }
-            .location a{
-                color:white;
-                text-decoration: none;
-            }
-            .shop{
-                text-align: left;
-                padding:.5em;
-                width:40%;
-                border:1px solid white;
-                display:grid;
-                grid-template-columns:  40% auto;
-            }
-            .moreInfo p{
-                font-size: 1em;
-              }
-              .moreInfo{
-                  max-width:550px;
-                  margin:auto;
-              }
-              .singlePage{
-                  margin-bottom:1.5em;
-              }
-
-      }
-
-     */
-
-/* .popup-content { */
-/* width:70%  !important;
-         margin:auto !important; */
-/* position:static !important; */
-/* 
-         top:5em  !important;
-         left:15%  !important; */
-/* } */
+    font-size:38px;
+    padding:4px;
+    text-align: center;
+  }
+  .others .location :nth-child(1){
+    text-align: center;
+  }
+  .others .shop :nth-child(1){
+    text-align: center;
+  }
+}
