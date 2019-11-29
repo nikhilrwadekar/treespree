@@ -3,6 +3,7 @@ import GridViewV2 from "./GridViewV2";
 import WrappedMap from "./MapView";
 import Switch, { Item } from "react-switchable";
 import "react-switchable/dist/main.css";
+import "./GridMapView.css";
 
 class GridMapView extends React.Component {
   state = {
@@ -27,20 +28,22 @@ class GridMapView extends React.Component {
       <>
         {/* Component Toggler STARTS */}
         {/* https://codesandbox.io/s/react-switchable-alvarobernalg-lp823 */}
+        <div className="gridMapToggle">
+          <Switch
+            name="mapOptions"
+            onItemChanged={index => {
+              this.setState({
+                ...this.state,
+                activeOption: index
+              });
+            }}
+            arrowSelection
+          >
+            <Item value="1">GRID</Item>
+            <Item value="2">MAP</Item>
+          </Switch>
+        </div>
 
-        <Switch
-          name="mapOptions"
-          onItemChanged={index => {
-            this.setState({
-              ...this.state,
-              activeOption: index
-            });
-          }}
-          arrowSelection
-        >
-          <Item value="1">GRID</Item>
-          <Item value="2">MAP</Item>
-        </Switch>
         {/* Component Toggler ENDS */}
 
         {this.state.activeOption == 1 && <GridViewV2 />}

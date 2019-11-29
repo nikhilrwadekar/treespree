@@ -6,39 +6,12 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import ReactPaginate from "react-paginate";
 import Popup from "reactjs-popup";
-
-/*
-COMMENT BOX:
-Neighbourhoods, Genus and Species should be filtered based on whatever is selected in any of the three fields.
-
-Lets say if neighbourhood(s) is/are selected, filter the existing genus and species based on the neighbourhood(s) selected.
-
-If on top of that other fields are selected, filter further, but keep the previous filtered state.
-[filtered1 (was a result of n2,s3,g2g3 for example),filtered2,filtered3,]
-
-{
-  // The condition will probably be g1 || g2 || g3 & s2 || s3 & n1 || n2 
-
-  if(genusOptions.includes(tree.genus_name)
-  && speciesOptions.includes(tree.species_name)
-  && (treeCommonNames.map(treeCommonName => treeCommonName.neighbourhood_names).filter(
-        treeFilteredCommonName =>
-          selectedOptions
-            .map(selectedCommonName => selectedCommonName.value)
-            .includes(treeFilteredCommonName.common_name)
-      )) )
-  genusOptions: [],
-  speciesOptions: [],
-  neighbourhoodOptions: [],
-
-  treeFilteredCommonNames: []
-}
-*/
+import { Accordion, Card, Button } from "react-bootstrap";
 
 class GridViewV2 extends React.Component {
   state = {
     treeCommonNames: [],
-    selectedCommonNames: [],
+    selectedBasicSearchOptions: [],
     selectedGenus: [],
     selectedSpecies: [],
     selectedNeighbourhoods: [],
@@ -318,21 +291,39 @@ class GridViewV2 extends React.Component {
   };
 
   // Handle Change for Grid View Search
-  handleCommonNameChange = selectedOptions => {
+  handleBasicSearch = selectedOptions => {
     this.setState({
       ...this.state,
-      selectedCommonNames: selectedOptions
+      selectedBasicSearchOptions: selectedOptions
     });
 
     let treeFilteredCommonNames = this.state.treeCommonNames;
 
     // Mutually matching Options and Trees
     if (selectedOptions) {
+      // Array of selected options as Strings
+      let selectedOptionsStringArray = selectedOptions.map(
+        selectedBasicSearchOption => selectedBasicSearchOption.value
+      );
+
+      // Filter Grid..
       treeFilteredCommonNames = treeFilteredCommonNames.filter(
-        treeFilteredCommonName =>
-          selectedOptions
-            .map(selectedCommonName => selectedCommonName.value)
-            .includes(treeFilteredCommonName.common_name)
+        treeFilteredCommonName => {
+          // Nina Scholz: https://stackoverflow.com/questions/44134212/best-way-to-flatten-js-object-keys-and-values-to-a-single-depth-array
+          let treeValues = Object.keys(treeFilteredCommonName).reduce(
+            (r, k) => r.concat(treeFilteredCommonName[k]),
+            []
+          );
+
+          // --
+          // Return true if ANY common tree (key:)VALUE matches
+          let matchedArray = selectedOptionsStringArray.filter(selectedOption =>
+            treeValues.includes(selectedOption)
+          );
+
+          // If it includes any of the values
+          return matchedArray.length;
+        }
       );
 
       // Set the Filtered Array in State to the one we just filtered..
@@ -417,60 +408,90 @@ class GridViewV2 extends React.Component {
         <Select
           className="selector selectorCommonName"
           isMulti
-          onChange={this.handleCommonNameChange.bind(this)}
-          options={this.state.commonNameOptions}
+          onChange={this.handleBasicSearch.bind(this)}
+          options={[
+            {
+              label: "Trees",
+              options: this.state.commonNameOptions
+            },
+            {
+              label: "Tree Neighbourhoods",
+              options: this.state.neighbourhoods
+            },
+            {
+              label: "Tree Genus",
+              options: this.state.genus
+            },
+            {
+              label: "Tree Species",
+              options: this.state.species
+            }
+          ]}
           components={makeAnimated()}
           placeholder="Search and explore trees"
         />
 
         {/* Advanced Filters */}
-        <Popup
-          width={300}
-          trigger={<h5>Advanced Filters</h5>}
-          position="bottom center"
-          // modal
-          closeOnDocumentClick
-          repositionOnResize
-        >
-          <div className="GridViewV2-advancedFilters">
-            <Select
-              value={this.state.selectedNeighbourhoods.map(neighbourhood => ({
-                value: neighbourhood,
-                label: neighbourhood
-              }))}
-              className="selector"
-              isMulti
-              onChange={this.handleNeighbourhoodChange.bind(this)}
-              options={this.state.neighbourhoods}
-              components={makeAnimated()}
-              placeholder="Select Neighbourhood(s).."
-            />
-            <Select
-              value={this.state.selectedSpecies.map(species => ({
-                value: species,
-                label: species
-              }))}
-              className="selector"
-              isMulti
-              onChange={this.handleSpeciesChange.bind(this)}
-              options={this.state.species}
-              components={makeAnimated()}
-              placeholder="Select Species.."
-            />
-            <Select
-              value={this.state.selectedGenus.map(genus => ({
-                value: genus,
-                label: genus
-              }))}
-              className="selector"
-              isMulti
-              onChange={this.handleGenusChange.bind(this)}
-              options={this.state.genus}
-              components={makeAnimated()}
-              placeholder="Select Genus.."
-            />
-          </div>
-        </Popup>
+
+        <Accordion>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              Advanced Filters
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>
+                <div className="GridViewV2-advancedFilters">
+                  <Select
+                    value={this.state.selectedNeighbourhoods.map(
+                      neighbourhood => ({
+                        value: neighbourhood,
+                        label: neighbourhood
+                      })
+                    )}
+                    className="selector"
+                    isMulti
+                    onChange={this.handleNeighbourhoodChange.bind(this)}
+                    options={this.state.neighbourhoods}
+                    components={makeAnimated()}
+                    placeholder="Select Neighbourhood(s).."
+                  />
+                  <Select
+                    value={this.state.selectedSpecies.map(species => ({
+                      value: species,
+                      label: species
+                    }))}
+                    className="selector"
+                    isMulti
+                    onChange={this.handleSpeciesChange.bind(this)}
+                    options={this.state.species}
+                    components={makeAnimated()}
+                    placeholder="Select Species.."
+                  />
+                  <Select
+                    value={this.state.selectedGenus.map(genus => ({
+                      value: genus,
+                      label: genus
+                    }))}
+                    className="selector"
+                    isMulti
+                    onChange={this.handleGenusChange.bind(this)}
+                    options={this.state.genus}
+                    components={makeAnimated()}
+                    placeholder="Select Genus.."
+                  />
+
+                  <Button
+                    size="lg"
+                    style={{ backgroundColor: "#90c33e", color: "#fff" }}
+                    variant=""
+                  >
+                    APPLY
+                  </Button>
+                </div>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
 
         {/* The Grid View itself */}
         <div className="GridViewV2">

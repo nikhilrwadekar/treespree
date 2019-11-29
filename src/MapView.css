@@ -1,0 +1,30 @@
+.mapView-PopUp,
+.streetViewInfo {
+  font-size: 16px;
+}
+
+.mapView-PopUp h1,
+.mapView-PopUp h2,
+.mapView-PopUp h3,
+.mapView-PopUp h4,
+.mapView-PopUp h5,
+.streetViewInfo h1,
+.streetViewInfo h2,
+.streetViewInfo h3,
+.streetViewInfo h4,
+.streetViewInfo h5 {
+  font-size: 16px;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-family: "Karla";
+}
+
+.mapView-PopUp img {
+  display: none;
+}
+
+.streetViewInfo p,
+.mapView-PopUp p {
+  margin-bottom: 0;
+  font-style: italic;
+}
