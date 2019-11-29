@@ -6,6 +6,7 @@ state={
   products: [
     {
       img:"/images/shop-imgs/book.jpg",
+      link:"https://www.amazon.ca/",
       name: "Book - 'The hidden life of trees'",
       Description: "This book explains how trees feel, and communicate ",
       review: "/images/shop-imgs/stars.jpg",
@@ -14,6 +15,7 @@ state={
     },  
     {
         img:"/images/shop-imgs/bonsai.jpg",
+        link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
         Description: "Pine tree bonsai",
         review: "/images/shop-imgs/stars.jpg",
@@ -22,6 +24,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/bonsai_1.jpg",
+        link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
         Description: "Japanese bonsai",
         review: "/images/shop-imgs/stars.jpg",
@@ -30,6 +33,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/bonsai_2.jpg",
+        link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
         Description: "flower bonsai",
         review: "/images/shop-imgs/stars.jpg",
@@ -38,6 +42,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/cherry.jpg",
+        link:"https://www.amazon.ca/",
         name: "Artificial cherry blossom",
         Description: "House Decoration",
         review: "/images/shop-imgs/stars.jpg",
@@ -46,6 +51,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/flowers.jpg",
+        link:"https://www.amazon.ca/",
         name: "Artificial flowers",
         Description: "House Decoration",
         review: "/images/shop-imgs/stars.jpg",
@@ -54,6 +60,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/cactus_1.jpg",
+        link:"https://www.amazon.ca/",
         name: "Artificial cactus with pot",
         Description: "House Decoration",
         review: "/images/shop-imgs/stars.jpg",
@@ -62,6 +69,7 @@ state={
       },  
       {
         img:"/images/shop-imgs/miniplant.jpg",
+        link:"https://www.amazon.ca/",
         name: "Artificial mini cactus",
         Description: "House Decoration",
         review: "/images/shop-imgs/stars.jpg",
@@ -77,7 +85,7 @@ createProduct = () => {
   for (let i = 0; i < 8; i++) {
 
     let children=[]
-    children.push(<img src={this.state.products[i].img} alt={this.state.products[i].img} className="img_product" />)
+    children.push(<a href={this.state.products[i].link}><img src={this.state.products[i].img} alt={this.state.products[i].img} className="img_product" /></a>)
   
     let name = []
     name.push(this.state.products[i].name)
