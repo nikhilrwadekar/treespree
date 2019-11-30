@@ -32,7 +32,7 @@ function Hero() {
           </foreignObject>
         </svg>
         <div className="contentOverlay">
-          <h2>Get to know trees around in Vancouver</h2>
+          <h2>Explore city trees in Vancouver</h2>
           <p>Get started now.</p>
           <Button
             size="lg"
