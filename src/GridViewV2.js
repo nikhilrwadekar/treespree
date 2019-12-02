@@ -5,7 +5,6 @@ import Axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import ReactPaginate from "react-paginate";
-import Popup from "reactjs-popup";
 import { Accordion, Card, Button } from "react-bootstrap";
 
 class GridViewV2 extends React.Component {
@@ -343,10 +342,9 @@ class GridViewV2 extends React.Component {
 
   // Get Data from API
   getDatafromTreeSpreeAPI() {
-    fetch("http://treespree.wmdd.ca/api/trees/names")
-      .then(response => response.json())
+    Axios.get("http://treespree.wmdd.ca/api/trees/names")
       .then(responseJson => {
-        let commonNameOptions = responseJson.map(treeCommonName => {
+        let commonNameOptions = responseJson.data.map(treeCommonName => {
           return {
             label: treeCommonName.common_name,
             value: treeCommonName.common_name
@@ -356,8 +354,8 @@ class GridViewV2 extends React.Component {
         this.setState({
           ...this.state,
           commonNameOptions: commonNameOptions,
-          treeCommonNames: responseJson,
-          treeFilteredCommonNames: responseJson
+          treeCommonNames: responseJson.data,
+          treeFilteredCommonNames: responseJson.data
         });
       })
       .catch(error => {
