@@ -1,6 +1,7 @@
 import React from "react";
 import GridViewV2 from "./GridViewV2";
 import WrappedMap from "./MapView";
+// import GridHeroSection from "./GridHeroSection";
 import Switch, { Item } from "react-switchable";
 import "react-switchable/dist/main.css";
 import "./GridMapView.css";
@@ -26,6 +27,7 @@ class GridMapView extends React.Component {
   render() {
     return (
       <>
+        {/* <GridHeroSection /> */}
         {/* Component Toggler STARTS */}
         {/* https://codesandbox.io/s/react-switchable-alvarobernalg-lp823 */}
         <div className="gridMapToggle">
