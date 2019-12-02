@@ -6,21 +6,6 @@ import PopUpComponent from "./PopUp";
 class GridItemV2 extends React.Component {
   state = {};
 
-  componentWillMount() {
-    this.getDatafromTreeSpreeAPI();
-  }
-
-  getDatafromTreeSpreeAPI() {
-    fetch("http://treespree.wmdd.ca/api/trees/names")
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({ treeCommonNames: responseJson });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
   render() {
     return (
       <Popup
