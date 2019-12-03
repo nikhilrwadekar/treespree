@@ -21,9 +21,6 @@ import {
 import "./MapView.css";
 import { Button } from "react-bootstrap";
 
-// Import InfoBox
-const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
-
 // Import SearchBox
 const {
   SearchBox
@@ -33,13 +30,16 @@ const {
 class MapView extends React.Component {
   state = {
     trees: [],
-    defaultZoom: 18,
-    isMapView: true
+    zoom: 18,
+    isMapView: true,
+    center: { lat: 49.2259162, lng: -123.10982159999999 }
   };
   constructor(props) {
     super(props);
   }
 
+  //
+  componentWillMount() {}
   // After the component is mounted..
   componentDidMount() {
     // Set Data Layer
@@ -51,11 +51,22 @@ class MapView extends React.Component {
         // this.map.addGeoJson(data);
         this.setState({ ...this.state, geoJSON: response.data });
       });
-    // https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/vancouver.geojson
 
-    // this.map.loadGeoJson(
-    //   "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/vancouver.geojson"
-    // );
+    // Get Location
+    navigator.geolocation.getCurrentPosition(
+      success => {
+        let mapCenter = {
+          lat: success.coords.latitude,
+          lng: success.coords.longitude
+        };
+
+        this.setState({
+          ...this.state,
+          center: mapCenter
+        });
+      },
+      error => {}
+    );
   }
 
   getTreeDataAndStoreInState(boundingBox) {
@@ -76,7 +87,6 @@ class MapView extends React.Component {
 
     // Get current trees bound by current view from API..
     if (currentZoomLevel >= 18) {
-      console.log("You're zoomed in enough! Updating Trees on map..");
       // Derive NE and SW
       let NE = this.map.getBounds().getNorthEast();
       let SW = this.map.getBounds().getSouthWest();
@@ -89,8 +99,6 @@ class MapView extends React.Component {
         SouthEastY: NE.lng()
       };
       // Point is in bounding box
-      console.log("Ready to pull data!");
-      console.log(boundingBox);
 
       this.getTreeDataAndStoreInState(boundingBox);
     } else if (currentZoomLevel < 18) {
@@ -100,17 +108,13 @@ class MapView extends React.Component {
         trees: []
       });
     }
-    console.log("Current Zoom:" + currentZoomLevel);
   }
 
   //
-  onBoundsChanged() {
-    console.log("Map Bounds Changed!");
-  }
+  onBoundsChanged() {}
 
   // StreeView Handler! :D - Special Thanks to https://codepen.io/moutono/pen/KjZpZB
   streetViewHandler = (coordinates, tree) => {
-    console.log("StreetView Handler has run!");
     // Create Street View
     let panorama = this.map.getStreetView();
     panorama.setPosition(coordinates);
@@ -136,18 +140,28 @@ class MapView extends React.Component {
   };
 
   onIdle() {
-    console.log("Now Idle..");
     this.handleMapUpdate();
-    console.log(this.state.streetView);
   }
 
   // CITE THIS!!!!!
   showInfo(a) {
-    console.log(this);
     // If Tree ID is new, update the current InfoWindow index, else set it to null to toggle!
     if (this.state.showInfoIndex !== a) this.setState({ showInfoIndex: a });
     else this.setState({ showInfoIndex: null });
-    // console.log(this.map.getStreetView().setVisible(true));
+    //
+  }
+
+  // Function from https://tomchentw.github.io/react-google-maps/
+  onPlacesChanged() {
+    let placeCenter = {
+      lat: this.searchBox.getPlaces()[0].geometry.location.lat(),
+      lng: this.searchBox.getPlaces()[0].geometry.location.lng()
+    };
+
+    this.setState({
+      ...this.state,
+      center: placeCenter
+    });
   }
 
   render() {
@@ -159,15 +173,42 @@ class MapView extends React.Component {
             this.map = ref;
           }}
           // defaultOptions={{}}
-          defaultZoom={18}
+          zoom={this.state.zoom}
           // zoom={this.state.defaultZoom}
-          defaultCenter={{ lat: 49.2258331, lng: -123.1078227 }}
+          center={this.props.center ? this.props.center : this.state.center}
           // Pass this.map instead of this as you need to bind map's this
           onZoomChanged={this.handleMapUpdate.bind(this)}
           onIdle={this.onIdle.bind(this)}
 
           // streetView={}
         >
+          <SearchBox
+            ref={ref => {
+              this.searchBox = ref;
+            }}
+            // bounds={props.bounds}
+            controlPosition={google.maps.ControlPosition.TOP_RIGHT}
+            onPlacesChanged={this.onPlacesChanged.bind(this)}
+          >
+            <input
+              type="text"
+              placeholder="Search for a place.."
+              style={{
+                boxSizing: `border-box`,
+                border: `1px solid transparent`,
+                width: `240px`,
+                height: `50px`,
+                marginTop: `27px`,
+                marginRight: `27px`,
+                padding: `0 12px`,
+                borderRadius: `3px`,
+                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                fontSize: `18px`,
+                outline: `none`,
+                textOverflow: `ellipses`
+              }}
+            />
+          </SearchBox>
           {/* <MarkerClusterer averageCenter gridSize={60}> */}
           {/* The Marker Loop for the Map */}
           {this.state.trees.map(tree => (
@@ -191,7 +232,11 @@ class MapView extends React.Component {
                 title={tree.common_name}
                 onClick={() => {
                   this.showInfo(tree.tree_id);
-                  console.log("Marker Clicked!");
+                  this.setState({
+                    ...this.state,
+                    zoom: 20
+                  });
+
                   if (
                     this.map.getStreetView().getVisible() &&
                     this.state.showInfoIndex === tree.tree_id
@@ -219,6 +264,10 @@ class MapView extends React.Component {
                         closeBoxURL: ``,
                         enableEventPropagation: true,
                         pixelOffset: new google.maps.Size(0, -50)
+                      }}
+                      onCloseClick={() => {
+                        this.showInfo(tree.tree_id);
+                        this.setState({ ...this.state, zoom: 18 });
                       }}
                     >
                       <div

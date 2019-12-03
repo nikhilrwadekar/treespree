@@ -5,6 +5,7 @@ import Axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import ReactPaginate from "react-paginate";
+import Spinner from "react-bootstrap/Spinner";
 import { Accordion, Card, Button } from "react-bootstrap";
 
 class GridViewV2 extends React.Component {
@@ -444,7 +445,11 @@ class GridViewV2 extends React.Component {
 
           <Accordion className="GridViewV2-accordion">
             <Card>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
+              <Accordion.Toggle
+                as={Card.Header}
+                eventKey="0"
+                className="GridSearchAdvancedHeader"
+              >
                 Advanced Filters
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
@@ -505,24 +510,30 @@ class GridViewV2 extends React.Component {
         </div>
         {/* The Grid View itself */}
         <div className="GridViewV2">
-          {this.state.treeFilteredCommonNames
-            .slice(
-              this.state.gridStarterIndex,
-              this.state.gridStarterIndex + this.state.limitPerPage
-            )
-            .map((treeCommonName, index) => {
-              return (
-                <GridItemV2
-                  key={index}
-                  imageLink={`/png/leaves/${treeCommonName.absolute_common_name.toLowerCase()}.png`}
-                  title={treeCommonName.common_name}
-                  linkToPopUp={
-                    "/tree/name/" + treeCommonName.common_name.toLowerCase()
-                  }
-                  windowSize={this.state.windowSize}
-                />
-              );
-            })}
+          {this.state.treeFilteredCommonNames ? (
+            this.state.treeFilteredCommonNames
+              .slice(
+                this.state.gridStarterIndex,
+                this.state.gridStarterIndex + this.state.limitPerPage
+              )
+              .map((treeCommonName, index) => {
+                return (
+                  <GridItemV2
+                    key={index}
+                    imageLink={`/png/leaves/${treeCommonName.absolute_common_name.toLowerCase()}.png`}
+                    title={treeCommonName.common_name}
+                    linkToPopUp={
+                      "/tree/name/" + treeCommonName.common_name.toLowerCase()
+                    }
+                    windowSize={this.state.windowSize}
+                  />
+                );
+              })
+          ) : (
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          )}
         </div>
 
         {/* Pagination for the Grid View */}

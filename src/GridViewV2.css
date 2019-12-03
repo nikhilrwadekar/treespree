@@ -17,13 +17,22 @@
   border-color: #90c33e;
 }
 
+.GridSearchAdvancedHeader {
+  color: #90c33e;
+  text-decoration: underline;
+}
+
+.GridSearchAdvancedHeader:hover {
+  cursor: pointer;
+}
+
 .GridViewV2-accordion {
   width: 50%;
   min-width: 300px;
   margin: 0 auto;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
 }
-.GridViewV2-accordion .card-header {
+.GridViewV2-accordion .card {
   border: none;
 }
 
@@ -35,6 +44,7 @@
 }
 .GridViewV2-accordion .card-body {
   background: #eee;
+  border-radius: 20px;
 }
 
 @media screen and (min-width: 500px) {

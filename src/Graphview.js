@@ -16,7 +16,7 @@ class Graphview extends Component {
   }
   render() {
     return (
-      <>
+      <div className="GraphView">
         <h2>Did You Know?</h2>
         <div className="factsDiv">
           <p className="factParagraph">
@@ -38,7 +38,7 @@ class Graphview extends Component {
             />
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

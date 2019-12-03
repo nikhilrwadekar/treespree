@@ -8,20 +8,24 @@ import "./GridMapView.css";
 
 class GridMapView extends React.Component {
   state = {
-    activeOption: 1
+    activeOption: "1"
   };
 
   // This 'lifecycle hook' or function will run BEFORE the component is rendered. Pretty useful to set data from external API into the state.
-  componentWillMount() {}
+  componentWillMount() {
+    console.log(this.props.match.params.activeOption);
+    if (this.props.match.params.activeOption == 2)
+      this.setState({
+        activeOption: "2"
+      });
+  }
 
   // If the component renders..
   componentDidMount() {}
 
-  toggleMapGrid() {
-    this.setState({
-      gridViewIsActive: !this.state.gridViewIsActive,
-      mapViewIsActive: !this.state.mapViewIsActive
-    });
+  // If component Updates...
+  componentDidUpdate() {
+    console.log(this.state.activeOption);
   }
 
   render() {
@@ -32,17 +36,23 @@ class GridMapView extends React.Component {
         {/* https://codesandbox.io/s/react-switchable-alvarobernalg-lp823 */}
         <div className="gridMapToggle">
           <Switch
-            name="mapOptions"
             onItemChanged={index => {
+              console.log(`${index + 1} Item Changed!`);
               this.setState({
                 ...this.state,
                 activeOption: index
               });
             }}
-            arrowSelection
+            onItemSelected={index => {
+              this.setState({ activeOption: index + 1 });
+            }}
           >
-            <Item value="1">GRID</Item>
-            <Item value="2">MAP</Item>
+            <Item value="1" default>
+              GRID
+            </Item>
+            <Item value="2" active={this.state.activeOption == 2}>
+              MAP
+            </Item>
           </Switch>
         </div>
 
@@ -69,5 +79,13 @@ class GridMapView extends React.Component {
     );
   }
 }
+
+GridMapView.defaultProps = {
+  match: {
+    params: {
+      activeOption: 1
+    }
+  }
+};
 
 export default GridMapView;
