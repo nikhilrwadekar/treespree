@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
-import noImage from './no.jpg';
+import noImage from "./no.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBag,
@@ -57,7 +57,6 @@ class Single extends React.Component {
         };
       });
 
-
       let search = this.state.tree_name;
       //building search URL for Text from wikipedia
       let searchUrl = wikiUrl + search;
@@ -74,7 +73,7 @@ class Single extends React.Component {
           });
         });
 
-        //making two search URl for getting picture from wikipedia
+      //making two search URl for getting picture from wikipedia
       let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
       let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
 
@@ -86,37 +85,35 @@ class Single extends React.Component {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-            //checking if results for picture from wikipedia, using genus name is undefined
-          
-          try{
-          
-            if (imageObj.thumbnail == undefined) {
-            fetch(searchUrl2)
-              .then(res => {
-                return res.json();
-              })
-              .then(foundData => {
-                let imageObj =
-                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-                this.setState({
-                  imageSrc: imageObj.thumbnail.source
-                });
+          //checking if results for picture from wikipedia, using genus name is undefined
 
-                    });
-          } 
-          //Use tree absolute name for searching picture on wikipedia if searching with genus anme returns undefined
-          else 
-          {
+          try {
+            if (imageObj.thumbnail == undefined) {
+              fetch(searchUrl2)
+                .then(res => {
+                  return res.json();
+                })
+                .then(foundData => {
+                  let imageObj =
+                    foundData.query.pages[
+                      Object.keys(foundData.query.pages)[0]
+                    ];
+                  this.setState({
+                    imageSrc: imageObj.thumbnail.source
+                  });
+                });
+            }
+            //Use tree absolute name for searching picture on wikipedia if searching with genus anme returns undefined
+            else {
+              this.setState({
+                imageSrc: imageObj.thumbnail.source
+              });
+            }
+          } catch (error) {
             this.setState({
-              imageSrc: imageObj.thumbnail.source
+              imageSrc: noImage
             });
           }
-        }
-        catch(error){
-          this.setState({
-            imageSrc: noImage
-          });
-        }
 
           console.log(this.state.imageSrc);
         });
@@ -160,7 +157,7 @@ class Single extends React.Component {
                   <FontAwesomeIcon icon={faMapMarkerAlt} />
                 </div>
                 <div>
-                  <a href="/explore">Find One Near Me</a>
+                  <a href="/explore/2">Find One Near Me</a>
                 </div>
               </div>
               <div className="shop">

@@ -49,7 +49,7 @@ class SelectOption extends Component {
           onChange={this.handleChange.bind(this)}
           options={this.state.options}
           components={makeAnimated()}
-          placeholder="Select more than one.."
+          placeholder="Select more than one neighbourhood(s).."
         />
       </>
     );

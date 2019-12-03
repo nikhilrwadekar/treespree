@@ -42,6 +42,9 @@ class App extends React.Component {
             <GridMapView />
           </Route>
 
+          {/* Link for Directly opening Map View */}
+          <Route exact path="/explore/:activeOption" component={GridMapView} />
+
           {/* Single Component accessed with Tree ID (Sent from Map View) */}
           <Route exact path="/tree/id/:tree_id" component={Single} />
           {/* Single Component accessed with Tree Name (Sent from Map Grid View) */}

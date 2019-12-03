@@ -6,7 +6,7 @@ function Hero() {
   return (
     <>
       <div className="mainContent area1">
-        <svg width="100%" height="500px">
+        <svg width="100%" height="500px" className="heroVideo">
           <defs>
             <clipPath id="path">
               <path
