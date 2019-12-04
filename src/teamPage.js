@@ -11,7 +11,7 @@ state={
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/jasminekaur95",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/jasmine-kaur-914656195/",
     },
     
     {
@@ -29,7 +29,7 @@ state={
       img: "/images/team-photos/Davinder.jpg",
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/davinder-singh-00b8ab197/",
     },
     {
       name: "Blandy Castro",
@@ -38,7 +38,7 @@ state={
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/BlandyC",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/blandy-castro-a43010199/",
     }
     ,
     {

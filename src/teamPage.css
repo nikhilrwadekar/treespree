@@ -79,7 +79,6 @@
   .row2-members{
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
-    justify-content: center;
   }
   .row2-members .team-holder{
     width: 75%;
