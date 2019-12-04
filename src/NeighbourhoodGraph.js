@@ -10,6 +10,8 @@ class NeighbourhoodGraph extends Component {
       dataForGraph: [],
       filteredDataForGraph: []
     };
+
+    this.updateLegendRotation = this.updateLegendRotation.bind(this);
   }
 
   testFunction(passedNeighbourhoods) {
@@ -106,6 +108,37 @@ class NeighbourhoodGraph extends Component {
         let neighbourhoods = response.data;
         this.testFunction(neighbourhoods);
       });
+
+      this.updateLegendRotation();
+    window.addEventListener("resize", this.updateLegendRotation);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateLegendRotation);
+  }
+  
+  //viewport configuration
+  updateLegendRotation(){
+    let legendRotation, sliceLength,legendSpace,barPadding,
+    windowWidth = window.innerWidth;
+    if (windowWidth < 500) {
+      legendRotation = -45;
+      sliceLength=3;
+      legendSpace=95;
+      barPadding=0.3;
+    }
+    else if (windowWidth >= 500 && windowWidth < 750) {
+      legendRotation = -45;
+      sliceLength=4;
+      legendSpace=90;
+      barPadding=0.45;
+    }
+    else if (windowWidth >= 850) {
+      legendRotation = 0;
+      sliceLength=5;
+      legendSpace=45;
+      barPadding=0.55;
+    }
+    this.setState({ ...this.state, legendRotation,sliceLength,legendSpace,barPadding });
   }
 
   render() {
@@ -113,11 +146,11 @@ class NeighbourhoodGraph extends Component {
       // Graph component developed with nivo library. https://nivo.rocks/bar
       // Nivo, an alternative to react d3, which provides server side rendering ability and fully declarative charts.
       <ResponsiveBar
-        data={this.state.filteredDataForGraph.slice(0, 5)}
+        data={this.state.filteredDataForGraph.slice(0, this.state.sliceLength)}
         keys={["OTHERS", "HORNBEAM", "ASH", "PLUM", "CHERRY", "MAPLE"]}
         indexBy="neighbourhood"
-        margin={{ top: 50, right: 100, bottom: 50, left: 100 }}
-        padding={0.55}
+        margin={{ top: 50, right: 120, bottom: 150, left: 100 }}
+        padding={this.state.barPadding}
         groupMode="stacked"
         colors={{ scheme: "nivo" }}
         defs={[
@@ -140,20 +173,6 @@ class NeighbourhoodGraph extends Component {
             spacing: 10
           }
         ]}
-        fill={[
-          {
-            match: {
-              id: "fries"
-            },
-            id: "dots"
-          },
-          {
-            match: {
-              id: "sandwich"
-            },
-            id: "lines"
-          }
-        ]}
         borderRadius={4}
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
         axisTop={null}
@@ -161,23 +180,23 @@ class NeighbourhoodGraph extends Component {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
-          legend: "neighbourhoods",
+          tickRotation:this.state.legendRotation,
+          legend: "Neighbourhoods",
           legendPosition: "middle",
-          legendOffset: 32
+          legendOffset: this.state.legendSpace
         }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "population",
+          legend: "Population",
           legendPosition: "middle",
-          legendOffset: -40
+          legendOffset: -50
         }}
-        enableLabel={false}
-        labelSkipWidth={12}
+        enableLabel={true}
+        labelSkipWidth={25}
         labelSkipHeight={12}
-        labelTextColor="#80ff80"
+        labelTextColor="#fff"
         legends={[
           {
             dataFrom: 'keys',

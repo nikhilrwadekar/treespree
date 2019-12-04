@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
+import noImage from "./no.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBag,
@@ -22,32 +23,30 @@ class Single extends React.Component {
     paragraph: null,
     genus_name: "",
     tree_name: "",
-    imageSrc: "",
+    imageSrc: "noImage",
     tree_id: 602
   };
 
   constructor(props) {
     super(props);
-    // this.getImage = this.getImage.bind(this);
-
-    // this.getTrees();
-    // this.getImage();
   }
 
   componentDidMount() {
     let treespreeAPIQuery = "";
 
+    //setting Api for wikipedia serch based on if id is getting passed or name
     if (this.props.match.params.tree_id) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
     } else if (this.props.match.params.tree_name) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
     }
 
+    //Getting information from wikipedia and passing it to states
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
       console.log(response.data);
 
-      //Setting state.common_name to tree's common name
+      //Setting state values
       this.setState(prevstate => {
         return {
           genus_name: tree[0].genus_name,
@@ -59,6 +58,7 @@ class Single extends React.Component {
       });
 
       let search = this.state.tree_name;
+      //building search URL for Text from wikipedia
       let searchUrl = wikiUrl + search;
       fetch(searchUrl)
         .then(res => {
@@ -73,40 +73,45 @@ class Single extends React.Component {
           });
         });
 
-      console.log(this.state.tree_name);
-
-      // let searchPic = this.state.tree_name ;
-      // let b = searchPic.toLowerCase();
-      // let imageUrl = wikiPictureUrl + b;
-
+      //making two search URl for getting picture from wikipedia
       let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
       let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
 
       fetch(searchUrl1)
         .then(res => {
-          // Return data in form of JSON
           return res.json();
         })
         .then(foundData => {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-          if (imageObj.thumbnail == undefined) {
-            fetch(searchUrl2)
-              .then(res => {
-                // Return data in form of JSON
-                return res.json();
-              })
-              .then(foundData => {
-                let imageObj =
-                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-                this.setState({
-                  imageSrc: imageObj.thumbnail.source
+          //checking if results for picture from wikipedia, using genus name is undefined
+
+          try {
+            if (imageObj.thumbnail == undefined) {
+              fetch(searchUrl2)
+                .then(res => {
+                  return res.json();
+                })
+                .then(foundData => {
+                  let imageObj =
+                    foundData.query.pages[
+                      Object.keys(foundData.query.pages)[0]
+                    ];
+                  this.setState({
+                    imageSrc: imageObj.thumbnail.source
+                  });
                 });
+            }
+            //Use tree absolute name for searching picture on wikipedia if searching with genus anme returns undefined
+            else {
+              this.setState({
+                imageSrc: imageObj.thumbnail.source
               });
-          } else {
+            }
+          } catch (error) {
             this.setState({
-              imageSrc: imageObj.thumbnail.source
+              imageSrc: noImage
             });
           }
 
@@ -152,7 +157,7 @@ class Single extends React.Component {
                   <FontAwesomeIcon icon={faMapMarkerAlt} />
                 </div>
                 <div>
-                  <a href="/explore">Find One Near Me</a>
+                  <a href="/explore/2">Find One Near Me</a>
                 </div>
               </div>
               <div className="shop">

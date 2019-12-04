@@ -1,42 +1,94 @@
-.ContactPage input, textarea {
-    width: 100%;
-    margin-bottom: .8em;
-    padding:.2em;
-  }
-  
-  .ContactPage p {
-    width: 100%;
-    text-align:left;
-    margin-bottom:.3em;
-  }
-  .ContactPage{
-      max-width:50%;
-      margin: auto;
-      margin-bottom:2em;
-  }
-  
-  .ContactPage input[type=submit] {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: .6em;
-    text-decoration: none;
-    width:50%;
-    margin: auto;
-  }
-  .ContactPage span{
-    text-align: left;
+.ContactPage input,
+textarea {
+  width: 100%;
+  margin-bottom: 0.8em;
+  padding: 0.2em;
+}
 
-    }
-    
+.ContactPage h1 {
+  font-weight: 100;
+}
+.contact-image-form {
+  background-color: #fff;
+  padding: 2rem 10%;
+}
 
-    @media only screen and (max-width: 650px) {
+.contact-section {
+  border: 0.5px solid #bfbfbf;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
 
+.ContactPage p {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.1em;
+}
 
-      .ContactPage{
-        max-width:70%;
-        margin: auto;
-        margin-bottom: 2em;
-    }
-    
-    }
+.contact-section img {
+  max-width: 100%;
+  display: none;
+}
+.ContactPage {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  background-color: #fff;
+  padding: 1rem 4%;
+}
+
+.welcome-message {
+  text-align: center !important;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.25rem;
+}
+
+.ContactPage input {
+  margin-top: 0;
+}
+
+.ContactPage input[type="submit"] {
+  background-color: #90c33e;
+  border: none;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  text-decoration: none;
+  width: 25%;
+  margin: auto;
+  border-radius: 0.3rem;
+}
+.ContactPage span {
+  text-align: left;
+}
+
+@media screen and (min-width: 820px) {
+  .ContactPage {
+    max-width: 100%;
+    margin: 0;
+    padding: 1rem 4%;
+  }
+
+  .contact-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-image {
+    grid-column: 1/2;
+  }
+
+  .contact-image img {
+    display: block;
+  }
+
+  .ContactPage {
+    grid-column: 2/3;
+  }
+
+  .contact-image-form {
+    padding: 2rem 10%;
+    background-color: #fff;
+  }
+}

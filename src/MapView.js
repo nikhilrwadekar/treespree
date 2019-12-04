@@ -1,64 +1,72 @@
 /* global google */
 
-/*
- <div
-                        style={{
-                          fontSize: `16px`,
-                          fontColor: `#08233B`,
-                          fontFamily: "Karla"
-                        }}
-                      >
-                        <a
-                          style={{
-                            fontSize: `14px`,
-                            textTransform: "capitalize",
-                            fontStyle: "italic",
-                            color: "#fff"
-                          }}
-                          href={`/tree/id/${tree.tree_id}`}
-                        >
-                          tess {tree.common_name_tree.toLowerCase()}
-                        </a>
-                      </div> */
 import React from "react";
 import axios from "axios";
 import PopUp from "./PopUp";
+// import ReactDOMServer from "react-dom/server";
+
 // Google Maps Import
 import {
   GoogleMap,
   withScriptjs,
   withGoogleMap,
-  Marker
+  Marker,
+  StreetViewPanorama,
+  OverlayView,
+  InfoWindow,
+  Polygon
 } from "react-google-maps";
 
 // Import CSS
 import "./MapView.css";
-
-// Import InfoBox
-const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+import { Button } from "react-bootstrap";
 
 // Import SearchBox
 const {
   SearchBox
 } = require("react-google-maps/lib/components/places/SearchBox");
 
-// Import Marker Clusterer
-const {
-  MarkerClusterer
-} = require("react-google-maps/lib/components/addons/MarkerClusterer");
-
 // Declare the Component itself
 class MapView extends React.Component {
   state = {
-    trees: []
+    trees: [],
+    zoom: 18,
+    isMapView: true,
+    center: { lat: 49.2259162, lng: -123.10982159999999 }
   };
   constructor(props) {
     super(props);
   }
 
+  //
+  componentWillMount() {}
   // After the component is mounted..
   componentDidMount() {
     // Set Data Layer
+    axios
+      .get(
+        "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/vancouver.geojson"
+      )
+      .then(response => {
+        // this.map.addGeoJson(data);
+        this.setState({ ...this.state, geoJSON: response.data });
+      });
+
+    // Get Location
+    navigator.geolocation.getCurrentPosition(
+      success => {
+        let mapCenter = {
+          lat: success.coords.latitude,
+          lng: success.coords.longitude
+        };
+
+        this.setState({
+          ...this.state,
+          center: mapCenter
+        });
+      },
+      error => {}
+    );
   }
 
   getTreeDataAndStoreInState(boundingBox) {
@@ -78,8 +86,7 @@ class MapView extends React.Component {
     let currentZoomLevel = this.map.getZoom();
 
     // Get current trees bound by current view from API..
-    if (currentZoomLevel >= 20) {
-      console.log("You're zoomed in enough! Updating Trees on map..");
+    if (currentZoomLevel >= 18) {
       // Derive NE and SW
       let NE = this.map.getBounds().getNorthEast();
       let SW = this.map.getBounds().getSouthWest();
@@ -92,31 +99,69 @@ class MapView extends React.Component {
         SouthEastY: NE.lng()
       };
       // Point is in bounding box
-      console.log("Ready to pull data!");
-      console.log(boundingBox);
 
       this.getTreeDataAndStoreInState(boundingBox);
-    } else if (currentZoomLevel < 20) {
+    } else if (currentZoomLevel < 18) {
+      // this.map.data.addGeoJson(this.state.geoJSON);
+
       this.setState({
         trees: []
       });
     }
-    console.log("Current Zoom:" + currentZoomLevel);
   }
 
   //
-  onBoundsChanged() {
-    console.log("Map Bounds Changed!");
-  }
+  onBoundsChanged() {}
+
+  // StreeView Handler! :D - Special Thanks to https://codepen.io/moutono/pen/KjZpZB
+  streetViewHandler = (coordinates, tree) => {
+    // Create Street View
+    let panorama = this.map.getStreetView();
+    panorama.setPosition(coordinates);
+    // panorama.setPov({
+    //   heading: 34,
+    //   pitch: 10
+    // });
+    panorama.setVisible(true);
+
+    let streetViewInfowindow = new google.maps.InfoWindow({
+      content: `<div class="streetViewInfo">
+      <p>Name: <h3>${tree.common_name_tree.toLowerCase()}</h3></p>
+      
+      <p>Genus: <h4>${tree.genus_name.toLowerCase()}</h4></p>
+      <p>Species: <h4>${tree.species_name.toLowerCase()}</h4></p>
+      <p>Population: <h5>${tree.common_name_tree_count}</h5></p></div>
+      `,
+      pixelOffset: new google.maps.Size(0, -25)
+    });
+
+    streetViewInfowindow.setPosition(coordinates);
+    streetViewInfowindow.open(panorama);
+  };
 
   onIdle() {
-    console.log("Now Idle..");
     this.handleMapUpdate();
   }
 
   // CITE THIS!!!!!
   showInfo(a) {
-    this.setState({ showInfoIndex: a });
+    // If Tree ID is new, update the current InfoWindow index, else set it to null to toggle!
+    if (this.state.showInfoIndex !== a) this.setState({ showInfoIndex: a });
+    else this.setState({ showInfoIndex: null });
+    //
+  }
+
+  // Function from https://tomchentw.github.io/react-google-maps/
+  onPlacesChanged() {
+    let placeCenter = {
+      lat: this.searchBox.getPlaces()[0].geometry.location.lat(),
+      lng: this.searchBox.getPlaces()[0].geometry.location.lng()
+    };
+
+    this.setState({
+      ...this.state,
+      center: placeCenter
+    });
   }
 
   render() {
@@ -127,26 +172,38 @@ class MapView extends React.Component {
           ref={ref => {
             this.map = ref;
           }}
-          defaultZoom={20}
-          defaultCenter={{ lat: 49.2258331, lng: -123.1078227 }}
+          // defaultOptions={{}}
+          zoom={this.state.zoom}
+          // zoom={this.state.defaultZoom}
+          center={this.props.center ? this.props.center : this.state.center}
           // Pass this.map instead of this as you need to bind map's this
           onZoomChanged={this.handleMapUpdate.bind(this)}
           onIdle={this.onIdle.bind(this)}
+
+          // streetView={}
         >
-          <SearchBox>
+          <SearchBox
+            ref={ref => {
+              this.searchBox = ref;
+            }}
+            // bounds={props.bounds}
+            controlPosition={google.maps.ControlPosition.TOP_RIGHT}
+            onPlacesChanged={this.onPlacesChanged.bind(this)}
+          >
             <input
               type="text"
-              placeholder="Customized your placeholder"
+              placeholder="Search for a place.."
               style={{
                 boxSizing: `border-box`,
                 border: `1px solid transparent`,
                 width: `240px`,
-                height: `32px`,
+                height: `50px`,
                 marginTop: `27px`,
+                marginRight: `27px`,
                 padding: `0 12px`,
                 borderRadius: `3px`,
                 boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                fontSize: `14px`,
+                fontSize: `18px`,
                 outline: `none`,
                 textOverflow: `ellipses`
               }}
@@ -160,11 +217,11 @@ class MapView extends React.Component {
               <Marker
                 icon={
                   new google.maps.MarkerImage(
-                    `/svg/leaves/${tree.absolute_common_name}.svg`,
+                    `/png/leaves/${tree.absolute_common_name.toLowerCase()}.png`,
                     null,
                     null,
                     null,
-                    new google.maps.Size(75, 75)
+                    new google.maps.Size(50, 50)
                   )
                 }
                 key={tree.tree_id}
@@ -175,36 +232,73 @@ class MapView extends React.Component {
                 title={tree.common_name}
                 onClick={() => {
                   this.showInfo(tree.tree_id);
+                  this.setState({
+                    ...this.state,
+                    zoom: 20
+                  });
+
+                  if (
+                    this.map.getStreetView().getVisible() &&
+                    this.state.showInfoIndex === tree.tree_id
+                  )
+                    this.streetViewHandler(
+                      {
+                        lat: tree.tree_latitude,
+                        lng: tree.tree_longitude
+                      },
+                      tree
+                    );
                 }}
               >
                 {/* InfoBox for the Marker */}
-                {this.state.showInfoIndex == tree.tree_id && (
-                  <InfoBox
-                    defaultPosition={
-                      new window.google.maps.LatLng(
-                        tree.tree_latitude,
-                        tree.tree_longitude
-                      )
-                    }
-                    options={{
-                      closeBoxURL: ``,
-                      enableEventPropagation: true,
-                      pixelOffset: new google.maps.Size(10, -250)
-                    }}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: `white`,
-                        opacity: 1,
-                        padding: `12px`,
-                        borderRadius: "10px",
-                        width: "500px"
+                {this.state.isMapView &&
+                  this.state.showInfoIndex == tree.tree_id && (
+                    <InfoWindow
+                      defaultPosition={
+                        new window.google.maps.LatLng(
+                          tree.tree_latitude,
+                          tree.tree_longitude
+                        )
+                      }
+                      options={{
+                        closeBoxURL: ``,
+                        enableEventPropagation: true,
+                        pixelOffset: new google.maps.Size(0, -50)
+                      }}
+                      onCloseClick={() => {
+                        this.showInfo(tree.tree_id);
+                        this.setState({ ...this.state, zoom: 18 });
                       }}
                     >
-                      <PopUp tree_id={tree.tree_id} />
-                    </div>
-                  </InfoBox>
-                )}
+                      <div
+                        style={{
+                          backgroundColor: `white`,
+                          opacity: 1,
+                          padding: `12px`,
+                          borderRadius: "10px",
+                          width: "500px"
+                        }}
+                      >
+                        <div className="mapView-PopUp">
+                          <PopUp tree_id={tree.tree_id} />
+                        </div>
+
+                        {/* Render Street View with the current Co-ordinates! */}
+                        <Button
+                          onClick={this.streetViewHandler.bind(
+                            this,
+                            {
+                              lat: tree.tree_latitude,
+                              lng: tree.tree_longitude
+                            },
+                            tree
+                          )}
+                        >
+                          Virtual Tour
+                        </Button>
+                      </div>
+                    </InfoWindow>
+                  )}
               </Marker>
             </div>
           ))}

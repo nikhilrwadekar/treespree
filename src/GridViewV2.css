@@ -8,6 +8,45 @@
   transition: all 0.3s ease-in-out;
 }
 
+.GridViewV2-advancedFilters .selector {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.GridSearch .selector > div {
+  border-color: #90c33e;
+}
+
+.GridSearchAdvancedHeader {
+  color: #90c33e;
+  text-decoration: underline;
+}
+
+.GridSearchAdvancedHeader:hover {
+  cursor: pointer;
+}
+
+.GridViewV2-accordion {
+  width: 50%;
+  min-width: 300px;
+  margin: 0 auto;
+  /* margin-top: 1rem; */
+}
+.GridViewV2-accordion .card {
+  border: none;
+}
+
+.GridViewV2-accordion .card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+.GridViewV2-accordion .card-body {
+  background: #eee;
+  border-radius: 20px;
+}
+
 @media screen and (min-width: 500px) {
   .GridViewV2 {
     grid-template-columns: repeat(3, 1fr);

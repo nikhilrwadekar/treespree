@@ -1,4 +1,5 @@
 import React from "react";
+import "./Terms.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 class Terms extends React.Component {
