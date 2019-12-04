@@ -31,7 +31,7 @@ class Contact extends React.Component {
             <img src="/images/contact-image/leaf.jpg" alt="Maple Leaf" />
           </div>
           <div className="ContactPage">
-            <h1> CONTACT</h1>
+            <h1> CONTACT US</h1>
             <p className="welcome-message">
               Thank you for visiting our website. Feel free to talk to us or
               send us a message.
