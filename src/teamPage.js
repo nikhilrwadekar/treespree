@@ -6,20 +6,20 @@ state={
   teamMembers: [
     {
       name: "Jasmine Kaur",
-      Description: "Project Manager Front-end Developer",
+      Description: "PM | Front-end Developer",
       img: "/images/team-photos/Jasmine.jpg",
       github:"/images/team-photos/github-logo.png",
-      gitlink:"https://github.com",
+      gitlink:"https://github.com/jasminekaur95",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://ca.linkedin.com/",
     },
     
     {
       name: "Nikhil Wadekar",
-      Description: "Full-stack Developer",
+      Description: "Lead | Full-stack Developer",
       img: "/images/team-photos/Nikhil.jpg",
       github:"/images/team-photos/github-logo.png",
-      gitlink:"https://github.com",
+      gitlink:"https://github.com/nikhilrwadekar",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://ca.linkedin.com/",
     },
@@ -39,19 +39,20 @@ state={
       gitlink:"https://github.com/BlandyC",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://ca.linkedin.com/",
-    },
+    }
+    ,
     {
       name: "Satnam Thandi",
       Description: "Back-end Developer",
       img: "/images/team-photos/Sam.jpg",
       github:"/images/team-photos/github-logo.png",
-      gitlink:"https://github.com",
+      gitlink:"https://github.com/ssingh124",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://ca.linkedin.com/",
     } ,
     {
       name: "Darshpreet Kaur",
-      Description: "UI-Designer",
+      Description: "UI Designer",
       img: "/images/team-photos/Darshpreet.jpg",
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -59,20 +60,20 @@ state={
     } ,
     {
       name: "Angel Augustine",
-      Description: "QA Front-end Developer",
+      Description: "QA | Front-end Developer",
       img: "/images/team-photos/Angel.jpg",
       github:"/images/team-photos/github-logo.png",
-      gitlink:"https://github.com",
+      gitlink:"https://github.com/AngelAugustine",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://ca.linkedin.com/",
-    }   
+    } ,
   ]
 }
 
 createMember = () => {
   let member = []
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i <= 3; i++) {
 
     let children=[]
     children.push(<img src={this.state.teamMembers[i].img} alt={this.state.teamMembers[i].name} className="img_teamPage" />)
@@ -89,11 +90,44 @@ createMember = () => {
     let linkdin =[]
     linkdin.push(<a href={this.state.teamMembers[i].link}><img src={this.state.teamMembers[i].linkdin} alt="linkdin" className="img_link" /></a>)
   
-    member.push(<div className="team-holder"><div className="img-holder">{children}</div>
-   <div className="txt-holder"> <h5>{children1}</h5>
-    <p>{children2}</p>
-    {github}
-    {linkdin}</div></div>)
+     member.push(<div className="team-holder"><div className="img-holder">{children}</div>
+     <div className="txt-holder"> <h5>{children1}</h5>
+      <p>{children2}</p>
+      {github}
+      {linkdin}</div></div>)
+    
+    
+  }
+  return member
+}
+
+createMember_row2 = () => {
+  let member = []
+
+  for (let i = 4; i <7 ; i++) {
+
+    let children=[]
+    children.push(<img src={this.state.teamMembers[i].img} alt={this.state.teamMembers[i].name} className="img_teamPage" />)
+  
+    let children1 = []
+      children1.push(this.state.teamMembers[i].name)
+
+    let children2 = []
+      children2.push(this.state.teamMembers[i].Description)
+
+      let github =[]
+      github.push(<a href={this.state.teamMembers[i].gitlink}><img src={this.state.teamMembers[i].github} alt="github" className="img_git" /></a>)  
+    
+    let linkdin =[]
+    linkdin.push(<a href={this.state.teamMembers[i].link}><img src={this.state.teamMembers[i].linkdin} alt="linkdin" className="img_link" /></a>)
+  
+     member.push(<div className="team-holder"><div className="img-holder">{children}</div>
+     <div className="txt-holder"> <h5>{children1}</h5>
+      <p>{children2}</p>
+      {github}
+      {linkdin}</div></div>)
+    
+    
   }
   return member
 }
@@ -104,7 +138,7 @@ createMember = () => {
   return (
     <div className="teamPage">
       <div className="tp-header">
-        <h1>Team TreeSpree</h1>
+        <h1>Our Team</h1>
         <p>
         Our team wants to provide a refreshing experience to the users while exploring city trees across Vancouver. Our website will take users through a virtual walk around the city and provide comprehensive information about tree population, tree variants, and leaf illustrations.
         </p>
@@ -113,6 +147,9 @@ createMember = () => {
       </div>
       <div className="team-members">         
            {this.createMember()}                         
+      </div>
+      <div className="row2-members">         
+           {this.createMember_row2()}                         
       </div>
         </div>
   );}
