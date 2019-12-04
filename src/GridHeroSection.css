@@ -1,0 +1,35 @@
+.grid-hero {
+  position: relative;
+}
+
+.grid-hero img {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 60vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.textOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  color: #fff;
+  text-align: center;
+}
+
+.textOverlay h2 {
+  font-size: 2.3rem;
+  font-weight: 100;
+  font-weight: 500;
+}
+
+.textOverlay p {
+  margin-top: 1rem;
+  font-size: 1.35rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+}
