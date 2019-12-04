@@ -4,6 +4,7 @@
 .tp-header{
   width: 70%;
   margin-left: 13%;
+  line-height: 2rem;
 }
 .team-members {
   margin-top: 2rem;
@@ -55,6 +56,11 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
   }
+  .row2-members{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
   .img_git, .img_link{
     width: 10%;
   }
@@ -69,6 +75,19 @@
 @media only screen and (min-width: 900px) {
   .team-members  {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .row2-members{
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+  }
+  .row2-members .team-holder{
+    width: 75%;
+  }
+  .row2-members div:nth-of-type(1){
+    justify-self: end;
+  }
+  .row2-members div:nth-of-type(3){
+    justify-self: start;
   }
   .tp-header p  {
     display: block;
