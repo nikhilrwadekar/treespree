@@ -1,15 +1,16 @@
 import React from "react";
 import axios from "axios";
 import "./Single.css";
-import noImage from "./no.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBag,
   faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-let wikiUrl =
-  "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&summary=&origin=*&titles=";
+
+// Wikipedia API url for fetching image or picture for trees
+let wikiUrl ="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
+  // "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -23,17 +24,16 @@ class Single extends React.Component {
     paragraph: null,
     genus_name: "",
     tree_name: "",
-    imageSrc: "noImage",
-    tree_id: 602
+    imageSrc: "",
+    tree_id: 602,
+    imageClass:"SingleImage"
   };
-
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
     let treespreeAPIQuery = "";
-
     //setting Api for wikipedia serch based on if id is getting passed or name
     if (this.props.match.params.tree_id) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
@@ -41,11 +41,11 @@ class Single extends React.Component {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
     }
 
-    //Getting information from wikipedia and passing it to states
+
+    //Getting information from TreeSpree API and passing it to states
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
       console.log(response.data);
-
       //Setting state values
       this.setState(prevstate => {
         return {
@@ -56,10 +56,10 @@ class Single extends React.Component {
           population: tree[0].common_name_tree_count
         };
       });
-
-      let search = this.state.tree_name;
       //building search URL for Text from wikipedia
+      let search = this.state.tree_name;
       let searchUrl = wikiUrl + search;
+      //fetching information from Wikipedia
       fetch(searchUrl)
         .then(res => {
           return res.json();
@@ -77,6 +77,7 @@ class Single extends React.Component {
       let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
       let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
 
+      // fetching Picture from wikipedia API using genus name
       fetch(searchUrl1)
         .then(res => {
           return res.json();
@@ -85,10 +86,9 @@ class Single extends React.Component {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-          //checking if results for picture from wikipedia, using genus name is undefined
-
-          try {
+          //checking if results for picture from wikipedia, using genus name is undefined          
             if (imageObj.thumbnail == undefined) {
+              //if results are undefined using genus name it will use alsolute commom name for fetching image
               fetch(searchUrl2)
                 .then(res => {
                   return res.json();
@@ -98,38 +98,38 @@ class Single extends React.Component {
                     foundData.query.pages[
                       Object.keys(foundData.query.pages)[0]
                     ];
+                    // setting image URL to image Src
                   this.setState({
                     imageSrc: imageObj.thumbnail.source
                   });
+                })
+                //catch block for handling errors in fetching image from wikipedia
+                .catch(err =>{
+                  this.setState({
+                    // it will set image src to the tree leaf image
+                 imageSrc:`${window.location.protocol}\/\/${window.location.host}/png/leaves/${this.state.tree_name}.png`,
+                 imageClass:"errorImage"
+                  
                 });
+               });
             }
-            //Use tree absolute name for searching picture on wikipedia if searching with genus anme returns undefined
+            //Use tree absolute name for searching picture on wikipedia if searching with genus name returns undefined
             else {
               this.setState({
                 imageSrc: imageObj.thumbnail.source
               });
-            }
-          } catch (error) {
-            this.setState({
-              imageSrc: noImage
-            });
-          }
-
-          console.log(this.state.imageSrc);
+            }     
         });
     });
   }
 
-  //   componentDidMount() {
-  //     console.log(this.props.match.params.tree_id)
-  //     console.log(this.props.match.params.tree_name)
-  //   }
+
 
   render() {
     return (
       <div className="singlePage">
         <div className="banner">
-          <div className="image">
+          <div className={this.state.imageClass}>
             <img src={this.state.imageSrc} alt="" className="SingleImage" />
           </div>
 

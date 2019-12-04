@@ -1,27 +1,30 @@
 import React from "react";
 import "./Contact.css";
 
+// Refference for contact page https://reactjs.org/docs/forms.html
+
 class Contact extends React.Component {
-  constructor(props) {
+  constructor(props) 
+  {
     super(props);
     this.state = {
       name: "",
       email: "",
       message: ""
     };
-
+    // binding handleChange function with this.
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
 
+//function that handles changes in input field and assign values to state
   handleChange(event) {
-    let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({ [nam]: val });
+    let name = event.target.name;
+    let value = event.target.value;
+    // setting all value from contact page to state(where name is the field name(email) or value(ss@gmail.com) conatins value )
+    this.setState({ [name]: value });
   }
-  handleSubmit = () => {
-    alert("Your age must be a number");
-  };
+ 
 
   render() {
     return (
@@ -32,12 +35,11 @@ class Contact extends React.Component {
           </div>
           <div className="ContactPage">
             <h1> CONTACT</h1>
-            <p className="welcome-message">
-              Thank you for visiting our website. Feel free to talk to us or
-              send us a message.
+            <p>
+              Thank you for visiting our website. Feel free to send us a message.
             </p>
 
-            <form>
+            <form action="/submit" method="POST">
               <p>Name:</p>
               <input
                 type="text"
@@ -53,14 +55,7 @@ class Contact extends React.Component {
                 onChange={this.handleChange}
               />
               <p>Message:</p>
-              {/* <input
-          type="text"
-          name="message"
-          value={this.state.message}
-          onChange={this.handleChange}
-          
-        /> */}
-
+           
               <textarea
                 rows="4"
                 cols="50"
@@ -77,7 +72,6 @@ class Contact extends React.Component {
                 type="submit"
                 name="Submit"
                 value="Submit"
-                onClick={this.handleSubmit}
               />
             </form>
           </div>
