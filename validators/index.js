@@ -1,22 +1,25 @@
 
+//Code taken from Assignments from Server Side Scripting
+
+
 const {check} = require('express-validator');
 
 exports.validator=[
     check('name', 'Enter a valid Name')
     .isLength({ min: 3 })
-    // .trim()
+    .trim()
     .not().isEmpty()
-    // .escape(),
+    .escape(),
         
-//     check('email','Enter a valid Email')
+    check('email','Enter a valid Email')
     
-//     .isEmail()
-//     .not().isEmpty()
-//     .escape(),
+    .isEmail()
+    .not().isEmpty()
+    .escape(),
     
-//    check('message','Enter Message')
-//     .not().isEmpty()
-    // .isLength({ min: 5 })
+   check('message','Enter Message')
+    .not().isEmpty()
+    .isLength({ min: 5 })
     
     
     ];

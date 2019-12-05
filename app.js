@@ -3,9 +3,12 @@ const path = require("path");
 
 // Validator files
 const {validationResult} = require('express-validator');
-
 const {validator} = require("./validators");
 
+//Files for database
+const {cp} = require('./db/connection.js');
+const {query} = require('./db/promise-mysql.js');
+const mysql = require('mysql');
 
 
 // CORS for local development and remote API requests
@@ -35,39 +38,42 @@ app.get("*", (req, res) => {
 
 // Use JSON - This will allow you to work with req.body
 app.use(express.json());
+app.use(express.urlencoded())                                                      
+
+
+// code taken from Assignments from Server Side Scripting
+
+
 
 // Submit Contact Form
-app.post("/submit", (req,res) => {
+app.post("/submit",validator, (req,res) => {
   
-  res.send(req.body)
-
-  // const validationResults=validationResult(req);
-  // if(validationResults.isEmpty())
-  // {
+  const validationResults=validationResult(req);
+  if(validationResults.isEmpty())
+  {
+    let name=req.body.name;
+    let email=req.body.email;
+    let message=req.body.msg;
   
+    res.send("SUCCESS");
+  //   query(cp,`INSERT INTO contact (name,email,message) VALUES (${mysql.escape(name)},${mysql.escape(email)},${mysql.escape(message)})`)
+  //   .then(results=>{
+  //   res.send(results)
+  //         })
+  // .catch(error=>{
+  // res.send(error)
+  // });
 
-
-  //   let name=req.body.name;
-  //   let email=req.body.email;
-  //   let msg=req.body.msg;
-  
-  //   // res.send(name);
-  //   res.sendFile(path.join(__dirname, "./build/index.html"));
-
-
-  // }
-  // else{
+     // res.redirect('/');
+    // res.send("SUCCESS");
+  }
+  else{
      
-  //     // const a=validationResult(req).mapped();
-  //     // const newArray=Object.values(a);
-  //     // const errors=newArray.map(val=>val.msg);
+      const a=validationResult(req).mapped();
+      const newArray=Object.values(a);
+      const errors=newArray.map(val=>val.msg);
       
-  //     // next(new Error,errors));
-  // res.send( validationResults)
-  // }
-
-
-
-
+      res.send(errors)
+  }
 })
 

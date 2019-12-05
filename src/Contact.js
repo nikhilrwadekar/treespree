@@ -1,6 +1,7 @@
 import React from "react";
 import "./Contact.css";
 
+
 // Refference for contact page https://reactjs.org/docs/forms.html
 
 class Contact extends React.Component {
@@ -24,7 +25,6 @@ class Contact extends React.Component {
     // setting all value from contact page to state(where name is the field name(email) or value(ss@gmail.com) conatins value )
     this.setState({ [name]: value });
   }
- 
 
   render() {
     return (
