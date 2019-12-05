@@ -67,7 +67,7 @@ class GridViewV2 extends React.Component {
       // Genus
       Axios.get("http://treespree.wmdd.ca/api/trees/genus").then(Response => {
         // Get genus and map them
-        let optionsMapped = Response.data[1].map(genus => {
+        let optionsMapped = Response.data.map(genus => {
           return {
             label: genus.genus_name,
             value: genus.genus_name
