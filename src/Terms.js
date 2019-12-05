@@ -5,10 +5,8 @@ import "./Terms.css";
 class Terms extends React.Component {
   render() {
     return (
-      <div className="Terms">
+      <div className="terms">
         <h1>Terms And Conditions</h1>
-
-        <p>Welcome to Treespree!</p>
 
         <p>
           These terms and conditions outline the rules and regulations for the
@@ -47,9 +45,7 @@ class Terms extends React.Component {
           therefore as referring to same.
         </p>
 
-        <h3>
-          <strong>Cookies</strong>
-        </h3>
+        <h3>Cookies</h3>
 
         <p>
           We employ the use of cookies. By accessing Treespree, you agreed to
@@ -64,9 +60,7 @@ class Terms extends React.Component {
           cookies.
         </p>
 
-        <h3>
-          <strong>License</strong>
-        </h3>
+        <h3>License</h3>
 
         <p>
           Unless otherwise stated, Treespree and/or its licensors own the
@@ -134,9 +128,7 @@ class Terms extends React.Component {
           Comments in any and all forms, formats or media.
         </p>
 
-        <h3>
-          <strong>Hyperlinking to our Content</strong>
-        </h3>
+        <h3>Hyperlinking to our Content</h3>
 
         <p>
           The following organizations may link to our Website without prior
@@ -225,9 +217,7 @@ class Terms extends React.Component {
           linking absent a trademark license agreement.
         </p>
 
-        <h3>
-          <strong>iFrames</strong>
-        </h3>
+        <h3>iFrames</h3>
 
         <p>
           Without prior approval and written permission, you may not create
@@ -235,9 +225,7 @@ class Terms extends React.Component {
           presentation or appearance of our Website.
         </p>
 
-        <h3>
-          <strong>Content Liability</strong>
-        </h3>
+        <h3>Content Liability</h3>
 
         <p>
           We shall not be hold responsible for any content that appears on your
@@ -248,15 +236,11 @@ class Terms extends React.Component {
           violation of, any third party rights.
         </p>
 
-        <h3>
-          <strong>Your Privacy</strong>
-        </h3>
+        <h3>Your Privacy</h3>
 
         <p>Please read Privacy Policy</p>
 
-        <h3>
-          <strong>Reservation of Rights</strong>
-        </h3>
+        <h3>Reservation of Rights</h3>
 
         <p>
           We reserve the right to request that you remove all links or any
@@ -267,9 +251,7 @@ class Terms extends React.Component {
           follow these linking terms and conditions.
         </p>
 
-        <h3>
-          <strong>Removal of links from our website</strong>
-        </h3>
+        <h3>Removal of links from our website</h3>
 
         <p>
           If you find any link on our Website that is offensive for any reason,
@@ -285,9 +267,7 @@ class Terms extends React.Component {
           website is kept up to date.
         </p>
 
-        <h3>
-          <strong>Disclaimer</strong>
-        </h3>
+        <h3>Disclaimer</h3>
 
         <p>
           To the maximum extent permitted by applicable law, we exclude all
