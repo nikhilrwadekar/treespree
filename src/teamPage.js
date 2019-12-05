@@ -21,7 +21,7 @@ state={
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/nikhilrwadekar",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/nwadekar/",
     },
     {
       name: "Davinder Dhindsa",
@@ -48,7 +48,7 @@ state={
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/ssingh124",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/satnam-singh-50b3ba194/",
     } ,
     {
       name: "Darshpreet Kaur",
@@ -56,7 +56,7 @@ state={
       img: "/images/team-photos/Darshpreet.jpg",
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/mwlite/me",
     } ,
     {
       name: "Angel Augustine",
@@ -65,7 +65,7 @@ state={
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/AngelAugustine",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://ca.linkedin.com/",
+      link:"https://www.linkedin.com/in/angel-augustine-131219121/",
     } ,
   ]
 }
