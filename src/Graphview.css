@@ -1,4 +1,24 @@
 .graphviewContainer {
-    height: 500px;
-    margin-bottom: 100px;
+  height: 500px;
+}
+.graphviewContainer text {
+  font-family: "Karla", sans-serif !important;
+  font-size: 0.8rem !important;
+}
+.factsDiv {
+  max-width: 710px;
+  margin: auto;
+}
+
+.GraphView {
+  padding: 1rem;
+  padding-top: 2rem;
+}
+
+/* Media Query */
+@media screen and (min-width: 700px) {
+  .css-2b097c-container {
+    max-width: 700px;
+    margin: auto;
+  }
 }

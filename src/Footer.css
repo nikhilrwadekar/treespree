@@ -11,18 +11,22 @@
 }
 
 .footer-treespree-logo {
-  width: 4rem;
+  width: 3rem;
 }
 
 .footer {
-  display: grid;
-  grid-template-columns: 0.5fr 1.5fr 3fr;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  /* display: grid; */
+  /* grid-template-columns: 0.5fr 1.5fr 3fr; */
+  /* padding-top: 1rem; */
+  /* padding-bottom: 1rem; */
 }
 
 .footer a {
   grid-column: 1/2;
+  display: block;
 }
 
 .footer .logo {
@@ -34,19 +38,21 @@
 
 .footer .logo a {
   color: #90c33e;
+  font-size: 1.35rem;
 }
 
 .footer .navigation {
-  grid-column: 3/4;
+  /* grid-column: 3/4; */
   display: flex;
-  align-self: center;
+  /* align-self: center; */
   margin: 0;
   padding: 0;
   list-style-type: none;
   text-decoration: none;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   font-size: 1.5rem;
+  margin-top: 1rem;
 }
 
 .footer .navigation li {
@@ -59,4 +65,5 @@
   color: #90c33e;
   font-family: roboto;
   font-weight: 300;
+  font-size: 13px;
 }

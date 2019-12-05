@@ -1,7 +1,27 @@
 .abg-switch__container .abg-switch__overlay {
   background-color: #90c33e !important;
+  box-shadow: 0 0 6px 1px #aaa;
 }
 
-.abg-switch__item.abg-switch__item--on {
+.abg-switch__item.abg-switch__item--on,
+.abg-switch__item.abg-switch__item--on:hover {
   color: white;
+}
+
+.gridMapToggle {
+  display: flex;
+  justify-content: center;
+}
+
+.abg-switch.abg-switch__container {
+  border: 0.5px solid #aaa;
+}
+
+.gridMapToggle .abg-switch__item:hover:not(.abg-switch__item--on) {
+  color: #90c33e;
+  font-weight: bold;
+}
+
+.abg-switch__container {
+  width: 50%;
 }

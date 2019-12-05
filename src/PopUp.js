@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import "./PopUp.css";
+import noImage from './no.jpg';
 import Spinner from "react-bootstrap/Spinner";
 // https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
 let wikiUrl =
@@ -77,24 +78,34 @@ class PopUp extends React.Component {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
 
-          if (imageObj.thumbnail === undefined) {
+
+          if (imageObj.thumbnail === undefined)
+           {
+         
             fetch(searchUrl2)
               .then(res => {
                 // Return data in form of JSON
                 return res.json();
               })
               .then(foundData => {
-                let imageObj =
-                  foundData.query.pages[Object.keys(foundData.query.pages)[0]];
+                let imageObj =foundData.query.pages[Object.keys(foundData.query.pages)[0]];
                 this.setState({
                   imageSrc: imageObj.thumbnail.source
                 });
+              })
+              .catch(err =>{
+                 this.setState({
+                imageSrc: noImage
+                 });
               });
-          } else {
+           
+          }
+           else {
             this.setState({
               imageSrc: imageObj.thumbnail.source
             });
           }
+     
 
           console.log(this.state.imageSrc);
         });

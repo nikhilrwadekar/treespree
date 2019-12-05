@@ -1,0 +1,19 @@
+.Terms{
+    width:90%;
+    margin:auto;
+}
+.Terms{
+    max-width: 550px;
+    margin: auto;
+  }
+
+@media only screen and (min-width: 650px) {
+
+    .Terms{
+        width:90%;
+        margin:auto;
+    }
+
+
+
+}
