@@ -56,7 +56,7 @@ state={
       img: "/images/team-photos/Darshpreet.jpg",
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
-      link:"https://www.linkedin.com/mwlite/me",
+      link:"https://www.linkedin.com/in/darshpreet-kaur-025664125",
     } ,
     {
       name: "Angel Augustine",
