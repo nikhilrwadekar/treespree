@@ -203,6 +203,6 @@ exports.getTreeGenus = (req, res) => {
   
   GROUP BY SG.genus_name;`
   )
-    .then(results => res.send(results))
+    .then(results => res.send(results[1]))
     .catch(error => res.send(error));
 };
