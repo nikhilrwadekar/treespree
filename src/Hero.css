@@ -70,4 +70,8 @@
     background-size: cover;
     background-position: center;
   }
+
+  .contentOverlay a {
+    display: none;
+  }
 }
