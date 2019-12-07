@@ -165,14 +165,14 @@ class Single extends React.Component {
                   <FontAwesomeIcon icon={faShoppingBag} />
                 </div>
                 <div>
-                  <a href="/explore">Shop Products</a>
+                  <a href="/shop">Shop Products</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="moreInfo">
-          <h3> ABOUT </h3>
+          <h2> About </h2>
 
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
