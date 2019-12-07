@@ -5,6 +5,7 @@ import "./PopUp.css";
 import noImage from './no.jpg';
 import Spinner from "react-bootstrap/Spinner";
 
+// Reference for Wikipedia API https://www.mediawiki.org/wiki/API:Main_page
 // Building Urls for searching image or text from wikipedia
 let wikiUrl =
   "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro&summary=&origin=*&titles=";

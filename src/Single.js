@@ -7,7 +7,7 @@ import {
   faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons";
 
-
+// Refference for Wikipedia API https://www.mediawiki.org/wiki/API:Main_page
 // Wikipedia API url for fetching image or picture for trees
 let wikiUrl ="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
   // "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
@@ -32,9 +32,10 @@ class Single extends React.Component {
     super(props);
   }
 
+
   componentDidMount() {
     let treespreeAPIQuery = "";
-    //setting Api for wikipedia serch based on if id is getting passed or name
+    //setting Api for wikipedia search, based on if id is getting passed or name
     if (this.props.match.params.tree_id) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
     } else if (this.props.match.params.tree_name) {
@@ -45,7 +46,6 @@ class Single extends React.Component {
     //Getting information from TreeSpree API and passing it to states
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
-      console.log(response.data);
       //Setting state values
       this.setState(prevstate => {
         return {
@@ -65,7 +65,6 @@ class Single extends React.Component {
           return res.json();
         })
         .then(foundData => {
-          console.log(foundData);
           this.setState({
             paragraph:
               foundData.query.pages[Object.keys(foundData.query.pages)[0]]

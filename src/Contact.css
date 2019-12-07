@@ -58,6 +58,10 @@ textarea {
   text-align: left;
 }
 
+.Contact-error {
+  color: red;
+}
+
 @media screen and (min-width: 820px) {
   .ContactPage {
     max-width: 100%;

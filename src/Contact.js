@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import "./Contact.css";
 
 
@@ -26,6 +27,28 @@ class Contact extends React.Component {
     this.setState({ [name]: value });
   }
 
+  // Axios POST request to stay on the same page
+  handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // Axios POST request to the server
+    // Reference https://www.npmjs.com/package/axios
+    axios.post("http://localhost:8080/submit",null, { params: {
+      name: this.state.name,
+      message: this.state.message,
+      email: this.state.email
+    }})
+    .then(response => {
+      
+      this.setState({
+        ...this.state,
+        formSubmitMessage: response.data
+
+      })
+    })
+ 
+  }
+
   render() {
     return (
       <div className="contact-image-form">
@@ -37,9 +60,13 @@ class Contact extends React.Component {
             <h1> CONTACT</h1>
             <p>
               Thank you for visiting our website. Feel free to send us a message.
-            </p>
+            </p> 
+            
+            {            Array.isArray(this.state.formSubmitMessage)
+  ? <ul className="Contact-error">{this.state.formSubmitMessage.map(errorMessage => <li>{errorMessage}</li>)}</ul>
+            : this.state.formSubmitMessage}
 
-            <form action="/submit" method="POST">
+            <form>
               <p>Name:</p>
               <input
                 type="text"
@@ -69,9 +96,10 @@ class Contact extends React.Component {
               <br />
 
               <input
-                type="submit"
+                type="button"
                 name="Submit"
                 value="Submit"
+                onClick={this.handleFormSubmit.bind(this)}
               />
             </form>
           </div>

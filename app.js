@@ -55,9 +55,10 @@ app.post("/submit",validator, (req,res) => {
     let email=req.body.email;
     let message=req.body.msg;
   
-    res.send("SUCCESS");
+    //Send a 200 OK if done!
+    res.send("Submission Successful!");
   //   query(cp,`INSERT INTO contact (name,email,message) VALUES (${mysql.escape(name)},${mysql.escape(email)},${mysql.escape(message)})`)
-  //   .then(results=>{
+  //   .then(results=> {
   //   res.send(results)
   //         })
   // .catch(error=>{
@@ -73,7 +74,10 @@ app.post("/submit",validator, (req,res) => {
       const newArray=Object.values(a);
       const errors=newArray.map(val=>val.msg);
       
-      res.send(errors)
+      // Send a 422 if errors! status(422)
+      // res.status(400);
+      res.json(errors);
+      
   }
 })
 
