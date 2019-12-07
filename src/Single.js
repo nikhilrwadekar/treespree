@@ -165,7 +165,7 @@ class Single extends React.Component {
                   <FontAwesomeIcon icon={faShoppingBag} />
                 </div>
                 <div>
-                  <a href="/explore">Shop Products</a>
+                  <a href="/shop">Shop Products</a>
                 </div>
               </div>
             </div>

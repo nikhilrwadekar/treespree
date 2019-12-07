@@ -33,7 +33,7 @@ function Hero() {
         </svg>
         <div className="contentOverlay">
           <h2>Explore city trees in Vancouver</h2>
-          <p>Get started now.</p>
+          <p>Take a virtual tour</p>
           <Button
             size="lg"
             style={{ backgroundColor: "#90c33e", color: "#fff" }}
