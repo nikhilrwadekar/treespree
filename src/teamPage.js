@@ -2,12 +2,14 @@ import React from "react";
 import "./teamPage.css";
 
 class TeamPage extends React.Component {
+  //Array to create Team members
 state={
   teamMembers: [
     {
       name: "Jasmine Kaur",
       Description: "PM | Front-end Developer",
       img: "/images/team-photos/Jasmine.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/jasminekaur95",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -18,6 +20,7 @@ state={
       name: "Nikhil Wadekar",
       Description: "Lead | Full-stack Developer",
       img: "/images/team-photos/Nikhil.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/nikhilrwadekar",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -27,6 +30,7 @@ state={
       name: "Davinder Dhindsa",
       Description: "Lead Designer",
       img: "/images/team-photos/Davinder.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://www.linkedin.com/in/davinder-singh-00b8ab197/",
@@ -35,6 +39,7 @@ state={
       name: "Blandy Castro",
       Description: "Back-end Developer",
       img: "/images/team-photos/Blandy.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/BlandyC",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -45,6 +50,7 @@ state={
       name: "Satnam Thandi",
       Description: "Back-end Developer",
       img: "/images/team-photos/Sam.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/ssingh124",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -54,6 +60,7 @@ state={
       name: "Darshpreet Kaur",
       Description: "UI Designer",
       img: "/images/team-photos/Darshpreet.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"",
       linkdin:"/images/team-photos/linkdin-logo.png",
       link:"https://www.linkedin.com/in/darshpreet-kaur-025664125",
@@ -62,6 +69,7 @@ state={
       name: "Angel Augustine",
       Description: "QA | Front-end Developer",
       img: "/images/team-photos/Angel.jpg",
+      // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
       gitlink:"https://github.com/AngelAugustine",
       linkdin:"/images/team-photos/linkdin-logo.png",
@@ -69,7 +77,9 @@ state={
     } ,
   ]
 }
-
+// Function to loop trough the first four elements of the array
+// teamMembers and push the properties into
+// a new array member including the html tags.
 createMember = () => {
   let member = []
 
@@ -100,7 +110,12 @@ createMember = () => {
   }
   return member
 }
-
+// Function to loop trough the last three elements of the array
+// teamMembers and push the properties into
+// a new array member including the html tags.
+// This funtion was created with the purpose of enclosing the last three members
+// into a new div called "row2-members", this for aligning the second row of members
+// in the center when render.
 createMember_row2 = () => {
   let member = []
 

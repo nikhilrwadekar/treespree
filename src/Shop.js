@@ -2,9 +2,11 @@ import React from "react";
 import "./Shop.css";
 
 class Shop extends React.Component {
+  //Array to create Products
 state={
   products: [
     {
+      // image resource https://pixabay.com/images/search/book/
       img:"/images/shop-imgs/book.jpg",
       link:"https://www.amazon.ca/",
       name: "Book - 'The hidden life of trees'",
@@ -14,6 +16,7 @@ state={
       shipping:" & Free Shipping",
     },  
     {
+        // image resource https://unsplash.com/s/photos/bonsai
         img:"/images/shop-imgs/bonsai.jpg",
         link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
@@ -23,6 +26,7 @@ state={
         shipping:" & $5.00 Shipping",
       },  
       {
+        // image resource https://pixabay.com/images/search/bonsai/
         img:"/images/shop-imgs/bonsai_1.jpg",
         link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
@@ -32,6 +36,7 @@ state={
         shipping:" & $9.90 Shipping",
       },  
       {
+        // image resource https://unsplash.com/s/photos/bonsai
         img:"/images/shop-imgs/bonsai_2.jpg",
         link:"https://www.amazon.ca/",
         name: "Bonsai Seeds",
@@ -41,6 +46,7 @@ state={
         shipping:" & Free Shipping",
       },  
       {
+        // image resource https://unsplash.com/s/photos/cherry-blossom
         img:"/images/shop-imgs/cherry.jpg",
         link:"https://www.amazon.ca/",
         name: "Artificial cherry blossom",
@@ -50,6 +56,7 @@ state={
         shipping:" & $10.00 Shipping",
       },  
       {
+        //image resource https://unsplash.com/s/photos/flowers
         img:"/images/shop-imgs/flowers.jpg",
         link:"https://www.amazon.ca/",
         name: "Artificial flowers",
@@ -59,6 +66,7 @@ state={
         shipping:" & Free Shipping",
       },  
       {
+        //image resource https://unsplash.com/s/photos/cactus
         img:"/images/shop-imgs/cactus_1.jpg",
         link:"https://www.amazon.ca/",
         name: "Artificial cactus with pot",
@@ -68,6 +76,7 @@ state={
         shipping:" & $2.80 Shipping",
       },  
       {
+        //image resource https://pixabay.com/images/search/mini%20cactus/
         img:"/images/shop-imgs/miniplant.jpg",
         link:"https://www.amazon.ca/",
         name: "Artificial mini cactus",
@@ -78,7 +87,8 @@ state={
       },  
   ]
 }
-
+// Function to loop trough the array products and push the properties into
+// a new array product including the html tags.
 createProduct = () => {
   let product = []
 
@@ -123,7 +133,8 @@ createProduct = () => {
           Discover our wide variety of products.
         </p>
       </div>
-      <div className="shop-products">         
+      <div className="shop-products">   
+                  {/*  Call to our funtion createProduct */}
            {this.createProduct()}                         
       </div>
         </div>
