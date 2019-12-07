@@ -6,11 +6,11 @@
 .singlePage .others {
   text-align: center;
 }
-.singlePage .location{
-  padding:.3em;
+.singlePage .location {
+  padding: 0.3em;
 }
-.singlePage .shop{
-  padding:.3em;
+.singlePage .shop {
+  padding: 0.3em;
 }
 .SingleImage {
   width: 100%;
@@ -46,8 +46,42 @@
   text-align: left;
 }
 
-@media only screen and (max-width: 650px) {
+.info h1 {
+  font-weight: 100;
+}
 
+.singlePage .list {
+  font-family: roboto;
+}
+
+.singlePage .list ul {
+  text-transform: uppercase;
+}
+
+.singlePage .moreInfo h2 {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 100 !important;
+  font-family: roboto;
+}
+
+.singlePage .moreInfo h2 span {
+  font-family: roboto;
+  font-weight: 100 !important;
+}
+
+.singlePage .moreInfo h3 span {
+  font-family: roboto;
+  font-weight: 100 !important;
+  font-size: 1.5rem;
+}
+
+.singlePage .moreInfo h3 {
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 650px) {
   .singlePage img {
     width: 100%;
   }
@@ -112,7 +146,6 @@
     color: white;
   }
   .singlePage .banner {
-    
     display: grid;
     grid-template-columns: 45% auto;
   }
@@ -176,7 +209,7 @@
   .singlePage .moreInfo p {
     font-size: 1em;
   }
-  .singlePage  .moreInfo {
+  .singlePage .moreInfo {
     max-width: 650px;
     margin: auto;
   }
@@ -186,23 +219,22 @@
   .list {
     margin-top: 2em;
   }
-  .others .svg-inline--fa{
-
-    font-size:2em;
-    padding:4px;
+  .others .svg-inline--fa {
+    font-size: 2em;
+    padding: 4px;
     text-align: center;
   }
-  .others .location :nth-child(1){
+  .others .location :nth-child(1) {
     text-align: center;
   }
-  .others .shop :nth-child(1){
+  .others .shop :nth-child(1) {
     text-align: center;
   }
 }
 
 @media only screen and (min-width: 900px) {
-  .singlePage .moreInfo h2{
-    padding-top:.7em;
+  .singlePage .moreInfo h2 {
+    padding-top: 0.7em;
   }
   .others {
     margin-top: 2em;
@@ -210,16 +242,15 @@
   .list {
     margin-top: 2em;
   }
-  .others .svg-inline--fa{
-
-    font-size:38px;
-    padding:4px;
+  .others .svg-inline--fa {
+    font-size: 38px;
+    padding: 4px;
     text-align: center;
   }
-  .others .location :nth-child(1){
+  .others .location :nth-child(1) {
     text-align: center;
   }
-  .others .shop :nth-child(1){
+  .others .shop :nth-child(1) {
     text-align: center;
   }
 }
