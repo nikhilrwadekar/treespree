@@ -13,6 +13,8 @@
   width: 100%;
   display: grid;
   grid-template-columns: auto auto auto;
+  margin-top: 0;
+  text-transform: uppercase;
 }
 .popUp .list ul:nth-child(2) {
   border-left: 2px solid black;
@@ -22,14 +24,16 @@
   font-weight: bold;
 }
 
-.popUp .moreInfo{
-  margin-top:1.2em;
+.popUp .moreInfo {
+  margin-top: 0.75rem;
+  margin-top: 1.75rem;
 }
-.moreInfo .btn{
-  margin-top:.5em;
+.moreInfo .btn {
+  margin-top: 0.5em;
 }
 .popUp img {
   padding: 2em;
+  padding-top: 0.75rem;
   width: 400px;
 }
 .moreInfo {
@@ -40,7 +44,8 @@
   text-align: left;
 }
 .popUp h3 {
-margin-top:.9em;
+  margin-top: 0.9em;
+  font-weight: 100;
 }
 .moreInfo p {
   text-align: left;
@@ -61,4 +66,30 @@ margin-top:.9em;
   margin: auto;
   border-radius: 0.5em;
   margin-top: 1.2em;
+}
+
+.popUp h5 {
+  font-weight: 100;
+}
+
+.list li {
+  font-family: roboto;
+  font-weight: 100;
+}
+
+.btn-success {
+  background-color: #90c33e;
+  border-color: #90c33e;
+}
+
+.moreInfo .btn {
+  margin-top: 1rem;
+}
+
+.moreInfo h5 {
+  margin-bottom: 0.25rem;
+}
+
+.popup-content {
+  border-radius: 4%;
 }

@@ -9,8 +9,13 @@ textarea {
   font-weight: 100;
 }
 .contact-image-form {
-  background-color: #2e4328;
+  background-color: #fff;
   padding: 2rem 10%;
+}
+
+.contact-section {
+  border: 0.5px solid #bfbfbf;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .ContactPage p {
@@ -42,6 +47,7 @@ textarea {
 
 .ContactPage input {
   margin-top: 0;
+  border: 0.15px solid #d3d3d3;
 }
 
 .ContactPage input[type="submit"] {
@@ -50,9 +56,14 @@ textarea {
   color: white;
   padding: 0.3rem 0.6rem;
   text-decoration: none;
-  width: 25%;
+  width: 50%;
   margin: auto;
   border-radius: 0.3rem;
+  font-size: 1.25rem;
+}
+
+.ContactPage textarea {
+  border: 0.15px solid #d3d3d3 !important;
 }
 .ContactPage span {
   text-align: left;
@@ -60,6 +71,11 @@ textarea {
 
 .Contact-error {
   color: red;
+}
+
+.contact-image-form {
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 @media screen and (min-width: 820px) {
@@ -88,6 +104,6 @@ textarea {
 
   .contact-image-form {
     padding: 2rem 10%;
-    background-color: #2e4328;
+    background-color: #fff;
   }
 }

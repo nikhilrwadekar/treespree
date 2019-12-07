@@ -33,7 +33,7 @@ class Contact extends React.Component {
     
     // Axios POST request to the server
     // Reference https://www.npmjs.com/package/axios
-    axios.post("http://localhost:8080/submit",null, { params: {
+    axios.post("/submit", null, { params: {
       name: this.state.name,
       message: this.state.message,
       email: this.state.email
@@ -57,14 +57,15 @@ class Contact extends React.Component {
             <img src="/images/contact-image/leaf.jpg" alt="Maple Leaf" />
           </div>
           <div className="ContactPage">
-            <h1> CONTACT</h1>
-            <p>
+            <h1>CONTACT</h1>
+            <p className="welcome-message">
               Thank you for visiting our website. Feel free to send us a message.
             </p> 
             
             {            Array.isArray(this.state.formSubmitMessage)
   ? <ul className="Contact-error">{this.state.formSubmitMessage.map(errorMessage => <li>{errorMessage}</li>)}</ul>
             : this.state.formSubmitMessage}
+
 
             <form>
               <p>Name:</p>
