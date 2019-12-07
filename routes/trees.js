@@ -14,7 +14,7 @@ const {
   getTreeSpecies
 } = require("../controllers/treeController");
 
-// GET '/api/albums' sends an array of albums - using albumController;
+// GET '/api/trees' sends an array of trees - using treeController;
 router.get("/", getTrees);
 
 // GET '/api/trees/types

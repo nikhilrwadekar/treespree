@@ -69,6 +69,10 @@ textarea {
   text-align: left;
 }
 
+.Contact-error {
+  color: red;
+}
+
 .contact-image-form {
   padding-left: 5%;
   padding-right: 5%;

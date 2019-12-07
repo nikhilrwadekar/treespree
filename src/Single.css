@@ -103,6 +103,10 @@
   .SingleImage {
     object-fit: cover;
   }
+  .errorImage img{
+    object-fit: contain;
+  }
+
   .singlePage img {
     height: 20em;
     width: 100%;

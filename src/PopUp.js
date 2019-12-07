@@ -4,28 +4,31 @@ import { Button } from "react-bootstrap";
 import "./PopUp.css";
 import noImage from './no.jpg';
 import Spinner from "react-bootstrap/Spinner";
-// https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=
+
+// Reference for Wikipedia API https://www.mediawiki.org/wiki/API:Main_page
+// Building Urls for searching image or text from wikipedia
 let wikiUrl =
   "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro&summary=&origin=*&titles=";
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
+
 
 class PopUp extends React.Component {
   state = {};
 
   componentDidMount() {
     let treespreeAPIQuery, linkToSingleView;
-
-    // If ID is passed in props
+    // If ID is passed in props to this page to search trees 
     if (this.props.tree_id) {
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/id/${this.props.tree_id}`;
       linkToSingleView = `/tree/id/${this.props.tree_id}`;
     } else if (this.props.tree_name) {
-      //Else if the NAME is passed in props
+      //Else if the NAME is passed in props to this page to search trees 
       treespreeAPIQuery = `http://treespree.wmdd.ca/api/trees/name/${this.props.tree_name}`;
       linkToSingleView = `/tree/name/${this.props.tree_name}`;
     }
 
+    // setting state to the Single page
     if (linkToSingleView) {
       this.setState({
         ...this.state,
@@ -33,7 +36,7 @@ class PopUp extends React.Component {
       });
     }
 
-    // Get Data from API
+    // Get Data from Tree Spree API
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
       console.log(response.data);
@@ -49,6 +52,7 @@ class PopUp extends React.Component {
         };
       });
 
+      // building Search URL to search Text on wikipedia API
       let search = this.state.tree_name;
       let searchUrl = wikiUrl + search;
       fetch(searchUrl)
@@ -56,7 +60,7 @@ class PopUp extends React.Component {
           return res.json();
         })
         .then(foundData => {
-          console.log(foundData);
+        //Setting paragraph state to the results fetched from wikipedia API
           this.setState({
             paragraph:
               foundData.query.pages[Object.keys(foundData.query.pages)[0]]
@@ -64,11 +68,11 @@ class PopUp extends React.Component {
           });
         });
 
-      console.log(this.state.tree_name);
-
+      // building Search URL to search Picture on wikipedia API
       let searchUrl1 = wikiPictureUrl + this.state.genus_name.toLowerCase();
       let searchUrl2 = wikiPictureUrl + this.state.tree_name.toLowerCase();
 
+      //Searching picture on wikipedia api using genus name
       fetch(searchUrl1)
         .then(res => {
           // Return data in form of JSON
@@ -77,11 +81,9 @@ class PopUp extends React.Component {
         .then(foundData => {
           let imageObj =
             foundData.query.pages[Object.keys(foundData.query.pages)[0]];
-
-
           if (imageObj.thumbnail === undefined)
            {
-         
+            //Searching picture on wikipedia api using Absolute name if search using genus name gives undefined
             fetch(searchUrl2)
               .then(res => {
                 // Return data in form of JSON
@@ -93,21 +95,19 @@ class PopUp extends React.Component {
                   imageSrc: imageObj.thumbnail.source
                 });
               })
+              //catches error if upper code fails to get image from wikipedia, it will assign leaf image to that tree
               .catch(err =>{
                  this.setState({
                 imageSrc: noImage
                  });
               });
-           
-          }
+           }
            else {
+             //setting image src to state imageSrc
             this.setState({
               imageSrc: imageObj.thumbnail.source
             });
           }
-     
-
-          console.log(this.state.imageSrc);
         });
     });
   }
@@ -129,6 +129,7 @@ class PopUp extends React.Component {
             className="SingleImage"
           />
         ) : (
+          //Ref - https://react-bootstrap.github.io/components/spinners/
           <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
           </Spinner>
@@ -156,6 +157,7 @@ class PopUp extends React.Component {
           {this.state.paragraph ? (
             <div
               dangerouslySetInnerHTML={{
+                //Attaching ... at the end of the string after 288 words 
                 __html: this.state.paragraph.substring(0, 299) + "..."
               }}
             ></div>
@@ -164,7 +166,7 @@ class PopUp extends React.Component {
           )}
 
           <Button
-            // className="PopUp-know-more"
+           
             href={this.state.linkToSingleView}
             variant="success"
           >
