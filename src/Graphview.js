@@ -88,18 +88,6 @@ class Graphview extends Component {
             Get to know the city tree population by neighbourhoods.
           </p>
 
-          {/* {this.state.selectedNeighbourhoods.length == 1 ? (
-            <p>
-              Select <b>one more</b> to start comparing!
-            </p>
-          ) : this.state.selectedNeighbourhoods.length > 1 ? (
-            <p>Perfect!</p>
-          ) : (
-            <p>
-              <b>Pick your neighbourhood to get started!</b>
-            </p>
-          )} */}
-
           {this.state.selectionStatement}
         </div>
         <div>

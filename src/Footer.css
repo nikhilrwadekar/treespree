@@ -1,5 +1,6 @@
 .footer {
   background-color: #76533d;
+  margin-top: auto;
   display: grid !important;
   grid-template-columns: 1fr 3fr;
 }
