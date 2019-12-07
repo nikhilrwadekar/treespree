@@ -18,7 +18,7 @@ state={
     
     {
       name: "Nikhil Wadekar",
-      Description: "Lead | Full-stack Developer",
+      Description: "Full-stack Developer",
       img: "/images/team-photos/Nikhil.jpg",
       // github/Linkdin icons resources: https://fontawesome.com/
       github:"/images/team-photos/github-logo.png",
@@ -153,7 +153,7 @@ createMember_row2 = () => {
   return (
     <div className="teamPage">
       <div className="tp-header">
-        <h1>Our Team</h1>
+        <h1>Meet Our Team</h1>
         <p>
         Our team wants to provide a refreshing experience to the users while exploring city trees across Vancouver. Our website will take users through a virtual walk around the city and provide comprehensive information about tree population, tree variants, and leaf illustrations.
         </p>
@@ -161,13 +161,20 @@ createMember_row2 = () => {
         <p>Our team members are nature lovers and this has cultivated a strong passion for sharing enriching information with our community through TreeSpree. Our team’s vision is to partner with urban planners in order to develop plans and programs for the use of land in a sustainable way.</p>       
       </div>
       <div className="team-members">         
-           {this.createMember()}                         
+           {this.createMember()}   
+           {this.createMember_row2()}                       
       </div>
-      <div className="row2-members">         
-           {this.createMember_row2()}                         
-      </div>
+      {/* <div className="row2-members">          */}
+           {/* {this.createMember_row2()}                          */}
+      {/* </div> */}
         </div>
   );}
 }
 
 export default TeamPage;
+
+
+// display: flex;
+// flex-wrap: wrap;
+// justify-content: center
+// width: 25%;

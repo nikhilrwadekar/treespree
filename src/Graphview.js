@@ -8,7 +8,7 @@ class Graphview extends Component {
     selectedNeighbourhoods: [],
     selectionStatement: (
       <p>
-        <b>Pick your neighbourhood to get started!</b>
+        <b>Choose upto five neighbourhood to get started!</b>
       </p>
     )
   };
@@ -20,7 +20,7 @@ class Graphview extends Component {
       case 0:
         selectionStatement = (
           <p>
-            <b>Pick your neighbourhood to get started!</b>
+            <b>Choose upto five neighbourhood to get started!</b>
           </p>
         );
         break;
