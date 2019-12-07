@@ -10,7 +10,7 @@ function Hero() {
           <defs>
             <clipPath id="path">
               <path
-                class="cls-1"
+                className="cls-1"
                 d="M1100,0H1.71L0,404.91S1097.38,390.48,1099.58,217.3L1100,0"
               />
             </clipPath>
