@@ -61,10 +61,6 @@ class App extends React.Component {
             <Shop />
           </Route>
 
-          <Route exact path="/shopv2">
-            <ShopV2 />
-          </Route>
-
           <Route exact path="/team">
             <Team />
           </Route>
