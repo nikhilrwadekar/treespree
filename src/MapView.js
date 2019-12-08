@@ -143,7 +143,7 @@ class MapView extends React.Component {
     this.handleMapUpdate();
   }
 
-  // CITE THIS!!!!!
+  // https://github.com/tomchentw/react-google-maps/issues/753
   showInfo(a) {
     // If Tree ID is new, update the current InfoWindow index, else set it to null to toggle!
     if (this.state.showInfoIndex !== a) this.setState({ showInfoIndex: a });
