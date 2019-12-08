@@ -156,6 +156,7 @@ class PopUp extends React.Component {
           {/* If state's 'paragraph' is not null and has any value, render the component */}
           {this.state.paragraph ? (
             <div
+            // ref https://reactjs.org/docs/dom-elements.html
               dangerouslySetInnerHTML={{
                 //Attaching ... at the end of the string after 288 words 
                 __html: this.state.paragraph.substring(0, 299) + "..."
