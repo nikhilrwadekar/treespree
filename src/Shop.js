@@ -87,6 +87,7 @@ state={
       },  
   ]
 }
+// Resource from: https://flaviocopes.com/react-how-to-loop/.
 // Function to loop trough the array products and push the properties into
 // a new array product including the html tags.
 createProduct = () => {
