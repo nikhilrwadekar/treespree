@@ -30,6 +30,7 @@ function Newsletter() {
             ></input>
           </form> */}
 
+          {/* Boilerplate from: https://react-bootstrap.github.io/components/forms/ */}
           <Form>
             <Form.Group controlId="formBasicEmail">
               {/* <Form.Label>Email address</Form.Label> */}
