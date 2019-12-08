@@ -26,6 +26,7 @@ class Contact extends React.Component {
 
   // Axios POST request to stay on the same page
   handleFormSubmit(e) {
+    // ref https://www.w3schools.com/jsref/event_preventdefault.asp
     e.preventDefault();
 
     // Axios POST request to the server

@@ -6,11 +6,11 @@ import {
   faShoppingBag,
   faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons";
-
+// ref for font awsome https://www.npmjs.com/package/@fortawesome/react-fontawesome
 // Refference for Wikipedia API https://www.mediawiki.org/wiki/API:Main_page
 // Wikipedia API url for fetching image or picture for trees
 let wikiUrl ="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
-  // "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&origin=*&titles=";
+ 
 let wikiPictureUrl =
   "https://en.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=pageimages&format=json&pithumbsize=500&titles=";
 
@@ -44,6 +44,7 @@ class Single extends React.Component {
 
 
     //Getting information from TreeSpree API and passing it to states
+    // Reference https://www.npmjs.com/package/axios
     axios.get(treespreeAPIQuery).then(response => {
       let tree = response.data;
       //Setting state values
@@ -59,7 +60,9 @@ class Single extends React.Component {
       //building search URL for Text from wikipedia
       let search = this.state.tree_name;
       let searchUrl = wikiUrl + search;
+
       //fetching information from Wikipedia
+      // Ref https://reactjs.org/docs/faq-ajax.html
       fetch(searchUrl)
         .then(res => {
           return res.json();
@@ -92,6 +95,7 @@ class Single extends React.Component {
                 .then(res => {
                   return res.json();
                 })
+                // ref for object.keys https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
                 .then(foundData => {
                   let imageObj =
                     foundData.query.pages[
