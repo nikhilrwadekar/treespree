@@ -5,7 +5,6 @@ import Header from "./Header";
 import "./App.css";
 import Single from "./Single";
 import Shop from "./Shop";
-import ShopV2 from "./ShopV2";
 import Contact from "./Contact";
 import Terms from "./Terms";
 import Team from "./teamPage";
