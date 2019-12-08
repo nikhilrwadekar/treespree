@@ -77,7 +77,8 @@ state={
     } ,
   ]
 }
-// Function to loop trough the first four elements of the array
+// Resource from: https://flaviocopes.com/react-how-to-loop/.
+//Function to loop trough the first four elements of the array
 // teamMembers and push the properties into
 // a new array member including the html tags.
 createMember = () => {
@@ -110,6 +111,7 @@ createMember = () => {
   }
   return member
 }
+// Resource from: https://flaviocopes.com/react-how-to-loop/.
 // Function to loop trough the last three elements of the array
 // teamMembers and push the properties into
 // a new array member including the html tags.
