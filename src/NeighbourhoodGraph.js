@@ -117,6 +117,7 @@ class NeighbourhoodGraph extends Component {
   }
   
   //viewport configuration
+  // 'src/GridViewV2.js'
   updateLegendRotation(){
     let legendRotation, sliceLength,legendSpace,barPadding,
     windowWidth = window.innerWidth;

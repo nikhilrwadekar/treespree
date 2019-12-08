@@ -60,19 +60,6 @@
   .team-holder{
     width: 33.33%;
   }
-  .team-members  {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px; */
-  }
-  /* .row2-members{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-  } */
-  .img_git, .img_link{
-    /* width: 10%; */
-  }
   .tp-header p {
     display: block;
     margin: 1rem;
@@ -85,13 +72,6 @@
   .team-holder{
     width: 25%;
   }
-  .team-members  {
-    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
-  }
-  /* .row2-members{
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
-  } */
   .row2-members .team-holder{
     width: 75%;
   }
