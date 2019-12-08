@@ -35,7 +35,7 @@
 .newsletter-text h2 {
   font-weight: 300;
   text-align: left;
-  font-family: "Karla", sans-serif;
+  font-family: roboto, sans-serif;
   font-size: 1rem;
 }
 
@@ -54,6 +54,7 @@
 .newsletter .img {
   grid-column: 1/2;
   justify-self: end;
+  padding-left: 10px;
 }
 
 .newsletter .newsletter-text {
@@ -62,8 +63,14 @@
   padding-right: 10px;
   margin-left: 35px;
 }
+
+.subscribe-form .btn-primary {
+  background-color: #90c33e;
+  border-color: #90c33e;
+}
+
 @media screen and (min-width: 487px) {
-  .newsletter-text .subscribe{
+  .newsletter-text .subscribe {
     margin-top: 0px;
   }
 }
@@ -71,14 +78,13 @@
   .newsletter-text h2 {
     font-size: 2rem;
   }
-  .newsletter-text h3{
+  .newsletter-text h3 {
     font-size: 16px;
   }
 }
 
 @media screen and (min-width: 700px) {
-
-  .newsletter{
+  .newsletter {
     grid-template-columns: 1fr 2fr;
   }
 
@@ -86,7 +92,7 @@
     width: 130px;
   }
 
-  .subscribe-form form{
+  .subscribe-form form {
     margin-top: 15px;
   }
 }

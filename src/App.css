@@ -5,6 +5,9 @@
   /* Courtesy: https://codepen.io/manabox/pen/KzzeNy */
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .App-logo {

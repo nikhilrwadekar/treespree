@@ -132,7 +132,7 @@ class NeighbourhoodGraph extends Component {
       legendSpace=90;
       barPadding=0.45;
     }
-    else if (windowWidth >= 850) {
+    else if (windowWidth >= 750) {
       legendRotation = 0;
       sliceLength=5;
       legendSpace=45;
