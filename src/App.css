@@ -2,6 +2,12 @@
   text-align: center;
   max-width: 1100px;
   margin: 0 auto;
+  /* Courtesy: https://codepen.io/manabox/pen/KzzeNy */
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .App-logo {
@@ -21,4 +27,22 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+* {
+  font-family: "Karla", sans-serif;
+}
+
+*:focus {
+  outline: none;
+}
+
+.App h1,
+.App h2,
+.App h3,
+.App h4,
+.App h5,
+.App h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
 }

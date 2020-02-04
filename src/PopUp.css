@@ -1,0 +1,95 @@
+.popUp .list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.popUp .list li {
+  padding: 0;
+  margin: 0;
+
+  text-align: center;
+}
+.popUp .list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.popUp .list ul:nth-child(2) {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+.popUp .list li:nth-child(2) {
+  font-weight: bold;
+}
+
+.popUp .moreInfo {
+  margin-top: 0.75rem;
+  margin-top: 1.75rem;
+}
+.moreInfo .btn {
+  margin-top: 0.5em;
+}
+.popUp img {
+  padding: 2em;
+  padding-top: 0.75rem;
+  width: 400px;
+}
+.moreInfo {
+  width: 80%;
+  margin: auto;
+}
+.moreInfo h2 {
+  text-align: left;
+}
+.popUp h3 {
+  margin-top: 0.9em;
+  font-weight: 100;
+}
+.moreInfo p {
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+.popUp {
+  margin-bottom: 1.2em;
+}
+.popUp .PopUp-know-more {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: auto;
+  border-radius: 0.5em;
+  margin-top: 1.2em;
+}
+
+.popUp h5 {
+  font-weight: 100;
+}
+
+.list li {
+  font-family: roboto;
+  font-weight: 100;
+}
+
+.btn-success {
+  background-color: #90c33e;
+  border-color: #90c33e;
+}
+
+.moreInfo .btn {
+  margin-top: 1rem;
+}
+
+.moreInfo h5 {
+  margin-bottom: 0.25rem;
+}
+
+.popup-content {
+  border-radius: 4%;
+}

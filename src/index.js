@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// let urls = [
+//     "/react-image-gallery/img/cat1.jpg",
+//     "/react-image-gallery/img/cat2.jpg",
+//     "/react-image-gallery/img/cat3.jpg"
+// ];
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -1,0 +1,260 @@
+.singlePage .others a {
+  color: black;
+  text-decoration: none;
+  padding: 0.3em;
+}
+.singlePage .others {
+  text-align: center;
+}
+.singlePage .location {
+  padding: 0.3em;
+}
+.singlePage .shop {
+  padding: 0.3em;
+}
+.SingleImage {
+  width: 100%;
+}
+
+.others {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 1.5em;
+}
+
+.singlePage p {
+  text-align: center;
+}
+.singlePage .moreInfo {
+  margin-bottom: 2em;
+}
+.singlePage .moreInfo h3 {
+  margin-top: 1.2em;
+  text-align: left;
+}
+
+.others .location {
+  border-radius: 0.8em;
+}
+.others .shop {
+  border-radius: 0.8em;
+}
+.singlePage .moreInfo p {
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.info h1 {
+  font-weight: 100;
+}
+
+.singlePage .list {
+  font-family: roboto;
+}
+
+.singlePage .list ul {
+  text-transform: uppercase;
+}
+
+.singlePage .moreInfo h2 {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 100 !important;
+  font-family: roboto;
+}
+
+.singlePage .moreInfo h2 span {
+  font-family: roboto;
+  font-weight: 100 !important;
+}
+
+.singlePage .moreInfo h3 span {
+  font-family: roboto;
+  font-weight: 100 !important;
+  font-size: 1.5rem;
+}
+
+.singlePage .moreInfo h3 {
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 650px) {
+  .singlePage img {
+    width: 100%;
+  }
+  .singlePage .info h1 {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  .singlePage .list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .singlePage .list li {
+    padding: 0;
+    margin: 0;
+
+    text-align: center;
+  }
+  .singlePage .list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .singlePage .list li:nth-child(2) {
+    font-weight: bold;
+    font-style: italic;
+  }
+  .location {
+    width: 40%;
+    border: 1px solid black;
+  }
+  .location a {
+    color: black;
+    text-decoration: none;
+  }
+  .shop {
+    width: 40%;
+    border: 1px solid black;
+  }
+
+  .singlePage .moreInfo {
+    padding: 1px 5%;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .singlePage .others a {
+    color: white;
+    text-decoration: none;
+    padding: 0.3em;
+  }
+  .SingleImage {
+    object-fit: cover;
+  }
+  .errorImage img{
+    object-fit: contain;
+  }
+
+  .singlePage img {
+    height: 20em;
+    width: 100%;
+  }
+  .singlePage .info {
+    background-color: #50642d;
+    color: white;
+  }
+  .singlePage .banner {
+    display: grid;
+    grid-template-columns: 45% auto;
+  }
+  .singlePage .info h1 {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    font-size: 2em;
+  }
+  .singlePage .list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .singlePage .list li {
+    padding: 0;
+    margin: 0;
+
+    text-align: center;
+  }
+  .singlePage .list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .singlePage .list li:nth-child(2) {
+    font-weight: bold;
+    font-style: italic;
+  }
+  /* .others{
+                margin-top:2em;  
+              } */
+  .location {
+    width: 40%;
+    border: 1px solid white;
+    display: grid;
+    grid-template-columns: 40% auto;
+    text-align: left;
+  }
+  .location a {
+    color: white;
+    text-decoration: none;
+  }
+  .shop {
+    text-align: left;
+
+    width: 40%;
+    border: 1px solid white;
+    display: grid;
+    grid-template-columns: 40% auto;
+  }
+  .singlePage .moreInfo {
+    padding: 1px 5%;
+  }
+
+  .singlePage {
+    margin-bottom: 1.5em;
+  }
+
+  .singlePage .moreInfo p {
+    font-size: 1em;
+  }
+  .singlePage .moreInfo {
+    max-width: 650px;
+    margin: auto;
+  }
+  .others {
+    margin-top: 2em;
+  }
+  .list {
+    margin-top: 2em;
+  }
+  .others .svg-inline--fa {
+    font-size: 2em;
+    padding: 4px;
+    text-align: center;
+  }
+  .others .location :nth-child(1) {
+    text-align: center;
+  }
+  .others .shop :nth-child(1) {
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .singlePage .moreInfo h2 {
+    padding-top: 0.7em;
+  }
+  .others {
+    margin-top: 2em;
+  }
+  .list {
+    margin-top: 2em;
+  }
+  .others .svg-inline--fa {
+    font-size: 38px;
+    padding: 4px;
+    text-align: center;
+  }
+  .others .location :nth-child(1) {
+    text-align: center;
+  }
+  .others .shop :nth-child(1) {
+    text-align: center;
+  }
+}

@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TreeSpree
 
-## Available Scripts
+Vancouver Street Trees Data Visualization
 
-In the project directory, you can run(test):
+## About
 
-### `npm start`
+TreeSpree is a web application meant to inform users about street trees across Vancouver, BC. It will provide insight on which species are around the cities, how they are useful and also where to locate them around the city.<br>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Users can get extensive information fetched from a number of reliable APIs making the eventual experience cohesive, essentially a one-stop destination for tree lovers, educators, and urban planners alike. <br>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## The API
 
-### `npm test`
+Provides extended information about the city trees in Vancouver. Thanks to Vancouver's Open Data combined with Wikipedia's Open API.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Usage
 
-### `npm run build`
+How to get data from the TreeSpree API
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### http://treespree.wmdd.ca/api/trees
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Lists all trees with relative information.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### http://treespree.wmdd.ca/api/trees/types
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Lists all tree types with a total count of each in Vancouver.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##### /api/trees/type/TREE_TYPE
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Get a particular tree type with advanced filters, if needed.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+###### Parameters
 
-## Learn More
+| query         | value                 | example                                                              |
+| ------------- | --------------------- | -------------------------------------------------------------------- |
+| count         | `Number` Default: 100 | http://treespree.wmdd.ca/api/trees/type/maple?count=150              |
+| neighbourhood | `Text`                | http://treespree.wmdd.ca/api/trees/type/maple?neighbourhood=OAKRIDGE |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Lists all trees with relative information.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### http://treespree.wmdd.ca/api/neighbourhoods
 
-### Code Splitting
+Lists all neighbourhoods with its total tree count.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Technologies Used
 
-### Analyzing the Bundle Size
+### The Frontend - Powered by React & D3
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### The Backend - MySQL DB served by an API powered by Express.js
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<!--
+## The Team -->

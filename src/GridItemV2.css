@@ -1,0 +1,43 @@
+.GridItemV2 {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  /* background: #eee; */
+  height: auto;
+  width: 150px;
+  border: 1px dashed #90c33e;
+  border-radius: 20%;
+  transition: all 0.1s ease-in-out;
+}
+
+.GridItemV2:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+.GridItemV2 a {
+  text-decoration: none;
+  font-style: italic;
+  color: #111;
+}
+.GridItemV2-image {
+  height: 75px;
+  width: auto;
+  /* object-fit: cover; */
+  align-self: center;
+  padding: 0.5rem;
+}
+
+.GridItemV2 h5 {
+  justify-self: flex-end;
+}
+
+.GridItemV2-title {
+  text-transform: capitalize !important;
+  text-align: center;
+  line-height: 1.5rem;
+  height: 3rem;
+  padding: 0.5rem;
+  font-style: italic;
+}
