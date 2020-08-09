@@ -18,7 +18,7 @@ class GridViewV2 extends React.Component {
     limitPerPage: 6,
     searchGridQuery: "",
     gridStarterIndex: 0,
-    treeFilteredCommonNames: []
+    treeFilteredCommonNames: [],
   };
   constructor(props) {
     super(props);
@@ -32,55 +32,61 @@ class GridViewV2 extends React.Component {
     // API Calls
 
     // Neighbourhoods
-    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods").then(Response => {
-      // Get neighbourhoods and map them
-      let optionsMapped = Response.data.map(neighbourhood => {
-        return {
-          label: neighbourhood.neighbourhood_name,
-          value: neighbourhood.neighbourhood_name
-        };
-      });
-
-      // Map Neighbourhoods to State
-      this.setState({
-        ...this.state,
-        neighbourhoods: optionsMapped
-      });
-
-      // Species
-      Axios.get("http://treespree.wmdd.ca/api/trees/species").then(Response => {
-        // Get species and map them
-        let optionsMapped = Response.data.map(species => {
+    Axios.get("https://treespree.wmdd.ca/api/neighbourhoods").then(
+      (Response) => {
+        // Get neighbourhoods and map them
+        let optionsMapped = Response.data.map((neighbourhood) => {
           return {
-            label: species.species_name,
-            value: species.species_name
+            label: neighbourhood.neighbourhood_name,
+            value: neighbourhood.neighbourhood_name,
           };
         });
 
-        // Map species to State
+        // Map Neighbourhoods to State
         this.setState({
           ...this.state,
-          species: optionsMapped
-        });
-      });
-
-      // Genus
-      Axios.get("http://treespree.wmdd.ca/api/trees/genus").then(Response => {
-        // Get genus and map them
-        let optionsMapped = Response.data.map(genus => {
-          return {
-            label: genus.genus_name,
-            value: genus.genus_name
-          };
+          neighbourhoods: optionsMapped,
         });
 
-        // Map genus to State
-        this.setState({
-          ...this.state,
-          genus: optionsMapped
-        });
-      });
-    });
+        // Species
+        Axios.get("https://treespree.wmdd.ca/api/trees/species").then(
+          (Response) => {
+            // Get species and map them
+            let optionsMapped = Response.data.map((species) => {
+              return {
+                label: species.species_name,
+                value: species.species_name,
+              };
+            });
+
+            // Map species to State
+            this.setState({
+              ...this.state,
+              species: optionsMapped,
+            });
+          }
+        );
+
+        // Genus
+        Axios.get("https://treespree.wmdd.ca/api/trees/genus").then(
+          (Response) => {
+            // Get genus and map them
+            let optionsMapped = Response.data.map((genus) => {
+              return {
+                label: genus.genus_name,
+                value: genus.genus_name,
+              };
+            });
+
+            // Map genus to State
+            this.setState({
+              ...this.state,
+              genus: optionsMapped,
+            });
+          }
+        );
+      }
+    );
   }
 
   // Code Courtesy - Stackoverflow user: envo
@@ -151,7 +157,7 @@ class GridViewV2 extends React.Component {
       // If Advanced Options Change, Filter Tree Common Names!
 
       let treeFilteredCommonNames = this.state.treeCommonNames.filter(
-        treeCommonName => {
+        (treeCommonName) => {
           // If ALL THREE Options are used
           if (
             this.state.selectedNeighbourhoods.length &&
@@ -163,10 +169,11 @@ class GridViewV2 extends React.Component {
                 treeCommonName.species_name
               ) &&
               this.state.selectedGenus.includes(treeCommonName.genus_name) &&
-              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
-                treeCommonName.neighbourhood_names.includes(
-                  selectedNeighbourhood
-                )
+              this.state.selectedNeighbourhoods.filter(
+                (selectedNeighbourhood) =>
+                  treeCommonName.neighbourhood_names.includes(
+                    selectedNeighbourhood
+                  )
               ).length
             );
           }
@@ -189,15 +196,16 @@ class GridViewV2 extends React.Component {
                 this.state.selectedGenus.includes(treeCommonName.genus_name)) ||
               (this.state.selectedGenus.includes(treeCommonName.genus_name) &&
                 this.state.selectedNeighbourhoods.filter(
-                  selectedNeighbourhood =>
+                  (selectedNeighbourhood) =>
                     treeCommonName.neighbourhood_names.includes(
                       selectedNeighbourhood
                     )
                 ).length) ||
-              (this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
-                treeCommonName.neighbourhood_names.includes(
-                  selectedNeighbourhood
-                )
+              (this.state.selectedNeighbourhoods.filter(
+                (selectedNeighbourhood) =>
+                  treeCommonName.neighbourhood_names.includes(
+                    selectedNeighbourhood
+                  )
               ).length &&
                 this.state.selectedSpecies.includes(
                   treeCommonName.species_name
@@ -217,10 +225,11 @@ class GridViewV2 extends React.Component {
                 treeCommonName.species_name
               ) ||
               this.state.selectedGenus.includes(treeCommonName.genus_name) ||
-              this.state.selectedNeighbourhoods.filter(selectedNeighbourhood =>
-                treeCommonName.neighbourhood_names.includes(
-                  selectedNeighbourhood
-                )
+              this.state.selectedNeighbourhoods.filter(
+                (selectedNeighbourhood) =>
+                  treeCommonName.neighbourhood_names.includes(
+                    selectedNeighbourhood
+                  )
               ).length
             );
           }
@@ -237,74 +246,74 @@ class GridViewV2 extends React.Component {
         this.setState({
           ...this.state,
           treeFilteredCommonNames: treeFilteredCommonNames,
-          numberOfPages
+          numberOfPages,
         });
       } else
         this.setState({
           ...this.state,
-          treeFilteredCommonNames: this.state.treeCommonNames
+          treeFilteredCommonNames: this.state.treeCommonNames,
         });
     }
   }
 
   // Handle Change for ADVANCED VIEW
   // 1 - NEIGHBOURHOOD Selection
-  handleNeighbourhoodChange = selectedOptions => {
+  handleNeighbourhoodChange = (selectedOptions) => {
     // Update the state with SelectedOptions(s)
 
     if (selectedOptions)
       this.setState({
         ...this.state,
         selectedNeighbourhoods: selectedOptions.map(
-          selectedOption => selectedOption.value
-        )
+          (selectedOption) => selectedOption.value
+        ),
       });
     else
       this.setState({
         ...this.state,
-        selectedNeighbourhoods: []
+        selectedNeighbourhoods: [],
       });
   };
 
   // 2 - SPECIES Selection
-  handleSpeciesChange = selectedOptions => {
+  handleSpeciesChange = (selectedOptions) => {
     // Update the state with SelectedOptions(s)
     if (selectedOptions)
       this.setState({
         ...this.state,
         selectedSpecies: selectedOptions.map(
-          selectedOption => selectedOption.value
-        )
+          (selectedOption) => selectedOption.value
+        ),
       });
     else
       this.setState({
         ...this.state,
-        selectedSpecies: []
+        selectedSpecies: [],
       });
   };
 
   // 2 - GENUS Selection
-  handleGenusChange = selectedOptions => {
+  handleGenusChange = (selectedOptions) => {
     // Update the state with SelectedOptions(s)
     if (selectedOptions)
       this.setState({
         ...this.state,
         selectedGenus: selectedOptions.map(
-          selectedOption => selectedOption.value
-        )
+          (selectedOption) => selectedOption.value
+        ),
       });
     else
       this.setState({
         ...this.state,
-        selectedGenus: []
+        selectedGenus: [],
       });
   };
 
   // Handle Change for Grid View Search
-  handleBasicSearch = selectedOptions => {
+  handleBasicSearch = (selectedOptions) => {
     this.setState({
       ...this.state,
-      selectedBasicSearchOptions: selectedOptions
+      selectedBasicSearchOptions: selectedOptions,
     });
 
     let treeFilteredCommonNames = this.state.treeCommonNames;
@@ -313,12 +322,12 @@ class GridViewV2 extends React.Component {
     if (selectedOptions) {
       // Array of selected options as Strings
       let selectedOptionsStringArray = selectedOptions.map(
-        selectedBasicSearchOption => selectedBasicSearchOption.value
+        (selectedBasicSearchOption) => selectedBasicSearchOption.value
       );
 
       // Filter Grid..
       treeFilteredCommonNames = treeFilteredCommonNames.filter(
-        treeFilteredCommonName => {
+        (treeFilteredCommonName) => {
           // Nina Scholz: https://stackoverflow.com/questions/44134212/best-way-to-flatten-js-object-keys-and-values-to-a-single-depth-array
           let treeValues = Object.keys(treeFilteredCommonName).reduce(
             (r, k) => r.concat(treeFilteredCommonName[k]),
@@ -327,8 +336,8 @@ class GridViewV2 extends React.Component {
 
           // --
           // Return true if ANY common tree (key:)VALUE matches
-          let matchedArray = selectedOptionsStringArray.filter(selectedOption =>
-            treeValues.includes(selectedOption)
+          let matchedArray = selectedOptionsStringArray.filter(
+            (selectedOption) => treeValues.includes(selectedOption)
           );
 
           // If it includes any of the values
@@ -339,7 +348,7 @@ class GridViewV2 extends React.Component {
       // Set the Filtered Array in State to the one we just filtered..
       this.setState({
         ...this.state,
-        treeFilteredCommonNames: treeFilteredCommonNames
+        treeFilteredCommonNames: treeFilteredCommonNames,
       });
     }
 
@@ -347,18 +356,18 @@ class GridViewV2 extends React.Component {
     else if (selectedOptions == null)
       this.setState({
         ...this.state,
-        treeFilteredCommonNames: this.state.treeCommonNames
+        treeFilteredCommonNames: this.state.treeCommonNames,
       });
   };
 
   // Get Data from API
   getDatafromTreeSpreeAPI() {
-    Axios.get("http://treespree.wmdd.ca/api/trees/names")
-      .then(responseJson => {
-        let commonNameOptions = responseJson.data.map(treeCommonName => {
+    Axios.get("https://treespree.wmdd.ca/api/trees/names")
+      .then((responseJson) => {
+        let commonNameOptions = responseJson.data.map((treeCommonName) => {
           return {
             label: treeCommonName.common_name,
-            value: treeCommonName.common_name
+            value: treeCommonName.common_name,
           };
         });
 
@@ -366,10 +375,10 @@ class GridViewV2 extends React.Component {
           ...this.state,
           commonNameOptions: commonNameOptions,
           treeCommonNames: responseJson.data,
-          treeFilteredCommonNames: responseJson.data
+          treeFilteredCommonNames: responseJson.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -381,7 +390,7 @@ class GridViewV2 extends React.Component {
     let newGridStarterIndex = event.selected * this.state.limitPerPage;
     this.setState({
       ...this.state,
-      gridStarterIndex: newGridStarterIndex
+      gridStarterIndex: newGridStarterIndex,
     });
   }
 
@@ -422,20 +431,20 @@ class GridViewV2 extends React.Component {
             options={[
               {
                 label: "Trees",
-                options: this.state.commonNameOptions
+                options: this.state.commonNameOptions,
               },
               {
                 label: "Tree Neighbourhoods",
-                options: this.state.neighbourhoods
+                options: this.state.neighbourhoods,
               },
               {
                 label: "Tree Genus",
-                options: this.state.genus
+                options: this.state.genus,
               },
               {
                 label: "Tree Species",
-                options: this.state.species
-              }
+                options: this.state.species,
+              },
             ]}
             components={makeAnimated()}
             placeholder="Search and explore trees"
@@ -458,9 +467,9 @@ class GridViewV2 extends React.Component {
                     <h3>Select one or more</h3>
                     <Select
                       value={this.state.selectedNeighbourhoods.map(
-                        neighbourhood => ({
+                        (neighbourhood) => ({
                           value: neighbourhood,
-                          label: neighbourhood
+                          label: neighbourhood,
                         })
                       )}
                       className="selector"
@@ -471,9 +480,9 @@ class GridViewV2 extends React.Component {
                       placeholder="Select Neighbourhood(s).."
                     />
                     <Select
-                      value={this.state.selectedSpecies.map(species => ({
+                      value={this.state.selectedSpecies.map((species) => ({
                         value: species,
-                        label: species
+                        label: species,
                       }))}
                       className="selector"
                       isMulti
@@ -483,9 +492,9 @@ class GridViewV2 extends React.Component {
                       placeholder="Select Species.."
                     />
                     <Select
-                      value={this.state.selectedGenus.map(genus => ({
+                      value={this.state.selectedGenus.map((genus) => ({
                         value: genus,
-                        label: genus
+                        label: genus,
                       }))}
                       className="selector"
                       isMulti

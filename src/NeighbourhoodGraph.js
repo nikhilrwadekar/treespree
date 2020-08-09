@@ -8,7 +8,7 @@ class NeighbourhoodGraph extends Component {
     this.state = {
       neighbourhoods: [],
       dataForGraph: [],
-      filteredDataForGraph: []
+      filteredDataForGraph: [],
     };
 
     this.updateLegendRotation = this.updateLegendRotation.bind(this);
@@ -17,11 +17,11 @@ class NeighbourhoodGraph extends Component {
   testFunction(passedNeighbourhoods) {
     let dataForGraph = [];
     let element = {};
-    passedNeighbourhoods.map(neighbourhood => {
+    passedNeighbourhoods.map((neighbourhood) => {
       {
         let sum = 0;
 
-        Object.getOwnPropertyNames(neighbourhood).forEach(function(
+        Object.getOwnPropertyNames(neighbourhood).forEach(function (
           val,
           idx,
           array
@@ -52,7 +52,7 @@ class NeighbourhoodGraph extends Component {
       ...this.state,
       neighbourhoods: passedNeighbourhoods,
       dataForGraph: dataForGraph,
-      filteredDataForGraph: dataForGraph
+      filteredDataForGraph: dataForGraph,
     });
   }
 
@@ -67,7 +67,7 @@ class NeighbourhoodGraph extends Component {
     if (prevNeighbourhoods !== currentNeighbourhoods) {
       // Filter Graph Data based on selection
       let filteredDataForGraph = this.state.dataForGraph.filter(
-        neighbourhoodWithData => {
+        (neighbourhoodWithData) => {
           if (this.props.selectedNeighbourhoods)
             for (let selectedNeighbourhood of this.props
               .selectedNeighbourhoods) {
@@ -85,13 +85,13 @@ class NeighbourhoodGraph extends Component {
       if (filteredDataForGraph.length)
         this.setState({
           ...this.state,
-          filteredDataForGraph
+          filteredDataForGraph,
         });
       // Reset the filter with all Graphs
       else
         this.setState({
           ...this.state,
-          filteredDataForGraph: this.state.dataForGraph
+          filteredDataForGraph: this.state.dataForGraph,
         });
 
       // IF CONDITION ENDS
@@ -102,44 +102,51 @@ class NeighbourhoodGraph extends Component {
 
     axios
       .get(
-        "http://treespree.wmdd.ca/api/neighbourhoods/neighbourhood-treetype-count"
+        "https://treespree.wmdd.ca/api/neighbourhoods/neighbourhood-treetype-count"
       )
-      .then(response => {
+      .then((response) => {
         let neighbourhoods = response.data;
         this.testFunction(neighbourhoods);
       });
 
-      this.updateLegendRotation();
+    this.updateLegendRotation();
     window.addEventListener("resize", this.updateLegendRotation);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateLegendRotation);
   }
-  
+
   //viewport configuration
   // 'src/GridViewV2.js'
-  updateLegendRotation(){
-    let legendRotation, sliceLength,legendSpace,barPadding,
-    windowWidth = window.innerWidth;
+  updateLegendRotation() {
+    let legendRotation,
+      sliceLength,
+      legendSpace,
+      barPadding,
+      windowWidth = window.innerWidth;
     if (windowWidth < 500) {
       legendRotation = -45;
-      sliceLength=3;
-      legendSpace=95;
-      barPadding=0.3;
-    }
-    else if (windowWidth >= 500 && windowWidth < 750) {
+      sliceLength = 3;
+      legendSpace = 95;
+      barPadding = 0.3;
+    } else if (windowWidth >= 500 && windowWidth < 750) {
       legendRotation = -45;
-      sliceLength=4;
-      legendSpace=90;
-      barPadding=0.45;
-    }
-    else if (windowWidth >= 750) {
+      sliceLength = 4;
+      legendSpace = 90;
+      barPadding = 0.45;
+    } else if (windowWidth >= 750) {
       legendRotation = 0;
-      sliceLength=5;
-      legendSpace=45;
-      barPadding=0.55;
+      sliceLength = 5;
+      legendSpace = 45;
+      barPadding = 0.55;
     }
-    this.setState({ ...this.state, legendRotation,sliceLength,legendSpace,barPadding });
+    this.setState({
+      ...this.state,
+      legendRotation,
+      sliceLength,
+      legendSpace,
+      barPadding,
+    });
   }
 
   render() {
@@ -162,7 +169,7 @@ class NeighbourhoodGraph extends Component {
             color: "#38bcb2",
             size: 4,
             padding: 1,
-            stagger: true
+            stagger: true,
           },
           {
             id: "lines",
@@ -171,8 +178,8 @@ class NeighbourhoodGraph extends Component {
             color: "#eed312",
             rotation: -45,
             lineWidth: 6,
-            spacing: 10
-          }
+            spacing: 10,
+          },
         ]}
         borderRadius={4}
         borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
@@ -181,10 +188,10 @@ class NeighbourhoodGraph extends Component {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation:this.state.legendRotation,
+          tickRotation: this.state.legendRotation,
           legend: "Neighbourhoods",
           legendPosition: "middle",
-          legendOffset: this.state.legendSpace
+          legendOffset: this.state.legendSpace,
         }}
         axisLeft={{
           tickSize: 5,
@@ -192,7 +199,7 @@ class NeighbourhoodGraph extends Component {
           tickRotation: 0,
           legend: "Population",
           legendPosition: "middle",
-          legendOffset: -50
+          legendOffset: -50,
         }}
         enableLabel={true}
         labelSkipWidth={25}
@@ -200,9 +207,9 @@ class NeighbourhoodGraph extends Component {
         labelTextColor="#fff"
         legends={[
           {
-            dataFrom: 'keys',
-            anchor: 'right',
-            direction: 'column',
+            dataFrom: "keys",
+            anchor: "right",
+            direction: "column",
             justify: false,
             translateX: 106,
             translateY: 0,
@@ -210,8 +217,8 @@ class NeighbourhoodGraph extends Component {
             itemHeight: 28,
             itemsSpacing: 0,
             symbolSize: 20,
-            itemDirection: 'left-to-right'
-        }
+            itemDirection: "left-to-right",
+          },
         ]}
         animate={true}
         motionStiffness={90}

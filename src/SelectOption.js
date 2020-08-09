@@ -9,30 +9,32 @@ class SelectOption extends Component {
     selectedOption: [],
 
     // Dropdown List - Neighbourhoods
-    options: []
+    options: [],
   };
 
   componentWillMount() {
     // API Call
-    Axios.get("http://treespree.wmdd.ca/api/neighbourhoods").then(Response => {
-      // Get neighbourhoods and map them
-      let optionsMapped = Response.data.map(neighbourhood => {
-        return {
-          label: neighbourhood.neighbourhood_name,
-          value: neighbourhood.neighbourhood_name
-        };
-      });
+    Axios.get("https://treespree.wmdd.ca/api/neighbourhoods").then(
+      (Response) => {
+        // Get neighbourhoods and map them
+        let optionsMapped = Response.data.map((neighbourhood) => {
+          return {
+            label: neighbourhood.neighbourhood_name,
+            value: neighbourhood.neighbourhood_name,
+          };
+        });
 
-      // Map Them
-      this.setState({
-        ...this.state,
-        options: optionsMapped
-      });
-    });
+        // Map Them
+        this.setState({
+          ...this.state,
+          options: optionsMapped,
+        });
+      }
+    );
   }
 
   // Handle change for 'Select'
-  handleChange = selectedOption => {
+  handleChange = (selectedOption) => {
     // Update the state with SelectedOption(s)
     this.setState({ ...this.state, selectedOption: selectedOption });
 

@@ -14,7 +14,7 @@ import {
   StreetViewPanorama,
   OverlayView,
   InfoWindow,
-  Polygon
+  Polygon,
 } from "react-google-maps";
 
 // Import CSS
@@ -23,7 +23,7 @@ import { Button } from "react-bootstrap";
 
 // Import SearchBox
 const {
-  SearchBox
+  SearchBox,
 } = require("react-google-maps/lib/components/places/SearchBox");
 
 // Declare the Component itself
@@ -32,7 +32,7 @@ class MapView extends React.Component {
     trees: [],
     zoom: 18,
     isMapView: true,
-    center: { lat: 49.2259162, lng: -123.10982159999999 }
+    center: { lat: 49.2259162, lng: -123.10982159999999 },
   };
   constructor(props) {
     super(props);
@@ -47,34 +47,34 @@ class MapView extends React.Component {
       .get(
         "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/vancouver.geojson"
       )
-      .then(response => {
+      .then((response) => {
         // this.map.addGeoJson(data);
         this.setState({ ...this.state, geoJSON: response.data });
       });
 
     // Get Location
     navigator.geolocation.getCurrentPosition(
-      success => {
+      (success) => {
         let mapCenter = {
           lat: success.coords.latitude,
-          lng: success.coords.longitude
+          lng: success.coords.longitude,
         };
 
         this.setState({
           ...this.state,
-          center: mapCenter
+          center: mapCenter,
         });
       },
-      error => {}
+      (error) => {}
     );
   }
 
   getTreeDataAndStoreInState(boundingBox) {
     axios
       .get(
-        `http://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
+        `https://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
       )
-      .then(res => {
+      .then((res) => {
         const trees = res.data;
         this.setState({ trees: trees });
       });
@@ -96,7 +96,7 @@ class MapView extends React.Component {
         NorthWestX: NE.lat(),
         NorthWestY: SW.lng(),
         SouthEastX: SW.lat(),
-        SouthEastY: NE.lng()
+        SouthEastY: NE.lng(),
       };
       // Point is in bounding box
 
@@ -105,7 +105,7 @@ class MapView extends React.Component {
       // this.map.data.addGeoJson(this.state.geoJSON);
 
       this.setState({
-        trees: []
+        trees: [],
       });
     }
   }
@@ -132,7 +132,7 @@ class MapView extends React.Component {
       <p>Species: <h4>${tree.species_name.toLowerCase()}</h4></p>
       <p>Population: <h5>${tree.common_name_tree_count}</h5></p></div>
       `,
-      pixelOffset: new google.maps.Size(0, -25)
+      pixelOffset: new google.maps.Size(0, -25),
     });
 
     streetViewInfowindow.setPosition(coordinates);
@@ -155,12 +155,12 @@ class MapView extends React.Component {
   onPlacesChanged() {
     let placeCenter = {
       lat: this.searchBox.getPlaces()[0].geometry.location.lat(),
-      lng: this.searchBox.getPlaces()[0].geometry.location.lng()
+      lng: this.searchBox.getPlaces()[0].geometry.location.lng(),
     };
 
     this.setState({
       ...this.state,
-      center: placeCenter
+      center: placeCenter,
     });
   }
 
@@ -169,7 +169,7 @@ class MapView extends React.Component {
       <div className="MapView">
         {/* Google Map Component - centered to Vancouver */}
         <GoogleMap
-          ref={ref => {
+          ref={(ref) => {
             this.map = ref;
           }}
           // defaultOptions={{}}
@@ -183,7 +183,7 @@ class MapView extends React.Component {
           // streetView={}
         >
           <SearchBox
-            ref={ref => {
+            ref={(ref) => {
               this.searchBox = ref;
             }}
             // bounds={props.bounds}
@@ -205,13 +205,13 @@ class MapView extends React.Component {
                 boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
                 fontSize: `18px`,
                 outline: `none`,
-                textOverflow: `ellipses`
+                textOverflow: `ellipses`,
               }}
             />
           </SearchBox>
           {/* <MarkerClusterer averageCenter gridSize={60}> */}
           {/* The Marker Loop for the Map */}
-          {this.state.trees.map(tree => (
+          {this.state.trees.map((tree) => (
             <div>
               {/* Marker for the Marker Clusterer */}
               <Marker
@@ -227,14 +227,14 @@ class MapView extends React.Component {
                 key={tree.tree_id}
                 position={{
                   lat: tree.tree_latitude,
-                  lng: tree.tree_longitude
+                  lng: tree.tree_longitude,
                 }}
                 title={tree.common_name}
                 onClick={() => {
                   this.showInfo(tree.tree_id);
                   this.setState({
                     ...this.state,
-                    zoom: 20
+                    zoom: 20,
                   });
 
                   if (
@@ -244,7 +244,7 @@ class MapView extends React.Component {
                     this.streetViewHandler(
                       {
                         lat: tree.tree_latitude,
-                        lng: tree.tree_longitude
+                        lng: tree.tree_longitude,
                       },
                       tree
                     );
@@ -263,7 +263,7 @@ class MapView extends React.Component {
                       options={{
                         closeBoxURL: ``,
                         enableEventPropagation: true,
-                        pixelOffset: new google.maps.Size(0, -50)
+                        pixelOffset: new google.maps.Size(0, -50),
                       }}
                       onCloseClick={() => {
                         this.showInfo(tree.tree_id);
@@ -276,7 +276,7 @@ class MapView extends React.Component {
                           opacity: 1,
                           padding: `12px`,
                           borderRadius: "10px",
-                          width: "500px"
+                          width: "500px",
                         }}
                       >
                         <div className="mapView-PopUp">
@@ -289,7 +289,7 @@ class MapView extends React.Component {
                             this,
                             {
                               lat: tree.tree_latitude,
-                              lng: tree.tree_longitude
+                              lng: tree.tree_longitude,
                             },
                             tree
                           )}
