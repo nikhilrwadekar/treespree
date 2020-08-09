@@ -72,7 +72,7 @@ class MapView extends React.Component {
   getTreeDataAndStoreInState(boundingBox) {
     axios
       .get(
-        `https://treespree.wmdd.ca/api/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
+        `${process.env.REACT_APP_API_URL}/trees?bbtlx=${boundingBox.NorthWestX}&&bbtly=${boundingBox.NorthWestY}&&bbbrx=${boundingBox.SouthEastX}&&bbbry=${boundingBox.SouthEastY}`
       )
       .then((res) => {
         const trees = res.data;

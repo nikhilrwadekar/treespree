@@ -102,7 +102,7 @@ class NeighbourhoodGraph extends Component {
 
     axios
       .get(
-        "https://treespree.wmdd.ca/api/neighbourhoods/neighbourhood-treetype-count"
+        `${process.env.REACT_APP_API_URL}/neighbourhoods/neighbourhood-treetype-count`
       )
       .then((response) => {
         let neighbourhoods = response.data;

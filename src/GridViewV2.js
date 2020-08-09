@@ -32,7 +32,7 @@ class GridViewV2 extends React.Component {
     // API Calls
 
     // Neighbourhoods
-    Axios.get("https://treespree.wmdd.ca/api/neighbourhoods").then(
+    Axios.get(`${process.env.REACT_APP_API_URL}/neighbourhoods`).then(
       (Response) => {
         // Get neighbourhoods and map them
         let optionsMapped = Response.data.map((neighbourhood) => {
@@ -49,7 +49,7 @@ class GridViewV2 extends React.Component {
         });
 
         // Species
-        Axios.get("https://treespree.wmdd.ca/api/trees/species").then(
+        Axios.get(`${process.env.REACT_APP_API_URL}/trees/species`).then(
           (Response) => {
             // Get species and map them
             let optionsMapped = Response.data.map((species) => {
@@ -68,7 +68,7 @@ class GridViewV2 extends React.Component {
         );
 
         // Genus
-        Axios.get("https://treespree.wmdd.ca/api/trees/genus").then(
+        Axios.get(`${process.env.REACT_APP_API_URL}/trees/genus`).then(
           (Response) => {
             // Get genus and map them
             let optionsMapped = Response.data.map((genus) => {
@@ -362,7 +362,7 @@ class GridViewV2 extends React.Component {
 
   // Get Data from API
   getDatafromTreeSpreeAPI() {
-    Axios.get("https://treespree.wmdd.ca/api/trees/names")
+    Axios.get(`${process.env.REACT_APP_API_URL}/trees/names`)
       .then((responseJson) => {
         let commonNameOptions = responseJson.data.map((treeCommonName) => {
           return {

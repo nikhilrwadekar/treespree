@@ -19,11 +19,11 @@ class PopUp extends React.Component {
     let treespreeAPIQuery, linkToSingleView;
     // If ID is passed in props to this page to search trees
     if (this.props.tree_id) {
-      treespreeAPIQuery = `https://treespree.wmdd.ca/api/trees/id/${this.props.tree_id}`;
+      treespreeAPIQuery = `${process.env.REACT_APP_API_URL}/trees/id/${this.props.tree_id}`;
       linkToSingleView = `/tree/id/${this.props.tree_id}`;
     } else if (this.props.tree_name) {
       //Else if the NAME is passed in props to this page to search trees
-      treespreeAPIQuery = `https://treespree.wmdd.ca/api/trees/name/${this.props.tree_name}`;
+      treespreeAPIQuery = `${process.env.REACT_APP_API_URL}/trees/name/${this.props.tree_name}`;
       linkToSingleView = `/tree/name/${this.props.tree_name}`;
     }
 

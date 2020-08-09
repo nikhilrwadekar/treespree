@@ -37,9 +37,9 @@ class Single extends React.Component {
     let treespreeAPIQuery = "";
     //setting Api for wikipedia search, based on if id is getting passed or name
     if (this.props.match.params.tree_id) {
-      treespreeAPIQuery = `https://treespree.wmdd.ca/api/trees/id/${this.props.match.params.tree_id}`;
+      treespreeAPIQuery = `${process.env.REACT_APP_API_URL}/trees/id/${this.props.match.params.tree_id}`;
     } else if (this.props.match.params.tree_name) {
-      treespreeAPIQuery = `https://treespree.wmdd.ca/api/trees/name/${this.props.match.params.tree_name}`;
+      treespreeAPIQuery = `${process.env.REACT_APP_API_URL}/trees/name/${this.props.match.params.tree_name}`;
     }
 
     //Getting information from TreeSpree API and passing it to states

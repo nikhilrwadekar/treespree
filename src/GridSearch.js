@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import Axios from "axios";
 import Suggestions from "./Suggestions.js";
 
-const API_URL = "https://treespree.wmdd.ca/api/trees/types";
+const API_URL = `${process.env.REACT_APP_API_URL}/trees/types`;
 
 class GridSearch extends React.Component {
   constructor(props) {

@@ -14,7 +14,7 @@ class SelectOption extends Component {
 
   componentWillMount() {
     // API Call
-    Axios.get("https://treespree.wmdd.ca/api/neighbourhoods").then(
+    Axios.get(`${process.env.REACT_APP_API_URL}/neighbourhoods`).then(
       (Response) => {
         // Get neighbourhoods and map them
         let optionsMapped = Response.data.map((neighbourhood) => {
