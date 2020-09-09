@@ -16,11 +16,11 @@ Provides extended information about the city trees in Vancouver. Thanks to Vanco
 
 How to get data from the TreeSpree API (Alternatively, you can setup your own link in .env as shown in the .env.example file)
 
-#### https://treespree.wmdd.ca/api/trees
+#### /api/trees
 
 Lists all trees with relative information.
 
-#### https://treespree.wmdd.ca/api/trees/types
+#### /api/trees/types
 
 Lists all tree types with a total count of each in Vancouver.
 
@@ -32,12 +32,12 @@ Get a particular tree type with advanced filters, if needed.
 
 | query         | value                 | example                                                              |
 | ------------- | --------------------- | -------------------------------------------------------------------- |
-| count         | `Number` Default: 100 | http://treespree.wmdd.ca/api/trees/type/maple?count=150              |
-| neighbourhood | `Text`                | http://treespree.wmdd.ca/api/trees/type/maple?neighbourhood=OAKRIDGE |
+| count         | `Number` Default: 100 | /api/trees/type/maple?count=150              |
+| neighbourhood | `Text`                | /api/trees/type/maple?neighbourhood=OAKRIDGE |
 
 Lists all trees with relative information.
 
-#### https://treespree.wmdd.ca/api/neighbourhoods
+#### /api/neighbourhoods
 
 Lists all neighbourhoods with its total tree count.
 

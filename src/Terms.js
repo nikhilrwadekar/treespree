@@ -10,7 +10,7 @@ class Terms extends React.Component {
 
         <p>
           These terms and conditions outline the rules and regulations for the
-          use of Treespree's Website, located at treespree.wmdd.ca.
+          use of Treespree's Website.
         </p>
 
         <p>
