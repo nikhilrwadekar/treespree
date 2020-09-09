@@ -5,12 +5,6 @@ const path = require("path");
 const {validationResult} = require('express-validator');
 const {validator} = require("./validators");
 
-//Files for database
-const {cp} = require('./db/connection.js');
-const {query} = require('./db/promise-mysql.js');
-const mysql = require('mysql');
-
-
 // CORS for local development and remote API requests
 var cors = require("cors");
 
@@ -19,8 +13,8 @@ const app = express();
 // Use CORS
 app.use(cors());
 
-app.listen(8080, () => {
-  console.log("Listening on port 8080!");
+app.listen(4000, () => {
+  console.log("Listening on port 4000!");
 });
 
 // Use Router
