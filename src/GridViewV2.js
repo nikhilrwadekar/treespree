@@ -504,13 +504,13 @@ class GridViewV2 extends React.Component {
                       placeholder="Select Genus.."
                     />
 
-                    <Button
+                    {/* <Button
                       size="lg"
                       style={{ backgroundColor: "#90c33e", color: "#fff" }}
                       variant=""
                     >
                       APPLY
-                    </Button>
+                    </Button> */}
                   </div>
                 </Card.Body>
               </Accordion.Collapse>
