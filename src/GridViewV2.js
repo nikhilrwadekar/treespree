@@ -109,7 +109,6 @@ class GridViewV2 extends React.Component {
   // Window Resize Handling Code from https://www.hawatel.com/blog/handle-window-resize-in-react/
 
   componentDidMount() {
-    console.log("component Did Mount" + this.state.limitPerPage);
     this.updateGridPerPageLimit();
     window.addEventListener("resize", this.updateGridPerPageLimit);
   }
@@ -140,7 +139,6 @@ class GridViewV2 extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("Component Did Update: " + this.state.limitPerPage);
 
     // If Common Names were Filtered
     if (
@@ -187,7 +185,6 @@ class GridViewV2 extends React.Component {
             (this.state.selectedGenus.length &&
               this.state.selectedSpecies.length)
           ) {
-            // console.log("ANY TWO!");
 
             return (
               (this.state.selectedSpecies.includes(
@@ -218,7 +215,6 @@ class GridViewV2 extends React.Component {
             this.state.selectedGenus.length ||
             this.state.selectedSpecies.length
           ) {
-            // console.log("ANY ONE!");
 
             return (
               this.state.selectedSpecies.includes(
@@ -236,7 +232,6 @@ class GridViewV2 extends React.Component {
         }
       );
 
-      console.log(treeFilteredCommonNames);
 
       if (treeFilteredCommonNames.length) {
         let numberOfPages = Math.ceil(
@@ -386,7 +381,6 @@ class GridViewV2 extends React.Component {
   // Update Grid View on page change
   updateGridView(event) {
     // Page Number: 4; Items: 60; 4*12
-    // console.log(event.selected);
     let newGridStarterIndex = event.selected * this.state.limitPerPage;
     this.setState({
       ...this.state,

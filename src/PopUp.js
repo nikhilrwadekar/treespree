@@ -38,7 +38,6 @@ class PopUp extends React.Component {
     // Get Data from Tree Spree API
     axios.get(treespreeAPIQuery).then((response) => {
       let tree = response.data;
-      console.log(response.data);
 
       //Storing tree data in state
       this.setState((prevstate) => {

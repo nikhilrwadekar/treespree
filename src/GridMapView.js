@@ -13,19 +13,10 @@ class GridMapView extends React.Component {
 
   // This 'lifecycle hook' or function will run BEFORE the component is rendered. Pretty useful to set data from external API into the state.
   componentWillMount() {
-    console.log(this.props.match.params.activeOption);
     if (this.props.match.params.activeOption == 2)
       this.setState({
         activeOption: "2"
       });
-  }
-
-  // If the component renders..
-  componentDidMount() {}
-
-  // If component Updates...
-  componentDidUpdate() {
-    console.log(this.state.activeOption);
   }
 
   render() {
@@ -37,7 +28,6 @@ class GridMapView extends React.Component {
         <div className="gridMapToggle">
           <Switch
             onItemChanged={index => {
-              console.log(`${index + 1} Item Changed!`);
               this.setState({
                 ...this.state,
                 activeOption: index

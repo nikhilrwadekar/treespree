@@ -41,7 +41,6 @@ exports.getCountBreakdown = (req, res) => {
       let fixedResults = [];
       let resultsCopy = results[1];
       resultsCopy.forEach(result => {
-        // console.log(result);
         let singleKeyValueAsStringArray = result.counts.split(",");
 
         let ObjectWithKeyValues = {};
@@ -57,9 +56,7 @@ exports.getCountBreakdown = (req, res) => {
         }
 
         fixedResults.push(ObjectWithKeyValues);
-        // console.log(ObjectWithKeyValues);
       });
-      // console.log(fixedResults);
       res.json(fixedResults);
     })
     .catch(error => res.send(error));

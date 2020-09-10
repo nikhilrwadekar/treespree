@@ -41,7 +41,6 @@ class SelectOption extends Component {
     // CallBack Function
     this.props.callbackFunction(selectedOption);
 
-    console.log(`Option selected:`, selectedOption);
   };
   render() {
     return (

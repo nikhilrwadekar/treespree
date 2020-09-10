@@ -98,7 +98,6 @@ class NeighbourhoodGraph extends Component {
     }
   }
   componentDidMount() {
-    console.log("COMPONENT DID MOUNT");
 
     axios
       .get(
